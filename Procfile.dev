@@ -1,0 +1,4 @@
+tsc: tsc -w
+web: node-dev dist/server/index.js
+cpx: cpx 'src/server/**/*.pug' dist/server/ -w
+webpack: webpack-dev-server
