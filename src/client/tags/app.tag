@@ -1,15 +1,19 @@
 app
-    nav.navbar.navbar-light.bg-light.navbar-expand-sm
+    .all-container
+        nav.navbar.navbar-light.bg-light.navbar-expand-sm
+            .container
+                a.navbar-brand(href="/") Quesdon
+                button.navbar-toggler(type="button", data-toggle="collapse", data-target="app .collapse")
+                    span.navbar-toggler-icon
+                .collapse.navbar-collapse
+                    ul.navbar-nav.mr-auto
+                        li.nav-item(if="{login}"): a.nav-link(href="/my") @{user.acct}
+                        li.nav-item(if="{!login}"): a.nav-link(href="/login") ログイン
         .container
-            a.navbar-brand(href="/") Quesdon
-            button.navbar-toggler(type="button", data-toggle="collapse", data-target="app .collapse")
-                span.navbar-toggler-icon
-            .collapse.navbar-collapse
-                ul.navbar-nav.mr-auto
-                    li.nav-item(if="{login}"): a.nav-link(href="/my") @{user.acct}
-                    li.nav-item(if="{!login}"): a.nav-link(href="/login") ログイン
-    .container
-        .root
+            .root
+        footer.container
+            p quesdon は AGPL-3.0で提供されています。
+                a(href="https://github.com/rinsuki/quesdon") ソースコード
     script.
         this.on("mount", () => {
             require("../router.ts")
@@ -23,3 +27,14 @@ app
             }
             this.update()
         })
+    style.
+        .all-container{
+            min-height: 100vh;
+            padding-bottom: 3em;
+            position:relative;
+        }
+        footer.container {
+            position:absolute;
+            bottom:0;
+            padding-top: 1em;
+        }
