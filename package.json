@@ -12,7 +12,6 @@
   "license": "AGPL-3.0+",
   "devDependencies": {
     "@types/koa": "^2.0.42",
-    "@types/koa-generic-session": "^1.0.2",
     "@types/koa-mount": "^2.0.19",
     "@types/koa-pug": "^3.0.3",
     "@types/koa-router": "^7.0.27",
