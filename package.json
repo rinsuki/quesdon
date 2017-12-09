@@ -5,7 +5,7 @@
   "main": "dist/server/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc && cpx 'src/server/**/*.pug dist/server/ && webpack",
+    "build": "tsc && cpx 'src/server/**/*.pug' dist/server/ && webpack",
     "start": "node dist/server/index.js"
   },
   "author": "rinsuki",
