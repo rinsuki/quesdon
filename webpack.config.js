@@ -23,10 +23,13 @@ module.exports = {
     module: {
         loaders: [
             {test: /\.css$/, loader: 'style-loader!css-loader'},
-            {test: /\.tag$/, exclude: /node_modules/, loader: 'riot-tag-loader', query: {
-                type: "none",
-                template: "pug"
-            }},
+            {test: /\.tag$/, exclude: /node_modules/, use: [
+                {loader: 'babel-loader'},
+                {loader: 'riot-tag-loader', query: {
+                    type: "none",
+                    template: "pug"
+                }}
+            ]},
             {test: /\.(woff2?|ttf|eot|svg)$/, loader: 'file-loader'},
             {test: /\.ts$/, loader: 'ts-loader'},
         ]
