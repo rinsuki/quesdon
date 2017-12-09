@@ -1,3 +1,4 @@
 page-index
-    h1 Hello, World!
-    a(href="/login") Login
+    h1 Quesdon
+    p ザ・インタビューズとかaskfmとかそんなかんじのやつのMastodonアカウントで使えるやつです
+    p 上のメニューからログインしてね
