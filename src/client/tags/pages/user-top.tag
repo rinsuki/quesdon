@@ -35,7 +35,8 @@ page-user-top
             apiFetch("/api/web/accounts/"+this.opts.acct+"/question", {
                 method: "POST",
                 body: formData
-            }).then(r => {
+            }).then(r => r.json()).then(r => {
                 alert("質問しました!")
+                location.reload()
             })
         }
