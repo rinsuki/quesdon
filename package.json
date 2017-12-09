@@ -15,7 +15,6 @@
     "@types/koa-generic-session": "^1.0.2",
     "@types/koa-mount": "^2.0.19",
     "@types/koa-pug": "^3.0.3",
-    "@types/koa-redis": "^3.0.2",
     "@types/koa-router": "^7.0.27",
     "@types/koa-session": "^3.0.6",
     "@types/koa-static": "^3.0.2",

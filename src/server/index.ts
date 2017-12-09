@@ -6,7 +6,7 @@ import * as session from "koa-session"
 import * as koaStatic from "koa-static"
 import * as mount from "koa-mount"
 import apiRouter from "./api"
-import { PORT, REDIS_URL, SECRET_KEY } from "./config";
+import { PORT, SECRET_KEY } from "./config";
 
 const app = new Koa
 
