@@ -16,6 +16,8 @@ app
                 a(href="https://github.com/rinsuki/quesdon") ソースコード
             p 開発者: 
                 a(href="https://mstdn.maud.io/@rinsuki") @rinsuki@mstdn.maud.io
+                |  
+                a(href="/@rinsuki@mstdn.maud.io") Quesdon
     script.
         this.on("mount", () => {
             require("../router.ts")
