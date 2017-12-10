@@ -14,6 +14,8 @@ app
         footer.container
             p quesdon は AGPL-3.0で提供されています。
                 a(href="https://github.com/rinsuki/quesdon") ソースコード
+            p 開発者: 
+                a(href="https://mstdn.maud.io/@rinsuki") @rinsuki@mstdn.maud.io
     script.
         this.on("mount", () => {
             require("../router.ts")
@@ -30,11 +32,11 @@ app
     style.
         .all-container{
             min-height: 100vh;
-            padding-bottom: 3em;
+            padding-bottom:3em;
             position:relative;
         }
         footer.container {
             position:absolute;
             bottom:0;
-            padding-top: 1em;
+            padding-top: 5em;
         }
