@@ -15,7 +15,7 @@ page-user-top
             .card-body
                 h4.card-title {question.question}
                 h6.card-subtitle.mb-2: a(href="/@{user.acct}/questions/{question._id}").text-muted {question.answeredAt}
-                p.card-text {question.answer}
+                p.card-text.question-text {question.answer}
         loading(if="{!question_loaded}")
     script.
         import "../loading.tag"

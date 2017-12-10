@@ -9,7 +9,7 @@ page-question-latest
                     | 回答者: 
                     a(href="/@{question.user.acct}") {question.user.name}
                         span.text-muted  @{question.user.acct}
-                p.card-text {question.answer}
+                p.card-text.question-text {question.answer}
     script.
         apiFetch("/api/web/questions/latest").then(r => r.json()).then(r => {
             this.questions = r

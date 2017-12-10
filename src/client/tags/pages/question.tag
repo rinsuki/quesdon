@@ -8,7 +8,7 @@ page-question
                 span(if="{!user_loaded}") 読み込み中...
                 a(href="/@{user.acct}",if="{user_loaded}") {user.name}
                     span.text-muted  @{user.acct}
-            p {question.answer}
+            p.card-text.question-text {question.answer}
     script.
         apiFetch("/api/web/questions/"+this.opts.q_id).then(r => r.json()).then(r => {
             this.question = r
