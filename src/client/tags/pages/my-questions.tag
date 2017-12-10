@@ -12,7 +12,7 @@ page-my-questions
             this.update()
         })
 my-question
-    form(action="javascript://",onsubmit="{submit}")
+    form(action="javascript://",onsubmit="{submit}").mt-3
         .card
             .card-body
                 h4.card-title {opts.question.question}
