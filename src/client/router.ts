@@ -7,6 +7,7 @@ import "./tags/pages/user-top.tag"
 import "./tags/pages/my-top.tag"
 import "./tags/pages/my-questions.tag"
 import "./tags/pages/question.tag"
+import "./tags/pages/question-latest.tag"
 
 var routes = [
     {path: "/", tag: "page-index"},
@@ -15,6 +16,7 @@ var routes = [
     {path: "/@:acct/questions/:q_id", tag: "page-question"},
     {path: "/my", tag: "page-my-top"},
     {path: "/my/questions", tag: "page-my-questions"},
+    {path: "/latest", tag: "page-question-latest"},
 ]
 
 routes.forEach(route => {

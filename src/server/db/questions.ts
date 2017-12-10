@@ -2,7 +2,7 @@ import * as mongoose from "mongoose"
 import { IUser } from "./index";
 
 var schema = new mongoose.Schema({
-    user: {type: mongoose.Schema.Types.ObjectId, required: true, refs: "users"},
+    user: {type: mongoose.Schema.Types.ObjectId, required: true, ref: "users"},
     question: {type: String, required: true},
     answer: String,
     answeredAt: Date,

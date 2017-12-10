@@ -5,7 +5,7 @@ import setTransformer from "../utils/setTransformer"
 var schema = new mongoose.Schema({
     acct: {type: String, required: true},
     acctLower: {type: String, required: true, unique: true},
-    app: {type: mongoose.Schema.Types.ObjectId, required: true, refs: "mastodon_apps"},
+    app: {type: mongoose.Schema.Types.ObjectId, required: true, ref: "mastodon_apps"},
     name: {type: String, required: true},
     avatarUrl: {type: String, required: true},
     accessToken: {type: String, required: true},

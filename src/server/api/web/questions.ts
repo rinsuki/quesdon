@@ -16,6 +16,13 @@ router.get("/", async ctx => {
     ctx.body = JSON.stringify(questions)
 })
 
+router.get("/latest", async ctx => {
+    const questions = await Question.find({
+        answeredAt: {$ne: null}
+    }).limit(20).sort("-answeredAt").populate("user")
+    ctx.body = questions
+})
+
 router.post("/:id/answer", async ctx => {
     if (!ctx.session!.user) return ctx.throw("please login", 403)
     const question = await Question.findById(ctx.params.id)
@@ -37,6 +44,13 @@ router.post("/:id/answer", async ctx => {
             "Content-Type": "application/json"
         }
     })
+})
+
+router.post("/:id/delete", async ctx => {
+    if (!ctx.session!.user) return ctx.throw("please login", 403)
+    const question = await Question.findById(ctx.params.id)
+    if (!question) return ctx.throw("not found", 404)
+    if (question.user.toString() != ctx.session!.user) return ctx.throw("not found", 404)
 })
 
 router.get("/:id", async ctx => {
