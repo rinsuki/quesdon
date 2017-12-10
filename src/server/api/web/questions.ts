@@ -37,7 +37,8 @@ router.post("/:id/answer", async ctx => {
     fetch("https://"+user!.acct.split("@")[1]+"/api/v1/statuses", {
         method: "POST",
         body: JSON.stringify({
-            status: "Q. "+question.question + "\nA. " + question.answer + "\n#quesdon "+BASE_URL+"/@"+user!.acct+"/questions/"+question.id
+            spoiler_text: "Q. "+question.question + " #quesdon",
+            status: "A. " + question.answer + "\n#quesdon "+BASE_URL+"/@"+user!.acct+"/questions/"+question.id
         }),
         headers: {
             Authorization: "Bearer "+user!.accessToken,
