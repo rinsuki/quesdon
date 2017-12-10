@@ -72,7 +72,7 @@ router.get("/redirect", async ctx => {
         user.acctLower = acct.toLowerCase()
         user.app = app
     }
-    user.name = myProfile.display_name
+    user.name = myProfile.display_name || myProfile.username
     user.avatarUrl = myProfile.avatar_static
     user.accessToken = res.access_token
     await user.save()
