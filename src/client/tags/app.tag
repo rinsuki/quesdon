@@ -32,11 +32,11 @@ app
     style.
         .all-container{
             min-height: 100vh;
-            padding-bottom:3em;
+            padding-bottom:6em;
             position:relative;
         }
         footer.container {
             position:absolute;
             bottom:0;
-            padding-top: 5em;
+            padding-top: 1em;
         }
