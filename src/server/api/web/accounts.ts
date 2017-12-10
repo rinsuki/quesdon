@@ -30,9 +30,9 @@ router.post("/:acct/question", async ctx => {
     const user = await User.findOne({acctLower: ctx.params.acct.toLowerCase()})
     if(!user) return ctx.throw("not found", 404)
     var question = new Question
-    questionString.question = questionString
-    questionString.user = user
-    await questionString.save()
+    question.question = questionString
+    question.user = user
+    await question.save()
     ctx.body = {status: "ok"}
 })
 
