@@ -9,4 +9,9 @@ router.use("/oauth", oauthRouter.routes())
 router.use("/accounts", accountsRouter.routes())
 router.use("/questions", questionsRouter.routes())
 
+router.get("/logout", async ctx => {
+    ctx.session!.user = undefined
+    ctx.body = {status: "ok"}
+})
+
 export default router

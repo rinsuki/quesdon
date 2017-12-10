@@ -6,6 +6,7 @@ page-my-top
         ul
             li: a(href="/@{user.acct}") あなたのプロフィール
             li: a(href="/my/questions") あなた宛ての質問
+            li: a(href="#",onclick="{logout}") ログアウト
     script.
         import "../loading.tag"
         apiFetch("/api/web/accounts/verify_credentials").then(r => r.json()).then(r => {
@@ -13,3 +14,10 @@ page-my-top
             this.loaded = true
             this.update()
         })
+        this.logout = e => {
+            e.preventDefault()
+            if(!confirm("ログアウトしていい?")) return
+            apiFetch("/api/web/logout").then(r => r.json()).then(r => {
+                location.pathname = "/"
+            })
+        }
