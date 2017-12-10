@@ -11,6 +11,13 @@ router.get("/verify_credentials", async ctx => {
     ctx.body = user
 })
 
+router.get("/id/:id", async ctx => {
+    const user = await User.findById(ctx.params.id)
+    if (!user) return ctx.throw("not found", 404)
+    ctx.body = user
+})
+
+
 router.get("/:acct", async ctx => {
     const user = await User.findOne({acctLower: ctx.params.acct.toLowerCase()})
     if (!user) return ctx.throw("not found", 404)

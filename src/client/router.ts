@@ -6,11 +6,13 @@ import "./tags/pages/login.tag"
 import "./tags/pages/user-top.tag"
 import "./tags/pages/my-top.tag"
 import "./tags/pages/my-questions.tag"
+import "./tags/pages/question.tag"
 
 var routes = [
     {path: "/", tag: "page-index"},
     {path: "/login", tag: "page-login"},
     {path: "/@:acct", tag: "page-user-top"},
+    {path: "/@:acct/questions/:q_id", tag: "page-question"},
     {path: "/my", tag: "page-my-top"},
     {path: "/my/questions", tag: "page-my-questions"},
 ]

@@ -30,13 +30,20 @@ router.post("/:id/answer", async ctx => {
     fetch("https://"+user!.acct.split("@")[1]+"/api/v1/statuses", {
         method: "POST",
         body: JSON.stringify({
-            status: "Q. "+question.question + "\nA. " + question.answer + "\n#quesdon "+BASE_URL+"/@"+user!.acct
+            status: "Q. "+question.question + "\nA. " + question.answer + "\n#quesdon "+BASE_URL+"/@"+user!.acct+"/questions/"+question.id
         }),
         headers: {
             Authorization: "Bearer "+user!.accessToken,
             "Content-Type": "application/json"
         }
     })
+})
+
+router.get("/:id", async ctx => {
+    const question = await Question.findById(ctx.params.id)
+    if (!question) return ctx.throw("not found", 404)
+    if (!question.answeredAt) return ctx.throw("not found", 404)
+    ctx.body = question
 })
 
 export default router
