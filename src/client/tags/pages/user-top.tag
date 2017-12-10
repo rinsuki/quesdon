@@ -6,10 +6,10 @@ page-user-top
             h1 {user.name}
             p さんの質問箱
             form(action="javascript://",onsubmit="{submit}")
-                textarea.form-control(name="question", placeholder="質問する内容を入力")
+                textarea.form-control(name="question", placeholder="質問する内容を入力",oninput="{input_question}")
                 .d-flex.justify-content-end(style="line-height: 2.5em;")
-                    span(ref="character_counter",style="padding-right: 1em;") 500
-                    button.btn.btn-primary.col-xs-2(type="submit") 質問する
+                    span(ref="character_counter",style="padding-right: 1em;") {charcounter}
+                    button.btn.btn-primary.col-xs-2(type="submit",disabled="{charcounter < 0}") 質問する
         h2 回答
         .card.mb-2(each="{question in questions}",if="{question_loaded}")
             .card-body
@@ -20,6 +20,11 @@ page-user-top
     script.
         import "../loading.tag"
         console.log(this.opts)
+        this.charmax = 200
+        this.charcounter = this.charmax
+        this.input_question = (e) => {
+            this.charcounter = this.charmax - e.target.value.length
+        }
         apiFetch("/api/web/accounts/"+this.opts.acct).then(r => r.json()).then(r => {
             this.user = r
             this.loaded = true
