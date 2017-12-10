@@ -6,7 +6,7 @@ import * as session from "koa-session"
 import * as koaStatic from "koa-static"
 import * as mount from "koa-mount"
 import apiRouter from "./api"
-import { PORT, SECRET_KEY } from "./config";
+import { PORT, SECRET_KEY, GIT_COMMIT } from "./config";
 
 const app = new Koa
 
@@ -28,7 +28,9 @@ const router = new Router
 router.use("/api", apiRouter.routes())
 
 router.get("/*", async ctx => {
-    ctx.render("index.pug")
+    ctx.render("index.pug", {
+        GIT_COMMIT
+    })
 })
 
 app.use(router.routes())
