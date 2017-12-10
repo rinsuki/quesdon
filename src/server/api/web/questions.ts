@@ -38,7 +38,7 @@ router.post("/:id/answer", async ctx => {
         method: "POST",
         body: JSON.stringify({
             spoiler_text: "Q. "+question.question + " #quesdon",
-            status: "A. " + question.answer + "\n#quesdon "+BASE_URL+"/@"+user!.acct+"/questions/"+question.id
+            status: "A. " + (question.answer!.length > 200 ? question.answer!.substring(0,200) + "...(続きはリンク先で)" : question.answer) + "\n#quesdon "+BASE_URL+"/@"+user!.acct+"/questions/"+question.id
         }),
         headers: {
             Authorization: "Bearer "+user!.accessToken,
