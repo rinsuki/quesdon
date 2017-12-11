@@ -76,6 +76,7 @@ router.get("/redirect", async ctx => {
     user.name = myProfile.display_name || myProfile.username
     user.avatarUrl = myProfile.avatar_static
     user.accessToken = res.access_token
+    user.url = myProfile.url
     await user.save()
     ctx.session!.user = user.id
     ctx.redirect("/my")

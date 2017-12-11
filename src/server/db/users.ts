@@ -9,6 +9,7 @@ var schema = new mongoose.Schema({
     name: {type: String, required: true},
     avatarUrl: {type: String, required: true},
     accessToken: {type: String, required: true},
+    url: {type: String}
 }, {
     timestamps: true
 })
@@ -27,6 +28,7 @@ export interface IUser extends mongoose.Document {
     name: string
     avatarUrl: string
     accessToken: string
+    url: string | null
 }
 
 export default mongoose.model("users", schema) as mongoose.Model<IUser>
