@@ -1,5 +1,4 @@
 window.addEventListener("keydown", e => {
-    console.log(e)
     const target = e.target as HTMLElement
     if(target.tagName.toLowerCase() != "textarea") return
     if(e.keyCode != 13) return
