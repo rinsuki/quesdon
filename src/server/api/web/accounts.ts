@@ -1,6 +1,9 @@
 import * as Router from "koa-router"
 import * as mongoose from "mongoose"
 import { User, Question } from "../../db/index";
+import fetch from "node-fetch";
+import * as parseLinkHeader from "parse-link-header"
+import { Links, Link } from "parse-link-header";
 
 var router = new Router
 
@@ -9,6 +12,34 @@ router.get("/verify_credentials", async ctx => {
     const user = await User.findById(ctx.session!.user)
     if (!user) return ctx.throw("not found", 404)
     ctx.body = user
+})
+
+router.get("/followers", async ctx => {
+    if (null == /^\d+$/.exec(ctx.query.max_id || "0")) return ctx.throw("max_id is num only", 400)
+    if (!ctx.session!.user) return ctx.throw("please login", 403)
+    const user = await User.findById(ctx.session!.user)
+    if (!user) return ctx.throw("not found", 404)
+    const myInfo = await fetch("https://"+user!.acct.split("@")[1]+"/api/v1/accounts/verify_credentials", {
+        headers: {
+            Authorization: "Bearer "+user!.accessToken,
+        }
+    }).then(r => r.json())
+    var followersRes = await fetch("https://"+user!.acct.split("@")[1]+"/api/v1/accounts/"+myInfo.id+"/followers?limit=80" + (ctx.query.max_id ? "&max_id="+ctx.query.max_id : ""), {
+        headers: {
+            Authorization: "Bearer "+user!.accessToken,
+        }
+    })
+    var followers: any[] = await followersRes.json()
+    followers = followers
+        .map(follower => follower.acct as string)
+        .map(acct => ~acct.indexOf("@") ? acct : (acct + "@" + user!.acct.split("@")[1]))
+        .map(acct => acct.toLowerCase())
+    const followersObject = await User.find({acctLower: {$in: followers}})
+    const max_id = ((parseLinkHeader(followersRes.headers.get("Link")) || {} as Links).next || {} as Link).max_id
+    ctx.body = {
+        accounts: followersObject,
+        max_id
+    }
 })
 
 router.get("/id/:id", async ctx => {
