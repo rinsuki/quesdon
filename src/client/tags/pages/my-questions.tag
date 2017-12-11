@@ -23,6 +23,7 @@ my-question
                     select.form-control.card-link(style="display:inline-block;width:inherit;",name="visibility")
                         option(value="public") 公開
                         option(value="unlisted") 未収載
+                        option(value="private") 非公開
                         option(value="no") 投稿しない
                 button.btn.btn-danger(type="button",style="float:right;",onclick="{delete}") 削除
     script.

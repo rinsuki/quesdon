@@ -34,7 +34,7 @@ router.post("/:id/answer", async ctx => {
     await question.save()
     ctx.body = {status: "ok"}
     const user = await User.findById(ctx.session!.user)
-    if (!~["public","unlisted"].indexOf(ctx.request.body.fields.visibility)) return
+    if (!~["public","unlisted","private"].indexOf(ctx.request.body.fields.visibility)) return
     fetch("https://"+user!.acct.split("@")[1]+"/api/v1/statuses", {
         method: "POST",
         body: JSON.stringify({
