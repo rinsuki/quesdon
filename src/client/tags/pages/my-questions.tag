@@ -18,6 +18,11 @@ my-question
                 h4.card-title {opts.question.question}
                 textarea.form-control.mb-4(name="answer", placeholder="回答内容を入力")
                 button.btn.btn-primary.card-link(type="submit") 回答
+                span.card-link 公開範囲: 
+                    select.form-control.card-link(style="display:inline-block;width:inherit;",name="visibility")
+                        option(value="public") 公開
+                        option(value="unlisted") 未収載
+                        option(value="no") 投稿しない
     script.
         this.submit = e => {
             var formData = new FormData(e.target)
