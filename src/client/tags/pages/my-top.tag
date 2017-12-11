@@ -1,4 +1,5 @@
 page-my-top
+    title マイページ - Quesdon
     loading(if="{!loaded}")
     virtual(if="{loaded}")
         h1 マイページ

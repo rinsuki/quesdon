@@ -1,4 +1,5 @@
 page-my-followers
+    title フォロワーのQuesdon利用者一覧 - マイページ - Quesdon
     loading(if="{!loaded}")
     virtual(if="{loaded}")
         h1 フォロワーのQuesdon利用者一覧

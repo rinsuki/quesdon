@@ -1,6 +1,7 @@
 page-question
     loading(if="{!loaded}")
     virtual(if="{loaded}")
+        title Q. {question.question} - {user.name}さんの質問箱 - Quesdon
         .card: .card-body
             h2.card-title {question.question}
             h6.card-subtitle.mb-2

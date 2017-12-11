@@ -1,4 +1,5 @@
 page-my-questions
+    title 質問一覧 - マイページ - Quesdon
     loading(if="{!loaded}")
     virtual(if="{loaded}")
         h1 質問一覧

@@ -1,4 +1,5 @@
 page-question-latest
+    title 最近の回答 - Quesdon
     loading(if="{!loaded}")
     virtual(if="{loaded}")
         h2 最近の回答

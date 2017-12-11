@@ -1,6 +1,7 @@
 page-user-top
     loading(if="{!loaded}")
     virtual(if="{loaded}")
+        title {user.name}さんの質問箱 - Quesdon
         .jumbotron(style="text-align: center")
             img(src="{user.avatarUrl}",style="width:8em;height:8em;")
             h1 {user.name}

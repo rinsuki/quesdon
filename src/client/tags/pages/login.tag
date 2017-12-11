@@ -1,4 +1,5 @@
 page-login
+    title ログイン - Quesdon
     h1 ログイン
     form(action="javascript://",onsubmit="{submit}")
         p あなたのMastodonアカウントがあるインスタンスを入力してください。
