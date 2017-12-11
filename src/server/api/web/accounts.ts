@@ -42,6 +42,16 @@ router.get("/followers", async ctx => {
     }
 })
 
+router.post("/update", async ctx => {
+    if (!ctx.session!.user) return ctx.throw("please login", 403)
+    const user = await User.findById(ctx.session!.user)
+    if (!user) return ctx.throw("not found", 404)
+    user.description = ctx.request.body.fields.description
+    user.questionBoxName = ctx.request.body.fields.questionBoxName
+    await user.save()
+    ctx.body = {status: "ok"}
+})
+
 router.get("/id/:id", async ctx => {
     const user = await User.findById(ctx.params.id)
     if (!user) return ctx.throw("not found", 404)

@@ -5,8 +5,9 @@ page-user-top
         .jumbotron(style="text-align: center")
             img(src="{user.avatarUrl}",style="width:8em;height:8em;")
             h1 {user.name}
-            p さんの質問箱 
+            p さんの{user.questionBoxName || "質問箱"} 
                 a(href='{user.avatar || "https://"+user.acct.split("@")[1]+"/@"+user.acct.split("@")[0]}',rel="nofollow") Mastodonのプロフィール
+            p {user.description}
             form(action="javascript://",onsubmit="{submit}")
                 textarea.form-control(name="question", placeholder="質問する内容を入力",oninput="{input_question}")
                 .d-flex.justify-content-end(style="line-height: 2.5em;")

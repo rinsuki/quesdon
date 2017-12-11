@@ -8,6 +8,7 @@ page-my-top
             li: a(href="/@{user.acct}") あなたのプロフィール
             li: a(href="/my/questions") あなた宛ての質問
             li: a(href="/my/followers") フォロワーのQuesdon利用者
+            li: a(href="/my/settings") 設定
             li: a(href="#",onclick="{logout}") ログアウト
     script.
         import "../loading.tag"

@@ -9,6 +9,7 @@ import "./tags/pages/my-questions.tag"
 import "./tags/pages/question.tag"
 import "./tags/pages/question-latest.tag"
 import "./tags/pages/my-followers.tag"
+import "./tags/pages/my-settings.tag"
 
 var routes = [
     {path: "/", tag: "page-index"},
@@ -18,6 +19,7 @@ var routes = [
     {path: "/my", tag: "page-my-top"},
     {path: "/my/questions", tag: "page-my-questions"},
     {path: "/my/followers", tag: "page-my-followers"},
+    {path: "/my/settings", tag: "page-my-settings"},
     {path: "/latest", tag: "page-question-latest"},
 ]
 
