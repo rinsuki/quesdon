@@ -9,7 +9,7 @@ app
                     ul.navbar-nav.mr-auto
                         li.nav-item(if="{login}"): a.nav-link(href="/my") @{user.acct}
                         li.nav-item(if="{!login}"): a.nav-link(href="/login") ログイン
-        .container
+        .container.body-container
             .root
         footer.container
             p quesdon は AGPL-3.0で提供されています。
@@ -32,13 +32,11 @@ app
             this.update()
         })
     style.
-        .all-container{
+        .all-container {
+            display: flex;
+            flex-direction: column;
             min-height: 100vh;
-            padding-bottom:6em;
-            position:relative;
         }
-        footer.container {
-            position:absolute;
-            bottom:0;
-            padding-top: 1em;
+        .body-container {
+            flex: 1 0 auto;
         }
