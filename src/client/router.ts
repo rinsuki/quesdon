@@ -10,6 +10,8 @@ import "./tags/pages/question.tag"
 import "./tags/pages/question-latest.tag"
 import "./tags/pages/my-followers.tag"
 import "./tags/pages/my-settings.tag"
+import "./tags/pages/bottles-top.tag"
+import "./tags/pages/bottles-new.tag"
 
 var routes = [
     {path: "/", tag: "page-index"},
@@ -21,6 +23,8 @@ var routes = [
     {path: "/my/followers", tag: "page-my-followers"},
     {path: "/my/settings", tag: "page-my-settings"},
     {path: "/latest", tag: "page-question-latest"},
+    {path: "/bottles", tag: "page-bottles-top"},
+    {path: "/bottles/new", tag: "page-bottles-new"},
 ]
 
 routes.forEach(route => {

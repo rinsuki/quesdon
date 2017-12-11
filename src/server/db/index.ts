@@ -9,9 +9,11 @@ mongoose.connect(MONGODB_URL).catch(e => {
 import MastodonApp, {IMastodonApp} from "./apps"
 import User, {IUser} from "./users"
 import Question, {IQuestion} from "./questions"
+import Bottle, {IBottle} from "./bottles"
 
 export {
     MastodonApp, IMastodonApp,
     User, IUser,
-    Question, IQuestion
+    Question, IQuestion,
+    Bottle, IBottle
 }
