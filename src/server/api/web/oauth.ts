@@ -8,7 +8,7 @@ var router = new Router
 
 router.post("/get_url", async ctx => {
     const hostName = ctx.request.body.fields.instance
-        .replace(/.+@/, "")
+        .replace(/.*@/, "")
     if(~hostName.indexOf("/")) return ctx.reject(400, "not use slash in hostname")
     const redirectUri = BASE_URL+"/api/web/oauth/redirect"
     var app = await MastodonApp.findOne({hostName, appBaseUrl: BASE_URL, redirectUri})
