@@ -54,6 +54,8 @@ router.post("/:id/delete", async ctx => {
     const question = await Question.findById(ctx.params.id)
     if (!question) return ctx.throw("not found", 404)
     if (question.user.toString() != ctx.session!.user) return ctx.throw("not found", 404)
+    await question.remove()
+    ctx.body = {status: "ok"}
 })
 
 router.get("/:id", async ctx => {
