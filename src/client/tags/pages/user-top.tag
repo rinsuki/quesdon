@@ -13,7 +13,8 @@ page-user-top
                 .d-flex.justify-content-end(style="line-height: 2.5em;")
                     span(ref="character_counter",style="padding-right: 1em;") {charcounter}
                     button.btn.btn-primary.col-xs-2(type="submit",disabled="{charcounter < 0}") 質問する
-        h2 回答
+        h2 回答 
+            span.badge.badge-pill.badge-secondary(if="{questions.length}",style="font-size: 50%") {questions.length}
         .card.mb-2(each="{question in questions}",if="{question_loaded}")
             .card-body
                 h4.card-title {question.question}
@@ -23,6 +24,7 @@ page-user-top
     script.
         import "../loading.tag"
         console.log(this.opts)
+        this.questions = []
         this.charmax = 200
         this.charcounter = this.charmax
         this.input_question = (e) => {
