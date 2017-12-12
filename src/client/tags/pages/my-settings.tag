@@ -5,13 +5,13 @@ page-my-settings
     form(action="javascript://", onsubmit="{submit}")
         .form-group
             label ちょっとした説明
-            textarea.form-control(name="description",placeholder="しぶやのりんさんがすき",oninput="{description_input}") {user.description}
+            textarea.form-control(name="description",placeholder="しぶやのりんさんがすき",oninput="{description_input}") {window.USER.description}
             small.form-text.text-muted あと{description_count}文字 改行は表示時に反映されません
         .form-group
             label 「質問箱」のところの変更
             .input-group
                 span.input-group-addon ◯◯◯さんの
-                input.form-control(type="text",placeholder="質問箱",name="questionBoxName",oninput="{questionBoxName_input}",value="{user.questionBoxName || '質問箱'}")
+                input.form-control(type="text",placeholder="質問箱",name="questionBoxName",oninput="{questionBoxName_input}",value="{window.USER.questionBoxName || '質問箱'}")
             small.form-text.text-muted あと{questionBoxName_count}文字 改行は表示時に反映されません
         button(type="submit").btn.btn-primary 保存
     script.
