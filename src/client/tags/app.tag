@@ -7,7 +7,7 @@ app
                     span.navbar-toggler-icon
                 .collapse.navbar-collapse
                     ul.navbar-nav.mr-auto
-                        li.nav-item(if="{login}"): a.nav-link(href="/my") @{user.acct}
+                        li.nav-item(if="{login}"): a.nav-link(href="/my") @{window.USER.acct}
                         li.nav-item(if="{!login}"): a.nav-link(href="/login") ログイン
         .container.body-container
             .root
@@ -22,15 +22,7 @@ app
         this.on("mount", () => {
             require("../router.ts")
         })
-        apiFetch("/api/web/accounts/verify_credentials").then(async r => {
-            if (r.status == 200) {
-                this.login = true
-                this.user = await r.json()
-            } else {
-                this.login = false
-            }
-            this.update()
-        })
+        this.login = !!window.USER
     style.
         .all-container {
             display: flex;
