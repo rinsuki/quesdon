@@ -1,6 +1,6 @@
 app
     .all-container
-        nav.navbar.navbar-light.bg-light.navbar-expand-sm
+        nav.navbar.navbar-light.bg-light.navbar-expand-sm.mb-2
             .container
                 a.navbar-brand(href="/") Quesdon
                 button.navbar-toggler(type="button", data-toggle="collapse", data-target="app .collapse")
