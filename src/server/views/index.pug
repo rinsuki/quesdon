@@ -1,8 +1,12 @@
 doctype html
 html
     head
-        script(src="/assets/bundle.js?version="+GIT_COMMIT)
         meta(name="viewport",content="width=device-width")
+        if user
+            script window.USER=JSON.parse(atob("!{user}"))
+        else
+            script window.USER=undefined
+        script(src="/assets/bundle.js?version="+GIT_COMMIT)
     body
         app
             p ...あれ、もしかしてページが表示されてませんか?

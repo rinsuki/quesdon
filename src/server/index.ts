@@ -7,6 +7,7 @@ import * as koaStatic from "koa-static"
 import * as mount from "koa-mount"
 import apiRouter from "./api"
 import { PORT, SECRET_KEY, GIT_COMMIT } from "./config";
+import { User } from "./db/index";
 
 const app = new Koa
 
@@ -28,8 +29,17 @@ const router = new Router
 router.use("/api", apiRouter.routes())
 
 router.get("/*", async ctx => {
+    var user
+    if (ctx.session!.user) {
+        user = await User.findById(ctx.session!.user)
+        user = JSON.stringify(user).replace(/[\u0080-\uFFFF]/g, chr => {
+            return "\\u"+("0000"+chr.charCodeAt(0).toString(16)).substr(-4)
+        })
+        user = new Buffer(user, "binary").toString("base64")
+    }
     ctx.render("index.pug", {
-        GIT_COMMIT
+        GIT_COMMIT,
+        user
     })
 })
 
