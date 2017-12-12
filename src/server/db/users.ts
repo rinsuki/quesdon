@@ -17,6 +17,7 @@ var schema = new mongoose.Schema({
 })
 
 setTransformer(schema, (doc: IUser, ret: any) => {
+    ret.hostName = ret.acctLower.split("@").reverse()[0]
     delete ret.app
     delete ret.accessToken
     delete ret.acctLower
