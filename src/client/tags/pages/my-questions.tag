@@ -4,7 +4,8 @@ page-my-questions
     virtual(if="{loaded}")
         h1 質問一覧
         a(href="/my") マイページへ
-        my-question(each="{question in questions}",question="{question}") 
+        my-question(each="{question in questions}",question="{question}")
+        a.btn.btn-secondary.mt-3(href="https://{window.USER.hostName}/share?text={encodeURIComponent('私の質問箱です #quesdon\n'+location.origin+'/@'+window.USER.acct)}",target="_blank") 自分の質問箱のページを共有(新しいページで開きます)
     script.
         import "../loading.tag"
         apiFetch("/api/web/questions").then(r => r.json()).then(r => {
