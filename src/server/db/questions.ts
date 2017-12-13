@@ -6,6 +6,7 @@ var schema = new mongoose.Schema({
     question: {type: String, required: true},
     answer: String,
     answeredAt: Date,
+    isDeleted: {type: Boolean, default: false}
 }, {
     timestamps: true
 })
@@ -15,6 +16,7 @@ export interface IQuestion extends mongoose.Document {
     question: string
     answer: string | null
     answeredAt: Date | null
+    isDeleted: Boolean
 }
 
 export default mongoose.model("questions", schema) as mongoose.Model<IQuestion>

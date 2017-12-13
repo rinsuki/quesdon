@@ -10,7 +10,8 @@ router.get("/", async ctx => {
     if (!ctx.session!.user) return ctx.throw("please login", 403)
     const questions = await Question.find({
         user: mongoose.Types.ObjectId(ctx.session!.user),
-        answeredAt: null
+        answeredAt: null,
+        isDeleted: false
     })
     console.log(questions)
     ctx.body = JSON.stringify(questions)
@@ -18,7 +19,8 @@ router.get("/", async ctx => {
 
 router.get("/latest", async ctx => {
     const questions = await Question.find({
-        answeredAt: {$ne: null}
+        answeredAt: {$ne: null},
+        isDeleted: false
     }).limit(20).sort("-answeredAt").populate("user")
     ctx.body = questions
 })
@@ -27,6 +29,7 @@ router.post("/:id/answer", async ctx => {
     if (!ctx.session!.user) return ctx.throw("please login", 403)
     const question = await Question.findById(ctx.params.id)
     if (!question) return ctx.throw("not found", 404)
+    if (question.isDeleted) return ctx.throw("not found", 404)
     if (question.user.toString() != ctx.session!.user) return ctx.throw("not found", 404)
     if (question.answeredAt) return ctx.throw("alread answered", 400)
     question.answer = ctx.request.body.fields.answer
@@ -54,7 +57,8 @@ router.post("/:id/delete", async ctx => {
     const question = await Question.findById(ctx.params.id)
     if (!question) return ctx.throw("not found", 404)
     if (question.user.toString() != ctx.session!.user) return ctx.throw("not found", 404)
-    await question.remove()
+    question.isDeleted = true
+    await question.save()
     ctx.body = {status: "ok"}
 })
 
@@ -62,6 +66,7 @@ router.get("/:id", async ctx => {
     const question = await Question.findById(ctx.params.id)
     if (!question) return ctx.throw("not found", 404)
     if (!question.answeredAt) return ctx.throw("not found", 404)
+    if (question.isDeleted) return ctx.throw("not found", 404)
     ctx.body = question
 })
 
