@@ -6,7 +6,7 @@ page-my-questions
         a(href="/my") マイページへ
         
         my-question(each="{question in questions}",question="{question}")
-        div: a.btn.btn-secondary.mt-3(href="https://{window.USER.hostName}/share?text={encodeURIComponent('私の質問箱です #quesdon\n'+location.origin+'/@'+window.USER.acct)}",target="_blank")
+        div: a.btn.btn-secondary.break-with-wbr.mt-3(href="https://{window.USER.hostName}/share?text={encodeURIComponent('私の質問箱です #quesdon\n'+location.origin+'/@'+window.USER.acct)}",target="_blank")
             | 自分の質問箱のページを共有
             wbr
             | (新しいページで開きます)

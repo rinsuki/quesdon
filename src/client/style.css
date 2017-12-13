@@ -1,3 +1,8 @@
 .question-text {
     white-space: pre-line;
 }
+
+.break-with-wbr {
+    white-space: normal;
+    word-break: keep-all;
+}
