@@ -18,7 +18,7 @@ page-user-top
         .card.mb-2(each="{question in questions}",if="{question_loaded}")
             .card-body
                 h4.card-title {question.question}
-                h6.card-subtitle.mb-2: a(href="/@{user.acct}/questions/{question._id}").text-muted {new Date(question.answeredAt).toLocaleString()}
+                h6.card-subtitle.mb-2: a(href="/@{user.acct}/questions/{question._id}").text-muted {new XDate(question.answeredAt).toString("yyyy-MM-dd HH:mm:ss")}
                 p.card-text.question-text {question.answer}
         loading(if="{!question_loaded}")
     script.
