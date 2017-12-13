@@ -11,7 +11,7 @@ router.get("/", async ctx => {
     const questions = await Question.find({
         user: mongoose.Types.ObjectId(ctx.session!.user),
         answeredAt: null,
-        isDeleted: false
+        isDeleted: {$ne: true}
     })
     console.log(questions)
     ctx.body = JSON.stringify(questions)
@@ -20,7 +20,7 @@ router.get("/", async ctx => {
 router.get("/latest", async ctx => {
     const questions = await Question.find({
         answeredAt: {$ne: null},
-        isDeleted: false
+        isDeleted: {$ne: true}
     }).limit(20).sort("-answeredAt").populate("user")
     ctx.body = questions
 })

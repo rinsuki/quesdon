@@ -83,7 +83,7 @@ router.get("/:acct/questions", async ctx => {
     const questions = await Question.find({
         user,
         answeredAt: {$ne: null},
-        isDeleted: false
+        isDeleted: {$ne: true}
     }).sort("-answeredAt")
     ctx.body = questions
 })
