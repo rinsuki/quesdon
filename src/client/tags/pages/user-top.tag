@@ -5,7 +5,7 @@ page-user-top
         .jumbotron(style="text-align: center")
             img(src="{user.avatarUrl}",style="width:8em;height:8em;")
             h1 {user.name}
-            p さんの{user.questionBoxName || "質問箱"} 
+            p さんの{user.questionBoxName || "質問箱"}
                 a(href='{user.avatar || "https://"+user.acct.split("@")[1]+"/@"+user.acct.split("@")[0]}',rel="nofollow") Mastodonのプロフィール
             p {user.description}
             form(action="javascript://",onsubmit="{submit}")
@@ -13,12 +13,12 @@ page-user-top
                 .d-flex.justify-content-end(style="line-height: 2.5em;")
                     span(ref="character_counter",style="padding-right: 1em;") {charcounter}
                     button.btn.btn-primary.col-xs-2(type="submit",disabled="{charcounter < 0}") 質問する
-        h2 回答 
+        h2 回答
             span.badge.badge-pill.badge-secondary(if="{questions.length}",style="font-size: 50%") {questions.length}
         .card.mb-2(each="{question in questions}",if="{question_loaded}")
             .card-body
                 h4.card-title {question.question}
-                h6.card-subtitle.mb-2: a(href="/@{user.acct}/questions/{question._id}").text-muted {question.answeredAt}
+                h6.card-subtitle.mb-2: a(href="/@{user.acct}/questions/{question._id}").text-muted {new XDate(question.answeredAt).toString("yyyy-MM-dd HH:mm:ss")}
                 p.card-text.question-text {question.answer}
         loading(if="{!question_loaded}")
     script.
