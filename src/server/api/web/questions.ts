@@ -1,6 +1,6 @@
 import * as Router from "koa-router"
 import * as mongoose from "mongoose"
-import { User, Question, IMastodonApp } from "../../db/index";
+import { User, Question, IMastodonApp, QuestionLike } from "../../db/index";
 import fetch from "node-fetch";
 import { BASE_URL } from "../../config";
 
@@ -61,6 +61,37 @@ router.post("/:id/delete", async ctx => {
     await question.save()
     ctx.body = {status: "ok"}
 })
+
+router.post("/:id/like", async ctx => {
+    if(!ctx.session!.user) return ctx.throw("please login", 403)
+    const question = await Question.findById(ctx.params.id)
+    if (!question) return ctx.throw("not found", 404)
+    if (!question.answeredAt) return ctx.throw("not found", 404)
+    if (await QuestionLike.findOne({question})) return ctx.throw("already liked", 400)
+    const like = new QuestionLike
+    like.question = question
+    like.user = mongoose.Types.ObjectId(ctx.session!.user)
+    await like.save()
+    question.likesCount = await QuestionLike.find({question}).count()
+    await question.save()
+    ctx.body = {status: "ok"}
+})
+
+router.post("/:id/unlike", async ctx => {
+    if(!ctx.session!.user) return ctx.throw("please login", 403)
+    const question = await Question.findById(ctx.params.id)
+    const user = mongoose.Types.ObjectId(ctx.session!.user)
+    if (!question) return ctx.throw("not found", 404)
+    if (!question.answeredAt) return ctx.throw("not found", 404)
+    const like = await QuestionLike.findOne({question, user})
+    if (!like) return ctx.throw("not liked", 400)
+    await like.remove()
+    question.likesCount = await QuestionLike.find({question}).count()
+    await question.save()
+    ctx.body = {status: "ok"}
+})
+
+
 
 router.get("/:id", async ctx => {
     const question = await Question.findById(ctx.params.id)
