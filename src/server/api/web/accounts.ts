@@ -85,7 +85,10 @@ router.get("/:acct/questions", async ctx => {
         answeredAt: {$ne: null},
         isDeleted: {$ne: true}
     }).sort("-answeredAt")
-    ctx.body = questions
+    ctx.body = questions.map(question => {
+        question.user = user
+        return question
+    })
 })
 
 

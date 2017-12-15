@@ -15,14 +15,11 @@ page-user-top
                     button.btn.btn-primary.col-xs-2(type="submit",disabled="{charcounter < 0}") 質問する
         h2 回答
             span.badge.badge-pill.badge-secondary(if="{questions.length}",style="font-size: 50%") {questions.length}
-        .card.mb-2(each="{question in questions}",if="{question_loaded}")
-            .card-body
-                h4.card-title {question.question}
-                h6.card-subtitle.mb-2: a(href="/@{user.acct}/questions/{question._id}").text-muted {new XDate(question.answeredAt).toString("yyyy-MM-dd HH:mm:ss")}
-                p.card-text.question-text {question.answer}
+        question(each="{question in questions}",if="{question_loaded}",question="{question}",data-hide-answer-user="1")
         loading(if="{!question_loaded}")
     script.
         import "../loading.tag"
+        import "../question.tag"
         console.log(this.opts)
         this.questions = []
         this.charmax = 200

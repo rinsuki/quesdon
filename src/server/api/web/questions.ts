@@ -100,7 +100,7 @@ router.post("/:id/unlike", async ctx => {
 
 
 router.get("/:id", async ctx => {
-    const question = await Question.findById(ctx.params.id)
+    const question = await Question.findById(ctx.params.id).populate("user")
     if (!question) return ctx.throw("not found", 404)
     if (!question.answeredAt) return ctx.throw("not found", 404)
     if (question.isDeleted) return ctx.throw("not found", 404)
