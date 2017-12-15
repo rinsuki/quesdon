@@ -34,17 +34,23 @@ router.post("/:id/answer", async ctx => {
     if (question.answeredAt) return ctx.throw("alread answered", 400)
     question.answer = ctx.request.body.fields.answer
     question.answeredAt = new Date()
+    if (ctx.request.body.fields.isNSFW) question.isNSFW = true
     await question.save()
     ctx.body = {status: "ok"}
     const user = await User.findById(ctx.session!.user)
     if (!~["public","unlisted","private"].indexOf(ctx.request.body.fields.visibility)) return
+    var body = {
+        spoiler_text: "Q. "+question.question + " #quesdon",
+        status: "A. " + (question.answer!.length > 200 ? question.answer!.substring(0,200) + "...(続きはリンク先で)" : question.answer) + "\n#quesdon "+BASE_URL+"/@"+user!.acct+"/questions/"+question.id,
+        visibility: ctx.request.body.fields.visibility
+    }
+    if (question.isNSFW) {
+        body.status = "Q. "+question.question + "\n" + body.status
+        body.spoiler_text = "⚠ この質問は回答者がNSFWであると申告しています #quesdon"
+    }
     fetch("https://"+user!.acct.split("@")[1]+"/api/v1/statuses", {
         method: "POST",
-        body: JSON.stringify({
-            spoiler_text: "Q. "+question.question + " #quesdon",
-            status: "A. " + (question.answer!.length > 200 ? question.answer!.substring(0,200) + "...(続きはリンク先で)" : question.answer) + "\n#quesdon "+BASE_URL+"/@"+user!.acct+"/questions/"+question.id,
-            visibility: ctx.request.body.fields.visibility
-        }),
+        body: JSON.stringify(body),
         headers: {
             Authorization: "Bearer "+user!.accessToken,
             "Content-Type": "application/json"

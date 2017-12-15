@@ -8,6 +8,7 @@ var schema = new mongoose.Schema({
     answeredAt: Date,
     isDeleted: {type: Boolean, default: false},
     likesCount: {type: Number, default: 0},
+    isNSFW: {type: Boolean, default: false},
 }, {
     timestamps: true
 })
@@ -19,6 +20,7 @@ export interface IQuestion extends mongoose.Document {
     answeredAt: Date | null
     isDeleted: Boolean
     likesCount: Number
+    isNSFW: Boolean
 }
 
 export default mongoose.model("questions", schema) as mongoose.Model<IQuestion>

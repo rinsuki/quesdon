@@ -30,6 +30,10 @@ my-question
                         option(value="unlisted") 未収載
                         option(value="private") 非公開
                         option(value="no") 投稿しない
+                label.custom-control.custom-checkbox
+                    input.custom-control-input(type="checkbox",name="isNSFW",value="1")
+                    span.custom-control-indicator
+                    span.custom-control-description NSFW
                 button.btn.btn-danger(type="button",style="float:right;",onclick="{delete}") 削除
     script.
         this.submit = e => {
