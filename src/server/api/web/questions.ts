@@ -33,7 +33,7 @@ router.post("/:id/answer", async ctx => {
     if (question.user.toString() != ctx.session!.user) return ctx.throw("not found", 404)
     if (question.answeredAt) return ctx.throw("alread answered", 400)
     question.answer = ctx.request.body.fields.answer
-    if (question.answer.length < 1) return ctx.throw("please input answer", 400)
+    if (question.answer!.length < 1) return ctx.throw("please input answer", 400)
     question.answeredAt = new Date()
     if (ctx.request.body.fields.isNSFW) question.isNSFW = true
     await question.save()
