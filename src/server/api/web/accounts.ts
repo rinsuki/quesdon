@@ -67,6 +67,7 @@ router.get("/:acct", async ctx => {
 
 router.post("/:acct/question", async ctx => {
     const questionString = ctx.request.body.fields.question
+    if (questionString.length < 1) return ctx.throw("please input question", 400)
     if (questionString.length > 200) return ctx.throw("too long", 400)
     const user = await User.findOne({acctLower: ctx.params.acct.toLowerCase()})
     if(!user) return ctx.throw("not found", 404)

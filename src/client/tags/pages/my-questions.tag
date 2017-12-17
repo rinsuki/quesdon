@@ -22,8 +22,8 @@ my-question
         .card
             .card-body
                 h4.card-title {opts.question.question}
-                textarea.form-control.mb-4(name="answer", placeholder="回答内容を入力")
-                button.btn.btn-primary.card-link(type="submit") 回答
+                textarea.form-control.mb-4(name="answer", placeholder="回答内容を入力", oninput="{input}")
+                button.btn.btn-primary.card-link(type="submit",disabled="{answer_disabled}") 回答
                 span.card-link 公開範囲: 
                     select.form-control.card-link(style="display:inline-block;width:inherit;",name="visibility")
                         option(value="public") 公開
@@ -36,6 +36,11 @@ my-question
                     span.custom-control-description NSFW
                 button.btn.btn-danger(type="button",style="float:right;",onclick="{delete}") 削除
     script.
+        this.answer_disabled = true
+        this.input = e => {
+            this.answer_disabled = !(e.target.value.length > 0)
+            this.update()
+        }
         this.submit = e => {
             var formData = new FormData(e.target)
             apiFetch("/api/web/questions/"+this.opts.question._id+"/answer", {
