@@ -5,6 +5,7 @@ import * as koaBody from "koa-body"
 import * as session from "koa-session"
 import * as koaStatic from "koa-static"
 import * as mount from "koa-mount"
+import rndstr from "rndstr"
 import apiRouter from "./api"
 import { PORT, SECRET_KEY, GIT_COMMIT } from "./config";
 import { User } from "./db/index";
@@ -37,9 +38,13 @@ router.get("/*", async ctx => {
         })
         user = new Buffer(user, "binary").toString("base64")
     }
+    if (!ctx.session!.csrfToken) {
+        ctx.session!.csrfToken = rndstr()
+    }
     ctx.render("index.pug", {
         GIT_COMMIT,
-        user
+        user,
+        csrfToken: ctx.session!.csrfToken
     })
 })
 

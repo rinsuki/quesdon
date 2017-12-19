@@ -6,6 +6,7 @@ html
             script window.USER=JSON.parse(atob("!{user}"))
         else
             script window.USER=undefined
+        script window.CSRF_TOKEN="#{csrfToken}"
         script(src="/assets/bundle.js?version="+GIT_COMMIT)
     body
         app

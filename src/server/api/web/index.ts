@@ -5,6 +5,11 @@ import questionsRouter from "./questions"
 
 var router = new Router
 
+router.use(async (ctx, next) => {
+    if (ctx.request.method != "GET" && ctx.session!.csrfToken != ctx.request.headers["x-csrf-token"]) return ctx.throw("invalid csrf token", 403)
+    await next()
+})
+
 router.use("/oauth", oauthRouter.routes())
 router.use("/accounts", accountsRouter.routes())
 router.use("/questions", questionsRouter.routes())

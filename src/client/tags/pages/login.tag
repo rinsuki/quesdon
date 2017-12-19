@@ -21,7 +21,7 @@ page-login
             ]
             this.submit = async e => {
                 var formData = new FormData(e.target)
-                var res = await fetch("/api/web/oauth/get_url", {
+                var res = await apiFetch("/api/web/oauth/get_url", {
                     method: "POST",
                     body: formData,
                     credentials: "include"
