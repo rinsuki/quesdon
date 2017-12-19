@@ -8,6 +8,7 @@ app
                 .collapse.navbar-collapse
                     ul.navbar-nav.mr-auto
                         li.nav-item(if="{login}"): a.nav-link(href="/my") @{window.USER.acct}
+                            span.ml-1.badge.badge-pill.badge-secondary(if="{count}") {count}
                         li.nav-item(if="{!login}"): a.nav-link(href="/login") ログイン
         .container.body-container
             .alert.alert-info(if="{!isHideOfficialAccountNotifyAlert}")
@@ -37,6 +38,14 @@ app
         }
         this.isHideOfficialAccountNotifyAlert = localStorage.getItem("hideOfficialAccountNotifyAlert")
         this.login = !!window.USER
+        this.updateQuestionCount = () => {
+            apiFetch("/api/web/questions/count").then(r => r.json()).then(r => {
+                this.count = r.count
+                this.update()
+            })
+        }
+        this.updateQuestionCount()
+        setInterval(this.updateQuestionCount, 1 * 60 * 1000)
     style.
         .all-container {
             display: flex;

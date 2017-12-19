@@ -17,6 +17,16 @@ router.get("/", async ctx => {
     ctx.body = JSON.stringify(questions)
 })
 
+router.get("/count", async ctx => {
+    if (!ctx.session!.user) return ctx.throw("please login", 403)
+    const count = await Question.find({
+        user: mongoose.Types.ObjectId(ctx.session!.user),
+        answeredAt: null,
+        isDeleted: {$ne: true}
+    }).count()
+    ctx.body = {count}
+})
+
 router.get("/latest", async ctx => {
     const questions = await Question.find({
         answeredAt: {$ne: null},
