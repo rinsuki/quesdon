@@ -118,4 +118,17 @@ router.get("/:id", async ctx => {
     ctx.body = question
 })
 
+router.post("/all_delete", async ctx => {
+    await Question.update({
+        user: mongoose.Types.ObjectId(ctx.session!.user)
+    }, {
+        $set: {
+            isDeleted: true
+        }
+    }, {
+        multi: true
+    })
+    ctx.body = {status: "ok"}
+})
+
 export default router
