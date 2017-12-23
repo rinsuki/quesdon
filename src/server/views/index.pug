@@ -7,6 +7,7 @@ html
         else
             script window.USER=undefined
         script window.CSRF_TOKEN="#{csrfToken}"
+        script(src="https://cdn.polyfill.io/v2/polyfill.js?features=fetch")
         script(src="/assets/bundle.js?version="+GIT_COMMIT)
     body
         app
