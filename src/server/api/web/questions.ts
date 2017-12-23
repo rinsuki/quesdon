@@ -119,6 +119,7 @@ router.get("/:id", async ctx => {
 })
 
 router.post("/all_delete", async ctx => {
+    if(!ctx.session!.user) return ctx.throw("please login", 403)
     await Question.update({
         user: mongoose.Types.ObjectId(ctx.session!.user)
     }, {
