@@ -4,6 +4,7 @@ import { User, Question } from "../../db/index";
 import fetch from "node-fetch";
 import * as parseLinkHeader from "parse-link-header"
 import { Links, Link } from "parse-link-header";
+import { PUSHBULLET_CLIENT_ID, BASE_URL, PUSHBULLET_CLIENT_SECRET } from "../../config";
 
 var router = new Router
 
@@ -58,6 +59,50 @@ router.get("/id/:id", async ctx => {
     ctx.body = user
 })
 
+router.get("/pushbullet/redirect", async ctx => {
+    if (!ctx.session!.user) return ctx.throw("please login", 403)
+    const user = await User.findById(ctx.session!.user)
+    if (!user) return ctx.throw("not found", 404)
+    ctx.redirect("https://www.pushbullet.com/authorize"
+        + "?client_id=" + PUSHBULLET_CLIENT_ID
+        + "&redirect_uri=" + encodeURIComponent(BASE_URL+"/api/web/accounts/pushbullet/callback")
+        + "&response_type=code"
+        + "&scope=everything"
+    )
+})
+
+router.get("/pushbullet/callback", async ctx => {
+    if (!ctx.session!.user) return ctx.throw("please login", 403)
+    const user = await User.findById(ctx.session!.user)
+    if (!user) return ctx.throw("not found", 404)
+    const res = await fetch("https://api.pushbullet.com/oauth2/token", {
+        method: "POST",
+        body: JSON.stringify({
+            client_id: PUSHBULLET_CLIENT_ID,
+            client_secret: PUSHBULLET_CLIENT_SECRET,
+            code: ctx.query.code,
+            grant_type: "authorization_code"
+        }),
+        headers: {
+            "Content-Type": "application/json"
+        },
+    }).then(r => r.json())
+    if (res.error) {
+        return ctx.throw(500, "pushbullet error: "+res.error.message)
+    }
+    user.pushbulletAccessToken = res.access_token
+    await user.save()
+    ctx.redirect("/my/settings")
+})
+
+router.post("/pushbullet/disconnect", async ctx => {
+    if (!ctx.session!.user) return ctx.throw("please login", 403)
+    const user = await User.findById(ctx.session!.user)
+    if (!user) return ctx.throw("not found", 404)
+    user.pushbulletAccessToken = null
+    await user.save()
+    ctx.body = {status: "ok"}
+})
 
 router.get("/:acct", async ctx => {
     const user = await User.findOne({acctLower: ctx.params.acct.toLowerCase()})
@@ -76,6 +121,20 @@ router.post("/:acct/question", async ctx => {
     question.user = user
     await question.save()
     ctx.body = {status: "ok"}
+    if (user.pushbulletAccessToken) {
+        fetch("https://api.pushbullet.com/v2/pushes", {
+            method: "POST",
+            body: JSON.stringify({
+                "type": "link",
+                "body": "新しい質問です\nQ. "+question.question,
+                "url": BASE_URL+"/my/questions"
+            }),
+            headers: {
+                "Access-Token": user.pushbulletAccessToken,
+                "Content-Type": "application/json"
+            }
+        })
+    }
 })
 
 router.get("/:acct/questions", async ctx => {

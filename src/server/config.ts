@@ -13,3 +13,6 @@ export const MONGODB_URL = process.env.MONGODB_URL || "mongodb://localhost/quesd
 export const SECRET_KEY = process.env.SECRET_KEY || "shibuyarin16544"
 
 export var GIT_COMMIT = execSync("git rev-parse HEAD").toString().trim()
+
+export const PUSHBULLET_CLIENT_ID = process.env.PUSHBULLET_CLIENT_ID
+export const PUSHBULLET_CLIENT_SECRET = process.env.PUSHBULLET_CLIENT_SECRET

@@ -12,6 +12,7 @@ var schema = new mongoose.Schema({
     url: {type: String},
     description: {type: String, default: ""},
     questionBoxName: {type: String, default: "質問箱"},
+    pushbulletAccessToken: {type: String},
 }, {
     timestamps: true
 })
@@ -21,6 +22,8 @@ setTransformer(schema, (doc: IUser, ret: any) => {
     delete ret.app
     delete ret.accessToken
     delete ret.acctLower
+    delete ret.pushbulletAccessToken
+    ret.pushbulletEnabled = !!doc.pushbulletAccessToken
     return ret
 })
 
@@ -34,6 +37,7 @@ export interface IUser extends mongoose.Document {
     url: string | null
     description: string
     questionBoxName: string
+    pushbulletAccessToken: string | null
 }
 
 export default mongoose.model("users", schema) as mongoose.Model<IUser>
