@@ -1,6 +1,10 @@
 import * as riot from "riot"
 import "./tags/app.tag"
-import "bootstrap/dist/css/bootstrap.min.css"
+if (localStorage.getItem("using-dark-theme")) {
+    require("./bootstrap-darkly.min.css")
+} else {
+    require("bootstrap/dist/css/bootstrap.min.css")
+}
 import "./style.css"
 import "jquery"
 (<any>window).Popper = require("popper.js")

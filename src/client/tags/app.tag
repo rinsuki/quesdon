@@ -27,6 +27,9 @@ app
                 a(href="/@quesdon@mstdn.jp") 公式Quesdon (要望や不具合報告などもこちらへどうぞ)
             p 開発者: 
                 a(href="https://mstdn.maud.io/@rinsuki") @rinsuki@mstdn.maud.io
+            p
+                a(href="#", if="{localStorage.getItem('using-dark-theme')}",onclick="{leaveDarkMode}") ダークモードから戻す
+                a(href="#", if="{!localStorage.getItem('using-dark-theme')}",onclick="{enterDarkMode}") ダークモードにする(β)
     script.
         this.on("mount", () => {
             require("../router.ts")
@@ -45,6 +48,14 @@ app
             })
         }
         this.updateQuestionCount()
+        this.enterDarkMode = () => {
+            localStorage.setItem("using-dark-theme", 1)
+            location.reload()
+        }
+        this.leaveDarkMode = () => {
+            localStorage.removeItem("using-dark-theme")
+            location.reload()
+        }
         setInterval(this.updateQuestionCount, 1 * 60 * 1000)
     style.
         .all-container {
