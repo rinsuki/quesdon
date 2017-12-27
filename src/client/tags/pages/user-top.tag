@@ -10,9 +10,15 @@ page-user-top
             p {user.description}
             form(action="javascript://",onsubmit="{submit}")
                 textarea.form-control(name="question", placeholder="質問する内容を入力",oninput="{input_question}")
-                .d-flex.justify-content-end(style="line-height: 2.5em;")
-                    span(ref="character_counter",style="padding-right: 1em;") {charcounter}
-                    button.btn.btn-primary.col-xs-2(type="submit",disabled="{charcounter < 0 || charcounter === charmax}") 質問する
+                .d-flex.mt-1
+                    .p-1(if="{window.USER && !user.allAnon}")
+                        label.custom-control.custom-checkbox
+                            input.custom-control-input(type="checkbox", name="noAnon", value="1")
+                            span.custom-control-indicator(style="border:1px solid rgba(0,0,255,0.2)")
+                            span.custom-control-description 名乗る
+                    .ml-auto
+                        span(ref="character_counter",style="padding-right: 1em;") {charcounter}
+                        button.btn.btn-primary.col-xs-2(type="submit",disabled="{charcounter < 0 || charcounter === charmax}") 質問する
         h2 回答
             span.badge.badge-pill.badge-secondary(if="{questions.length}",style="font-size: 50%") {questions.length}
         question(each="{question in questions}",if="{question_loaded}",question="{question}",data-hide-answer-user="1")

@@ -13,6 +13,7 @@ var schema = new mongoose.Schema({
     description: {type: String, default: ""},
     questionBoxName: {type: String, default: "質問箱"},
     pushbulletAccessToken: {type: String},
+    allAnon: {type: Boolean, default: false},
 }, {
     timestamps: true
 })
@@ -38,6 +39,7 @@ export interface IUser extends mongoose.Document {
     description: string
     questionBoxName: string
     pushbulletAccessToken: string | null
+    allAnon: boolean
 }
 
 export default mongoose.model("users", schema) as mongoose.Model<IUser>

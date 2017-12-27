@@ -8,6 +8,9 @@ question
                     a(href="/@{opts.question.user.acct}") {opts.question.user.name}
                         span.text-muted  @{opts.question.user.acct}
                 span: a(href="/@{opts.question.user.acct}/questions/{opts.question._id}").text-muted {new XDate(opts.question.answeredAt).toString("yyyy-MM-dd HH:mm:ss")}
+                span(if="{opts.question.questionUser}") 質問者:
+                    a.ml-2(href="/@{opts.question.questionUser.acct}") {opts.question.questionUser.name}
+                        span.text-muted  @{opts.question.questionUser.acct}
             p.card-text.question-text {opts.question.answer}
         .nsfw-guard
             div

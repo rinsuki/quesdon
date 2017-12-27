@@ -4,7 +4,6 @@ page-my-questions
     virtual(if="{loaded}")
         h1 質問一覧
         a(href="/my") マイページへ
-        
         my-question(each="{question in questions}",question="{question}")
         div: a.btn.btn-secondary.break-with-wbr.mt-3(href="https://{window.USER.hostName}/share?text={encodeURIComponent('私の'+window.USER.questionBoxName+'です #quesdon\n'+location.origin+'/@'+window.USER.acct)}",target="_blank")
             | 自分の質問箱のページを共有
@@ -22,6 +21,9 @@ my-question
         .card
             .card-body
                 h4.card-title {opts.question.question}
+                p(if="{opts.question.questionUser}") 質問者:
+                    a.ml-2(href="/@{opts.question.questionUser.acct}") {opts.question.questionUser.name}
+                        span.text-muted  @{opts.question.questionUser.acct}
                 textarea.form-control.mb-4(name="answer", placeholder="回答内容を入力", oninput="{input}")
                 button.btn.btn-primary.card-link(type="submit",disabled="{answer_disabled}") 回答
                 span.card-link 公開範囲: 

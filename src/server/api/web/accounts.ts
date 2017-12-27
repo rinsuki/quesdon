@@ -49,6 +49,7 @@ router.post("/update", async ctx => {
     if (!user) return ctx.throw("not found", 404)
     user.description = ctx.request.body.fields.description
     user.questionBoxName = ctx.request.body.fields.questionBoxName
+    user.allAnon = !!ctx.request.body.fields.allAnon
     await user.save()
     ctx.body = {status: "ok"}
 })
@@ -115,10 +116,17 @@ router.post("/:acct/question", async ctx => {
     if (questionString.length < 1) return ctx.throw("please input question", 400)
     if (questionString.length > 200) return ctx.throw("too long", 400)
     const user = await User.findOne({acctLower: ctx.params.acct.toLowerCase()})
-    if(!user) return ctx.throw("not found", 404)
+    if (!user) return ctx.throw("not found", 404)
     var question = new Question
     question.question = questionString
     question.user = user
+    if (ctx.request.body.fields.noAnon) {
+        if (user.allAnon) return ctx.throw("all anon", 400)
+        if (!ctx.session!.user) return ctx.throw("please login", 403)
+        const questionUser = await User.findById(ctx.session!.user)
+        if (!questionUser) return ctx.throw("not found", 404)
+        question.questionUser = questionUser
+    }
     await question.save()
     ctx.body = {status: "ok"}
     if (user.pushbulletAccessToken) {

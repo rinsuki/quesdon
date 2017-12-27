@@ -13,6 +13,11 @@ page-my-settings
                 span.input-group-addon ◯◯◯さんの
                 input.form-control(type="text",placeholder="質問箱",name="questionBoxName",oninput="{questionBoxName_input}",value="{window.USER.questionBoxName || '質問箱'}")
             small.form-text.text-muted あと{questionBoxName_count}文字 改行は表示時に反映されません
+        .form-group
+            label.custom-control.custom-checkbox
+                input.custom-control-input(type="checkbox", name="allAnon", value="1", checked="{window.USER.allAnon}")
+                span.custom-control-indicator
+                span.custom-control-description 自分宛ての質問では名乗らせない
         button(type="submit").btn.btn-primary 保存
     h2.mt-3.mb-2 プッシュ通知
     a(href="/api/web/accounts/pushbullet/redirect",if="{!window.USER.pushbulletEnabled}").btn.btn-success Pushbulletと接続して新しい質問が来た際に通知を受け取る

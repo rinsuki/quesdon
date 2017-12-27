@@ -1,6 +1,6 @@
 import * as Router from "koa-router"
 import * as mongoose from "mongoose"
-import { User, Question, IMastodonApp, QuestionLike } from "../../db/index";
+import { User, Question, IMastodonApp, QuestionLike, IUser } from "../../db/index";
 import fetch from "node-fetch";
 import { BASE_URL } from "../../config";
 
@@ -31,7 +31,7 @@ router.get("/latest", async ctx => {
     const questions = await Question.find({
         answeredAt: {$ne: null},
         isDeleted: {$ne: true}
-    }).limit(20).sort("-answeredAt").populate("user")
+    }).limit(20).sort("-answeredAt")
     ctx.body = questions
 })
 
@@ -40,7 +40,7 @@ router.post("/:id/answer", async ctx => {
     const question = await Question.findById(ctx.params.id)
     if (!question) return ctx.throw("not found", 404)
     if (question.isDeleted) return ctx.throw("not found", 404)
-    if (question.user.toString() != ctx.session!.user) return ctx.throw("not found", 404)
+    if (question.user._id != ctx.session!.user) return ctx.throw("not found", 404)
     if (question.answeredAt) return ctx.throw("alread answered", 400)
     question.answer = ctx.request.body.fields.answer
     if (question.answer!.length < 1) return ctx.throw("please input answer", 400)
@@ -54,6 +54,9 @@ router.post("/:id/answer", async ctx => {
         spoiler_text: "Q. "+question.question + " #quesdon",
         status: "A. " + (question.answer!.length > 200 ? question.answer!.substring(0,200) + "...(続きはリンク先で)" : question.answer) + "\n#quesdon "+BASE_URL+"/@"+user!.acct+"/questions/"+question.id,
         visibility: ctx.request.body.fields.visibility
+    }
+    if (question.questionUser) {
+        body.status = "質問者: @"+question.questionUser.acct + "\n" + body.status
     }
     if (question.isNSFW) {
         body.status = "Q. "+question.question + "\n" + body.status
@@ -111,7 +114,7 @@ router.post("/:id/unlike", async ctx => {
 
 
 router.get("/:id", async ctx => {
-    const question = await Question.findById(ctx.params.id).populate("user")
+    const question = await Question.findById(ctx.params.id)
     if (!question) return ctx.throw("not found", 404)
     if (!question.answeredAt) return ctx.throw("not found", 404)
     if (question.isDeleted) return ctx.throw("not found", 404)
