@@ -10,7 +10,7 @@ var schema = new mongoose.Schema({
     isDeleted: {type: Boolean, default: false},
     likesCount: {type: Number, default: 0},
     isNSFW: {type: Boolean, default: false},
-    questionUser: {type: mongoose.Schema.Types.ObjectId, required: true, ref: "users", autopopulate: true},
+    questionUser: {type: mongoose.Schema.Types.ObjectId, ref: "users", autopopulate: true},
 }, {
     timestamps: true
 })
