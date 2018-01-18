@@ -9,7 +9,7 @@ import Checkbox from "./common/checkbox"
 import apiFetch from "../api-fetch";
 
 interface Props extends APIQuestion {
-    hideQuestionUser?: boolean | undefined
+    hideAnswerUser?: boolean | undefined
 }
 
 interface State {
@@ -38,7 +38,7 @@ export default class Question extends React.Component<Props, State> {
     }
 
     renderAnswerUser() {
-        if (this.props.hideQuestionUser) return null
+        if (this.props.hideAnswerUser) return null
         return <span className="mr-2">
             回答者:&nbsp;
             <UserLink {...this.props.user}/>

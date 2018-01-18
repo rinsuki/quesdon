@@ -68,7 +68,7 @@ export default class PageUserIndex extends React.Component<Props,State> {
             {this.state.questions && 
                 <div>
                     <h2>回答&nbsp;<Badge pill>{this.state.questions.length}</Badge></h2>
-                    {this.state.questions.map(question => <Question {...question}/>)}
+                    {this.state.questions.map(question => <Question {...question} hideAnswerUser/>)}
                 </div>
             }
         </div>
