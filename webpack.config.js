@@ -31,7 +31,10 @@ module.exports = {
                 }}
             ]},
             {test: /\.(woff2?|ttf|eot|svg)$/, loader: 'file-loader'},
-            {test: /\.ts$/, loader: 'ts-loader'},
+            {test: /\.tsx?$/, loader: 'ts-loader'},
         ]
+    },
+    resolve: {
+        extensions: [".ts", ".tsx", ".js"]
     }
 }
