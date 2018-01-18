@@ -1,12 +1,14 @@
 import * as React from "react"
-import { Card, CardBody, CardTitle, CardText, Input, Button, FormGroup } from "reactstrap";
+import "xdate"
+const XDate = require("xdate")
+import { Card, CardBody, CardTitle, CardText, Input, Button, FormGroup, CardSubtitle } from "reactstrap";
 import { APIQuestion } from "../../api-interfaces"
 import { Link } from "react-router-dom";
 import UserLink from "./userLink"
 import Checkbox from "./common/checkbox"
 
 interface Props extends APIQuestion {
-    hideQuestionUser: boolean | undefined
+    hideQuestionUser?: boolean | undefined
 }
 
 interface State {
@@ -24,10 +26,11 @@ export default class Question extends React.Component<Props, State> {
         return <Card className="mb-3">
             <CardBody>
                 <CardTitle>{this.props.question}</CardTitle>
-                <p>
+                <CardSubtitle className="mb-2">
                     {this.renderAnswerUser()}
                     {this.renderQuestionUser()}
-                </p>
+                    {this.props.answeredAt && <Link to={`/@${this.props.user.acct}/questions/${this.props._id}`} className="text-muted">{new XDate(this.props.answeredAt).toLocaleString()}</Link>}
+                </CardSubtitle>
                 {this.props.answeredAt ? this.renderAnswer() : this.renderAnswerForm()}
             </CardBody>
         </Card>
@@ -43,7 +46,7 @@ export default class Question extends React.Component<Props, State> {
 
     renderQuestionUser() {
         if (!this.props.questionUser) return null
-        return <span>
+        return <span className="mr-2">
             質問者:&nbsp;
             <UserLink {...this.props.questionUser}/>
         </span>

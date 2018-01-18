@@ -26,6 +26,7 @@
     "@types/react-router-dom": "^4.2.3",
     "@types/reactstrap": "^5.0.10",
     "@types/riot": "^3.6.1",
+    "@types/xdate": "^0.8.28",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-async-to-generator": "^6.24.1",

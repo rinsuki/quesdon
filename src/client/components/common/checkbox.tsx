@@ -18,7 +18,7 @@ export default class Checkbox extends React.Component<Props> {
                 value={this.props.value}
                 onChange={this.props.onChange}
             />
-            <span className="custom-control-indicator"></span>
+            <span className="custom-control-indicator" style={{border: "1px solid rgba(0,0,255,0.2)"}}></span>
             <span className="custom-control-description">{this.props.children}</span>
         </label>
     }

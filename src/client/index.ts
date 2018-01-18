@@ -2,7 +2,7 @@ import * as React from "react"
 import * as ReactDOM from "react-dom"
 
 import App from "./components/app"
-import APIUser from "../api-interface/APIUser";
+import { APIUser } from "../api-interfaces";
 
 // --- bootstrap init ---
 if (localStorage.getItem("using-dark-theme")) {

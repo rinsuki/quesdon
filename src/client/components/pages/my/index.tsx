@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Link } from "react-router-dom";
 import apiFetch from "../../../api-fetch"
-import APIUser from "../../../../api-interface/APIUser"
+import { APIUser } from "../../../../api-interfaces"
 
 interface Props {
     userInfo: APIUser

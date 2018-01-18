@@ -1,5 +1,5 @@
 import * as React from "react"
-import APIUser from "../../api-interface/APIUser";
+import { APIUser } from "../../api-interfaces";
 import { Link } from "react-router-dom";
 import { Navbar, NavbarToggler, Collapse, Nav, NavItem, Container } from "reactstrap";
 import NavbarBrand from "./common/navbarBrand"
