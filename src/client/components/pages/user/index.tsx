@@ -50,7 +50,7 @@ export default class PageUserIndex extends React.Component<Props,State> {
                     </a>
                 </p>
                 <p>{user.description}</p>
-                <form>
+                <form action="javascript://" onSubmit={this.questionSubmit.bind(this)}>
                     <Input type="textarea" name="question"
                         placeholder="質問する内容を入力"
                     />
@@ -72,5 +72,17 @@ export default class PageUserIndex extends React.Component<Props,State> {
                 </div>
             }
         </div>
+    }
+    
+    questionSubmit(e: any) {
+        if (!this.state.user) return
+        const form = new FormData(e.target)
+        apiFetch("/api/web/accounts/"+this.state.user.acct+"/question", {
+            method: "POST",
+            body: form
+        }).then(r => r.json()).then(r => {
+            alert("質問しました!")
+            location.reload()
+        })
     }
 }

@@ -6,6 +6,7 @@ import { APIQuestion } from "../../api-interfaces"
 import { Link } from "react-router-dom";
 import UserLink from "./userLink"
 import Checkbox from "./common/checkbox"
+import apiFetch from "../api-fetch";
 
 interface Props extends APIQuestion {
     hideQuestionUser?: boolean | undefined
@@ -57,7 +58,7 @@ export default class Question extends React.Component<Props, State> {
     }
 
     renderAnswerForm() {
-        return <form>
+        return <form action="javascript://" onSubmit={this.onSubmit.bind(this)}>
             <FormGroup>
                 <Input type="textarea" name="answer" placeholder="回答内容を入力" onInput={this.onInput.bind(this)}/>
             </FormGroup>
@@ -70,11 +71,32 @@ export default class Question extends React.Component<Props, State> {
                 <option value="no">投稿しない</option>
             </Input>
             <Checkbox name="isNSFW" value="true" className="ml-2">NSFW</Checkbox>
-            <Button type="button" color="danger" style={{float: "right"}}>削除</Button>
+            <Button type="button" color="danger" style={{float: "right"}} onClick={this.onDelete.bind(this)}>削除</Button>
         </form>
     }
 
     onInput(e: any) {
         this.setState({isNotEmpty: e.target.value != ""}) 
+    }
+
+    onSubmit(e: any) {
+        const form = new FormData(e.target)
+        apiFetch("/api/web/questions/"+this.props._id+"/answer", {
+            method: "POST",
+            body: form
+        }).then(r => r.json()).then(r => {
+            alert("答えました")
+            location.reload()
+        })
+    }
+
+    onDelete(e: any) {
+        if(!confirm("質問を削除します。\n削除した質問は二度と元に戻せません。\n本当に質問を削除しますか?")) return
+        apiFetch("/api/web/questions/"+this.props._id+"/delete", {
+            method: "POST"
+        }).then(r => r.json()).then(r => {
+            alert("削除しました")
+            location.reload()
+        })
     }
 }
