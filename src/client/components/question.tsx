@@ -26,11 +26,15 @@ export default class Question extends React.Component<Props, State> {
     render() {
         return <Card className="mb-3">
             <CardBody>
-                <CardTitle>{this.props.question}</CardTitle>
+                <CardTitle tag="h2">{this.props.question}</CardTitle>
                 <CardSubtitle className="mb-2">
                     {this.renderAnswerUser()}
+                    {this.props.answeredAt && <Link
+                        to={`/@${this.props.user.acct}/questions/${this.props._id}`}
+                        className="text-muted">
+                        {new XDate(this.props.answeredAt).toString("yyyy-MM-dd HH:mm:ss")}
+                    &nbsp;</Link>}
                     {this.renderQuestionUser()}
-                    {this.props.answeredAt && <Link to={`/@${this.props.user.acct}/questions/${this.props._id}`} className="text-muted">{new XDate(this.props.answeredAt).toLocaleString()}</Link>}
                 </CardSubtitle>
                 {this.props.answeredAt ? this.renderAnswer() : this.renderAnswerForm()}
             </CardBody>

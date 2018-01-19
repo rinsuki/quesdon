@@ -7,6 +7,7 @@ import PageLogin from "./pages/login";
 import PageMyIndex from "./pages/my/index";
 import PageMyQuestions from "./pages/my/questions";
 import PageUserIndex from "./pages/user/index"
+import PageUserQuestion from "./pages/user/question";
 
 interface Props {
     userInfo: APIUser | undefined
@@ -27,6 +28,7 @@ export default class App extends React.Component<Props> {
                     </Route>
                     <Route exact path="/my/questions" component={PageMyQuestions}/>
                     <Route exact path="/@:user_id" component={PageUserIndex}/>
+                    <Route exact path="/@:user_id/questions/:question_id" component={PageUserQuestion}/>
                 </Switch>
                 </div>
             </div>
