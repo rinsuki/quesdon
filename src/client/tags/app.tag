@@ -10,6 +10,7 @@ app
                         li.nav-item(if="{login}"): a.nav-link(href="/my") @{window.USER.acct}
                             span.ml-1.badge.badge-pill.badge-secondary(if="{count}") {count}
                         li.nav-item(if="{!login}"): a.nav-link(href="/login") ログイン
+                        li.nav-item: a.nav-link(href="https://beta.quesdon.rinsuki.net/") β版
         .container.body-container
             .alert.alert-info(if="{!isHideOfficialAccountNotifyAlert}")
                 p: strong Quesdon公式アカウント(@quesdon@mstdn.jp)ができました!
