@@ -12,6 +12,7 @@ import PageLatest from "./pages/latest";
 import { me }  from "../initial-state"
 import PageMyFollowers from "./pages/my/followers";
 import PageBetaHelp from "./pages/beta-help"
+import PageNotfound from "./pages/notfound"
 
 interface Props {
     userInfo: APIUser | undefined
@@ -35,6 +36,7 @@ export default class App extends React.Component<Props> {
                     <Route exact path="/my/followers" component={PageMyFollowers}/>
                     <Route exact path="/@:user_id" component={PageUserIndex}/>
                     <Route exact path="/@:user_id/questions/:question_id" component={PageUserQuestion}/>
+                    <Route component={PageNotfound}/>
                 </Switch>
                 </div>
             </div>
