@@ -4,6 +4,7 @@ import { APIUser, APIQuestion } from "../../../../api-interfaces";
 import Checkbox from "../../common/checkbox"
 import Question from "../../question"
 import apiFetch from "../../../api-fetch";
+import { me } from "../../../initial-state"
 
 interface Props {
     match: {
@@ -14,6 +15,8 @@ interface Props {
 interface State {
     user: APIUser | undefined
     questions: APIQuestion[] | undefined
+    questionLength: number
+    questionMax: number
 }
 
 export default class PageUserIndex extends React.Component<Props,State> {
@@ -22,20 +25,12 @@ export default class PageUserIndex extends React.Component<Props,State> {
         this.state = {
             user: undefined,
             questions: undefined,
+            questionLength: 0,
+            questionMax: 200
         }
     }
 
-    componentDidMount() {
-        apiFetch("/api/web/accounts/"+this.props.match.params.user_id)
-            .then(r => r.json())
-            .then(user => this.setState({user}))
-        apiFetch("/api/web/accounts/"+this.props.match.params.user_id+"/questions")
-            .then(r => r.json())
-            .then(questions => this.setState({questions}))
-    }
-
     render() {
-        console.log(this.props)
         const { user } = this.state
         if (!user) return null
         return <div>
@@ -53,14 +48,22 @@ export default class PageUserIndex extends React.Component<Props,State> {
                 <form action="javascript://" onSubmit={this.questionSubmit.bind(this)}>
                     <Input type="textarea" name="question"
                         placeholder="質問する内容を入力"
+                        onInput={this.questionInput.bind(this)}
                     />
                     <div className="d-flex mt-1">
-                        {!user.allAnon && <div className="p-1">
+                        {me && !user.allAnon && <div className="p-1">
                             <Checkbox name="noAnon" value="true">名乗る</Checkbox>
                         </div>}
                         <div className="ml-auto">
-                            <span className="mr-3">500</span>
-                            <Button color="primary" className="col-xs-2">質問する</Button>
+                            <span className={"mr-3 "+
+                                (this.state.questionLength > this.state.questionMax ? "text-danger" : "")
+                            }>
+                                {this.state.questionMax - this.state.questionLength}
+                            </span>
+                            <Button color="primary" className="col-xs-2"
+                                disabled={!this.state.questionLength || this.state.questionLength > this.state.questionMax}>
+                                質問する
+                            </Button>
                         </div>
                     </div>
                 </form>
@@ -68,10 +71,19 @@ export default class PageUserIndex extends React.Component<Props,State> {
             {this.state.questions && 
                 <div>
                     <h2>回答&nbsp;<Badge pill>{this.state.questions.length}</Badge></h2>
-                    {this.state.questions.map(question => <Question {...question} hideAnswerUser/>)}
+                    {this.state.questions.map(question => <Question {...question} hideAnswerUser key={question._id}/>)}
                 </div>
             }
         </div>
+    }
+
+    componentDidMount() {
+        apiFetch("/api/web/accounts/"+this.props.match.params.user_id)
+            .then(r => r.json())
+            .then(user => this.setState({user}))
+        apiFetch("/api/web/accounts/"+this.props.match.params.user_id+"/questions")
+            .then(r => r.json())
+            .then(questions => this.setState({questions}))
     }
     
     questionSubmit(e: any) {
@@ -83,6 +95,13 @@ export default class PageUserIndex extends React.Component<Props,State> {
         }).then(r => r.json()).then(r => {
             alert("質問しました!")
             location.reload()
+        })
+    }
+
+    questionInput(e: any) {
+        const count = e.target.value.length
+        this.setState({
+            questionLength: count
         })
     }
 }
