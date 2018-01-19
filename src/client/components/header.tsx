@@ -22,7 +22,7 @@ export default class Header extends React.Component<Props, State> {
     }
     render() {
         return <Navbar light expand="md" color="light"><Container>
-            <NavbarBrand to="/">Quesdon</NavbarBrand>
+            <NavbarBrand to="/">Quesdon βserver</NavbarBrand>
             <NavbarToggler onClick={this.toggle.bind(this)} />
             <Collapse navbar isOpen={this.state.isOpen}>
                 <Nav className="mr-auto" navbar>
