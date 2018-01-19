@@ -27,6 +27,9 @@ export default class Header extends React.Component<Props, State> {
             <Collapse navbar isOpen={this.state.isOpen}>
                 <Nav className="mr-auto" navbar>
                     <NavItem>
+                        <NavLink to="/beta-help">β版について</NavLink>
+                    </NavItem>
+                    <NavItem>
                         {this.props.userInfo
                         ? <NavLink to="/my">@{this.props.userInfo.acct}</NavLink>
                         : <NavLink to="/login">ログイン</NavLink>}
