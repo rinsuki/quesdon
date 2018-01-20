@@ -5,17 +5,14 @@ import { Navbar, NavbarToggler, Collapse, Nav, NavItem, Container } from "reacts
 import NavbarBrand from "./common/navbarBrand"
 import NavLink from "./common/navLink"
 import QuestionRemaining from "./question-remaining";
-
-interface Props {
-    userInfo: APIUser | undefined
-}
+import { me } from "../initial-state";
 
 interface State {
     isOpen: boolean
 }
 
-export default class Header extends React.Component<Props, State> {
-    constructor(props: Props) {
+export default class Header extends React.Component<{}, State> {
+    constructor(props: any) {
         super(props)
         this.state = {
             isOpen: false
@@ -28,8 +25,8 @@ export default class Header extends React.Component<Props, State> {
             <Collapse navbar isOpen={this.state.isOpen}>
                 <Nav className="mr-auto" navbar>
                     <NavItem>
-                        {this.props.userInfo
-                        ? <NavLink to="/my">@{this.props.userInfo.acct}<QuestionRemaining/></NavLink>
+                        {me
+                        ? <NavLink to="/my">@{me.acct}<QuestionRemaining/></NavLink>
                         : <NavLink to="/login">ログイン</NavLink>}
                     </NavItem>
                 </Nav>

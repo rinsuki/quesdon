@@ -15,16 +15,12 @@ import PageNotfound from "./pages/notfound"
 import PageMySettings from "./pages/my/settings"
 import Footer from "./footer";
 
-interface Props {
-    userInfo: APIUser | undefined
-}
-
-export default class App extends React.Component<Props> {
+export default class App extends React.Component {
     render() {
         return (
             <BrowserRouter>
             <div className="all-container">
-                <Header userInfo={this.props.userInfo} />
+                <Header/>
                 <main className="container mt-2">
                 <Switch>
                     <Route exact path="/" component={PageIndex}/>

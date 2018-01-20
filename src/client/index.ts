@@ -20,7 +20,5 @@ import "./ctrl-enter"
 
 addEventListener("DOMContentLoaded", () => {
     var root = document.getElementById("root")
-    ReactDOM.render(React.createElement(App, {
-        userInfo: <APIUser | undefined>(<any>window).USER
-    }), root)
+    ReactDOM.render(React.createElement(App), root)
 })
