@@ -56,7 +56,7 @@ router.post("/:id/answer", async ctx => {
     if (!user) return
     const isTwitter = user.hostName == "twitter.com"
     const answerCharMax = isTwitter ? (110-question.question.length) : 200
-    const answerUrl = "https://example.com"+"/@"+user!.acct+"/questions/"+question.id
+    const answerUrl = BASE_URL+"/@"+user!.acct+"/questions/"+question.id
     if (!isTwitter) { // Mastodon
         var body = {
             spoiler_text: "Q. "+question.question + " #quesdon",
