@@ -1,5 +1,6 @@
 const webpack = require("webpack")
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
+const isProduction = process.env.NODE_ENV == "production"
 
 module.exports = {
     entry: "./src/client/index.ts",
@@ -27,15 +28,8 @@ module.exports = {
     module: {
         loaders: [
             {test: /\.css$/, loader: 'style-loader!css-loader'},
-            {test: /\.tag$/, exclude: /node_modules/, use: [
-                {loader: 'babel-loader'},
-                {loader: 'riot-tag-loader', query: {
-                    type: "none",
-                    template: "pug"
-                }}
-            ]},
             {test: /\.(woff2?|ttf|eot|svg)$/, loader: 'file-loader'},
-            {test: /\.tsx?$/, loader: 'ts-loader'},
+            {test: /\.tsx?$/, loader: isProduction ? 'babel-loader!ts-loader' : 'ts-loader'},
         ]
     },
     resolve: {
@@ -45,6 +39,5 @@ module.exports = {
 
 if (process.env.NODE_ENV == "production") {
     module.exports.plugins.push(new UglifyJsPlugin({
-        uglifyOptions: {ecma: 6}
     }))
 }
