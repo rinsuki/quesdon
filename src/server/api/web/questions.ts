@@ -64,7 +64,11 @@ router.post("/:id/answer", async ctx => {
             visibility: ctx.request.body.fields.visibility
         }
         if (question.questionUser) {
-            body.status = "質問者: @"+question.questionUser.acct + "\n" + body.status
+            var questionUserAcct = "@"+question.questionUser.acct
+            if (question.questionUser.hostName == "twitter.com") {
+                questionUserAcct = "https://twitter.com/"+question.questionUser.acct.replace(/:.+/, "")
+            }
+            body.status = "質問者: " + questionUserAcct + "\n" + body.status
         }
         if (question.isNSFW) {
             body.status = "Q. "+question.question + "\n" + body.status
