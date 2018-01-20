@@ -11,7 +11,6 @@ import PageUserQuestion from "./pages/user/question";
 import PageLatest from "./pages/latest";
 import { me }  from "../initial-state"
 import PageMyFollowers from "./pages/my/followers";
-import PageBetaHelp from "./pages/beta-help"
 import PageNotfound from "./pages/notfound"
 import PageMySettings from "./pages/my/settings"
 import Footer from "./footer";
@@ -31,7 +30,6 @@ export default class App extends React.Component<Props> {
                     <Route exact path="/" component={PageIndex}/>
                     <Route exact path="/latest" component={PageLatest}/>
                     <Route exact path="/login" component={PageLogin}/>
-                    <Route exact path="/beta-help" component={PageBetaHelp}/>
                     {!me && <Redirect from="/my" to="/login"/>}
                     <Route exact path="/my" component={PageMyIndex}/>
                     <Route exact path="/my/questions" component={PageMyQuestions}/>
