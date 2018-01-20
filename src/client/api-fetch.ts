@@ -1,3 +1,5 @@
+import { csrfToken } from "./initial-state";
+
 const fetchDefaults = require("fetch-defaults")
 
 export default function apiFetch(url: string, params?: RequestInit) {
@@ -5,7 +7,7 @@ export default function apiFetch(url: string, params?: RequestInit) {
     params = Object.assign({
         credentials: "include",
         headers: {
-            "X-CSRF-Token": (<any>window).CSRF_TOKEN
+            "X-CSRF-Token": csrfToken
         }
     }, params)
     return window.fetch(url, params)
