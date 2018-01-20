@@ -18,6 +18,9 @@ module.exports = {
             riot: "riot",
             "$": "jquery",
             apiFetch: __dirname+"/src/client/api-fetch.ts"
+        }),
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
         })
     ],
     module: {
