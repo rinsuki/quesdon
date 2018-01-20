@@ -37,7 +37,7 @@ module.exports = {
     }
 }
 
-if (process.env.NODE_ENV == "production") {
-    module.exports.plugins.push(new UglifyJsPlugin({
-    }))
-}
+// if (process.env.NODE_ENV == "production") {
+//     module.exports.plugins.push(new UglifyJsPlugin({
+//     }))
+// }
