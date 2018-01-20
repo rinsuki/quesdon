@@ -35,9 +35,9 @@ router.post("/get_url", async ctx => {
             app.appBaseUrl = BASE_URL
             app.redirectUri = redirectUri
             await app.save()
-            ctx.session!.loginState = rndstr()+"_"+app.id
-            url = `https://${app.hostName}/oauth/authorize?client_id=${app.clientId}&scope=read+write&redirect_uri=${redirectUri}&response_type=code&state=${ctx.session!.loginState}`
         }
+        ctx.session!.loginState = rndstr()+"_"+app.id
+        url = `https://${app.hostName}/oauth/authorize?client_id=${app.clientId}&scope=read+write&redirect_uri=${redirectUri}&response_type=code&state=${ctx.session!.loginState}`
     } else { // Twitter
         ctx.session!.loginState = "twitter"
         const { TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET } = process.env
@@ -109,7 +109,7 @@ router.get("/redirect", async ctx => {
             avatarUrl: myProfile.avatar_static,
             accessToken: res.access_token,
             url: myProfile.url,
-            acct: myProfile.display_name + "@" + app.hostName,
+            acct: myProfile.username + "@" + app.hostName,
         }
     } else { // twitter
         const requestToken: {
