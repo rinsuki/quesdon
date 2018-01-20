@@ -26,7 +26,7 @@ export default class Header extends React.Component<{}, State> {
                 <Nav className="mr-auto" navbar>
                     <NavItem>
                         {me
-                        ? <NavLink to="/my">@{me.acct}<QuestionRemaining/></NavLink>
+                        ? <NavLink to="/my">@{me.acctDisplay}<QuestionRemaining/></NavLink>
                         : <NavLink to="/login">ログイン</NavLink>}
                     </NavItem>
                 </Nav>

@@ -9,7 +9,7 @@ export default class UserLink extends React.Component<Props> {
     render() {
         return <Link to={`/@${this.props.acct}`}>
             {this.props.name}
-            <span className="text-muted">&nbsp;@{this.props.acct}</span>
+            <span className="text-muted">&nbsp;@{this.props.acctDisplay}</span>
         </Link>
     }
 }

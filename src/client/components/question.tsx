@@ -44,7 +44,7 @@ export default class Question extends React.Component<Props, State> {
             { this.state.nsfwGuard && <div className="nsfw-guard" onClick={this.nsfwGuardClick.bind(this)}>
                 <div>
                     <div>閲覧注意</div>
-                    { !this.props.hideAnswerUser && <div>回答者: @{this.props.user.acct}</div>}
+                    { !this.props.hideAnswerUser && <div>回答者: @{this.props.user.acctDisplay}</div>}
                     <div>クリック/タップで表示</div>
                 </div>
             </div> }

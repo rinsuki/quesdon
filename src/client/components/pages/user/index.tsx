@@ -38,7 +38,7 @@ export default class PageUserIndex extends React.Component<Props,State> {
         const { user } = this.state
         if (!user) return <Loading/>
         return <div>
-            <Title>{user.name} @{user.acct} さんの{user.questionBoxName}</Title>
+            <Title>{user.name} @{user.acctDisplay} さんの{user.questionBoxName}</Title>
             <Jumbotron><div style={{textAlign: "center"}}>
                 <img src={user.avatarUrl} style={{maxWidth: "8em", height: "8em"}}/>
                 <h1>{user.name}</h1>
@@ -46,7 +46,7 @@ export default class PageUserIndex extends React.Component<Props,State> {
                     さんの{user.questionBoxName || "質問箱"}&nbsp;
                     <a href={user.url || `https://${user.hostName}/@${user.acct.split("@")[0]}`}
                         rel="nofollow">
-                        Mastodonのプロフィール
+                        {user.isTwitter ? "Twitter" : "Mastodon"}のプロフィール
                     </a>
                 </p>
                 <p>{user.description}</p>
