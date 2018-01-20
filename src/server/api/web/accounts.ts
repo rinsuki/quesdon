@@ -20,6 +20,9 @@ router.get("/followers", async ctx => {
     if (!ctx.session!.user) return ctx.throw("please login", 403)
     const user = await User.findById(ctx.session!.user)
     if (!user) return ctx.throw("not found", 404)
+    if (user.hostName == "twitter.com") {
+        return {max_id: undefined, accounts: []}
+    }
     const myInfo = await fetch("https://"+user!.acct.split("@")[1]+"/api/v1/accounts/verify_credentials", {
         headers: {
             Authorization: "Bearer "+user!.accessToken,

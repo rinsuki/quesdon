@@ -16,7 +16,7 @@ export default class PageMyIndex extends React.Component {
             <ul>
                 <li><Link to={`/@${me.acct}`}>あなたのプロフィール</Link></li>
                 <li><Link to="/my/questions">あなた宛ての質問<QuestionRemaining/></Link></li>
-                <li><Link to="/my/followers">Quesdonを利用しているフォロワー一覧</Link></li>
+                {!me.isTwitter && <li><Link to="/my/followers">Quesdonを利用しているフォロワー一覧</Link></li>}
                 <li><Link to="/my/settings">設定</Link></li>
                 <li><a href="javascript://" onClick={this.logoutConfirm.bind(this)}>ログアウト</a></li>
             </ul>
