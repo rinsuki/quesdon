@@ -5,6 +5,7 @@ import Checkbox from "../../common/checkbox"
 import Question from "../../question"
 import apiFetch from "../../../api-fetch";
 import { me } from "../../../initial-state"
+import Title from "../../common/title";
 
 interface Props {
     match: {
@@ -34,6 +35,7 @@ export default class PageUserIndex extends React.Component<Props,State> {
         const { user } = this.state
         if (!user) return null
         return <div>
+            <Title>{user.name} @{user.acct} さんの{user.questionBoxName}</Title>
             <Jumbotron><div style={{textAlign: "center"}}>
                 <img src={user.avatarUrl}/>
                 <h1>{user.name}</h1>

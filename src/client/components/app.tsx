@@ -13,6 +13,7 @@ import { me }  from "../initial-state"
 import PageMyFollowers from "./pages/my/followers";
 import PageBetaHelp from "./pages/beta-help"
 import PageNotfound from "./pages/notfound"
+import PageMySettings from "./pages/my/settings"
 
 interface Props {
     userInfo: APIUser | undefined
@@ -34,6 +35,7 @@ export default class App extends React.Component<Props> {
                     <Route exact path="/my" component={PageMyIndex}/>
                     <Route exact path="/my/questions" component={PageMyQuestions}/>
                     <Route exact path="/my/followers" component={PageMyFollowers}/>
+                    <Route exact path="/my/settings" component={PageMySettings}/>
                     <Route exact path="/@:user_id" component={PageUserIndex}/>
                     <Route exact path="/@:user_id/questions/:question_id" component={PageUserQuestion}/>
                     <Route component={PageNotfound}/>

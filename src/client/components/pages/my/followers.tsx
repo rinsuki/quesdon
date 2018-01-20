@@ -3,6 +3,7 @@ import { APIUser } from "../../../../api-interfaces"
 import apiFetch from "../../../api-fetch"
 import UserLink from "../../userLink"
 import { Button } from "reactstrap";
+import Title from "../../common/title";
 
 interface State {
     maxId: string | undefined
@@ -22,6 +23,7 @@ export default class PageMyFollowers extends React.Component<{}, State> {
 
     render() {
         return <div>
+            <Title>Quesdonを利用しているフォロワー一覧 - マイページ</Title>
             <h1>Quesdonを利用しているフォロワー一覧</h1>
             <ul>
                 {this.state.accounts.map(user => <li><UserLink {...user} /></li>)}

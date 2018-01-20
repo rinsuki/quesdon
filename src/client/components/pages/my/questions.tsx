@@ -4,6 +4,7 @@ import { APIQuestion, APIUser } from "../../../../api-interfaces"
 import Question from "../../question";
 import apiFetch from "../../../api-fetch"
 import { Button } from "reactstrap";
+import Title from "../../common/title";
 
 interface State {
     questions: APIQuestion[]
@@ -15,6 +16,7 @@ export default class PageMyQuestions extends React.Component<{},State> {
     }
     render() {
         return <div>
+            <Title>質問一覧 - マイページ</Title>
             <h1>質問一覧</h1>
             <Link to="/my">マイページへ</Link>
             <div className="mt-3">

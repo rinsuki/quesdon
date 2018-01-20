@@ -14,7 +14,7 @@ export default class Checkbox extends React.Component<Props> {
             <input className="custom-control-input"
                 type="checkbox"
                 name={this.props.name}
-                checked={this.props.checked}
+                defaultChecked={this.props.checked}
                 value={this.props.value}
                 onChange={this.props.onChange}
             />

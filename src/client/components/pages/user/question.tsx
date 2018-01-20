@@ -2,6 +2,7 @@ import * as React from "react"
 import { APIQuestion } from "../../../../api-interfaces";
 import apiFetch from "../../../api-fetch"
 import Question from "../../question"
+import Title from "../../common/title";
 
 interface Props {
     match: {
@@ -29,6 +30,9 @@ export default class PageUserQuestion extends React.Component<Props, State> {
 
     render() {
         if (!this.state.question) return null
-        return <Question {...this.state.question} />
+        return <div>
+            <Title>{this.state.question.user.name} さん宛ての質問: 「{this.state.question.question}」</Title>
+            <Question {...this.state.question} />
+        </div>
     }
 }

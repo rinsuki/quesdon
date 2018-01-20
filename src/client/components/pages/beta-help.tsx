@@ -1,9 +1,11 @@
 import * as React from "react"
 import { Link } from "react-router-dom";
+import Title from "../common/title";
 
 export default class PageBetaHelp extends React.Component {
     render() {
         return <div>
+            <Title>β版について</Title>
             <h1>β版について</h1>
             <ul>
                 <li>通常版とデータは同期されています</li>
