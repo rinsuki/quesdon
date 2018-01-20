@@ -55,7 +55,7 @@ router.post("/get_url", async ctx => {
             secret: requestTokenRes.oauth_token_secret
         }
         ctx.session!.twitterOAuth = requestToken
-        url = `https://twitter.com/oauth/authorize?oauth_token=${requestToken.token}`
+        url = `https://twitter.com/oauth/authenticate?oauth_token=${requestToken.token}`
     }
     ctx.body = {
         url
