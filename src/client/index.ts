@@ -16,6 +16,8 @@ import "jquery"
 import "bootstrap/dist/js/bootstrap.min.js"
 // ---
 
+import "./ctrl-enter"
+
 addEventListener("DOMContentLoaded", () => {
     var root = document.getElementById("root")
     ReactDOM.render(React.createElement(App, {
