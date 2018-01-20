@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Navbar, NavbarToggler, Collapse, Nav, NavItem, Container } from "reactstrap";
 import NavbarBrand from "./common/navbarBrand"
 import NavLink from "./common/navLink"
+import QuestionRemaining from "./question-remaining";
 
 interface Props {
     userInfo: APIUser | undefined
@@ -28,7 +29,7 @@ export default class Header extends React.Component<Props, State> {
                 <Nav className="mr-auto" navbar>
                     <NavItem>
                         {this.props.userInfo
-                        ? <NavLink to="/my">@{this.props.userInfo.acct}</NavLink>
+                        ? <NavLink to="/my">@{this.props.userInfo.acct}<QuestionRemaining/></NavLink>
                         : <NavLink to="/login">ログイン</NavLink>}
                     </NavItem>
                 </Nav>
