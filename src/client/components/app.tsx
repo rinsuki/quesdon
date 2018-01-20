@@ -14,6 +14,7 @@ import PageMyFollowers from "./pages/my/followers";
 import PageBetaHelp from "./pages/beta-help"
 import PageNotfound from "./pages/notfound"
 import PageMySettings from "./pages/my/settings"
+import Footer from "./footer";
 
 interface Props {
     userInfo: APIUser | undefined
@@ -23,9 +24,9 @@ export default class App extends React.Component<Props> {
     render() {
         return (
             <BrowserRouter>
-            <div>
+            <div className="all-container">
                 <Header userInfo={this.props.userInfo} />
-                <div className="container mt-2">
+                <main className="container mt-2">
                 <Switch>
                     <Route exact path="/" component={PageIndex}/>
                     <Route exact path="/latest" component={PageLatest}/>
@@ -40,7 +41,8 @@ export default class App extends React.Component<Props> {
                     <Route exact path="/@:user_id/questions/:question_id" component={PageUserQuestion}/>
                     <Route component={PageNotfound}/>
                 </Switch>
-                </div>
+                </main>
+                <Footer />
             </div>
             </BrowserRouter>
         )
