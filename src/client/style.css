@@ -6,3 +6,24 @@
     white-space: normal;
     word-break: keep-all;
 }
+
+.progress-anime.progress {
+    height: 0.5em;
+    overflow: hidden;
+}
+.progress-anime .progress-bar {
+    width: 10%;
+    margin-left: calc(-10% + 1em);
+    animation: load2 2.25s infinite ease;
+}
+@keyframes load2 {
+    45% {
+        margin-left: calc(100% - 1em);
+    }
+    50% {
+        margin-left: calc(100% - 1em);
+    }
+    95% {
+        margin-left: calc(-10% + 1em);
+    }
+}
