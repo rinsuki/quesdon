@@ -6,6 +6,7 @@ import Question from "../../question"
 import apiFetch from "../../../api-fetch";
 import { me } from "../../../initial-state"
 import Title from "../../common/title";
+import Loading from "../../loading";
 
 interface Props {
     match: {
@@ -18,6 +19,7 @@ interface State {
     questions: APIQuestion[] | undefined
     questionLength: number
     questionMax: number
+    questionNow: boolean
 }
 
 export default class PageUserIndex extends React.Component<Props,State> {
@@ -27,13 +29,14 @@ export default class PageUserIndex extends React.Component<Props,State> {
             user: undefined,
             questions: undefined,
             questionLength: 0,
-            questionMax: 200
+            questionMax: 200,
+            questionNow: false,
         }
     }
 
     render() {
         const { user } = this.state
-        if (!user) return null
+        if (!user) return <Loading/>
         return <div>
             <Title>{user.name} @{user.acct} さんの{user.questionBoxName}</Title>
             <Jumbotron><div style={{textAlign: "center"}}>
@@ -63,18 +66,19 @@ export default class PageUserIndex extends React.Component<Props,State> {
                                 {this.state.questionMax - this.state.questionLength}
                             </span>
                             <Button color="primary" className="col-xs-2"
-                                disabled={!this.state.questionLength || this.state.questionLength > this.state.questionMax}>
-                                質問する
+                                disabled={!this.state.questionLength || this.state.questionLength > this.state.questionMax || this.state.questionNow}>
+                                質問{this.state.questionNow ? "中..." : "する"}
                             </Button>
                         </div>
                     </div>
                 </form>
             </div></Jumbotron>
-            {this.state.questions && 
-                <div>
-                    <h2>回答&nbsp;<Badge pill>{this.state.questions.length}</Badge></h2>
+                        <h2>回答&nbsp;{this.state.questions && <Badge pill>{this.state.questions.length}</Badge>}</h2>
+            {this.state.questions
+            ?   <div>
                     {this.state.questions.map(question => <Question {...question} hideAnswerUser key={question._id}/>)}
                 </div>
+            :   <Loading />
             }
         </div>
     }
@@ -90,11 +94,13 @@ export default class PageUserIndex extends React.Component<Props,State> {
     
     questionSubmit(e: any) {
         if (!this.state.user) return
+        this.setState({questionNow: true})
         const form = new FormData(e.target)
         apiFetch("/api/web/accounts/"+this.state.user.acct+"/question", {
             method: "POST",
             body: form
         }).then(r => r.json()).then(r => {
+            this.setState({questionNow: false})
             alert("質問しました!")
             location.reload()
         })

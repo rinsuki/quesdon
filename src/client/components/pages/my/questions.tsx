@@ -5,14 +5,19 @@ import Question from "../../question";
 import apiFetch from "../../../api-fetch"
 import { Button } from "reactstrap";
 import Title from "../../common/title";
+import Loading from "../../loading";
 
 interface State {
     questions: APIQuestion[]
+    loading: boolean
 }
 export default class PageMyQuestions extends React.Component<{},State> {
     constructor(props: {}) {
         super(props)
-        this.state = {questions: []}
+        this.state = {
+            questions: [],
+            loading: true
+        }
     }
     render() {
         return <div>
@@ -20,7 +25,7 @@ export default class PageMyQuestions extends React.Component<{},State> {
             <h1>質問一覧</h1>
             <Link to="/my">マイページへ</Link>
             <div className="mt-3">
-                {this.state.questions.map(q => <Question {...q} hideAnswerUser key={q._id}/>)}
+                {this.state.loading ? <Loading/> : this.state.questions.map(q => <Question {...q} hideAnswerUser key={q._id}/>)}
             </div>
             <Button href={this.getShareUrl()} color="secondary" target="_blank">自分の質問箱のページを共有<wbr />(新しいページで開きます)</Button>
         </div>
@@ -28,7 +33,7 @@ export default class PageMyQuestions extends React.Component<{},State> {
 
     componentDidMount() {
         apiFetch("/api/web/questions").then(r => r.json()).then(questions => {
-            this.setState({questions})
+            this.setState({questions, loading: false})
         })
     }
     getShareUrl() {

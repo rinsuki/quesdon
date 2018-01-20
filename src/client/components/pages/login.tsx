@@ -22,12 +22,15 @@ export default class PageLogin extends React.Component {
         </div>
     }
 
-    async send(e: any) {
+    send(e: any) {
         const form = new FormData(e.target)
-        var res = await apiFetch("/api/web/oauth/get_url", {
+        apiFetch("/api/web/oauth/get_url", {
             method: "POST",
             body: form,
-        }).then(r =>r.json())
-        location.href = res.url
+        })
+            .then(r =>r.json())
+            .then(r => {
+                location.href = r.url
+            })
     }
 }

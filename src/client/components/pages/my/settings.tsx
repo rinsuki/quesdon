@@ -11,6 +11,7 @@ interface State {
     questionBoxNameMax: number    
     descriptionCount: number
     questionBoxNameCount: number
+    saving: boolean
 }
 
 export default class PageMySettings extends React.Component<{},State> {
@@ -22,6 +23,7 @@ export default class PageMySettings extends React.Component<{},State> {
             questionBoxNameMax: 10,
             descriptionCount: (me.description || "").length,
             questionBoxNameCount: (me.questionBoxName || "質問箱").length,
+            saving: false
         }
     }
     render() {
@@ -53,7 +55,7 @@ export default class PageMySettings extends React.Component<{},State> {
                     <Checkbox name="allAnon" value="1" checked={me.allAnon}>自分宛ての質問では名乗らせない</Checkbox>
                 </FormGroup>
                 <Button type="submit" color="primary"
-                    disabled={this.questionBoxNameRemaining() < 0 || this.descriptionRemaining() < 0}>保存</Button>
+                    disabled={this.questionBoxNameRemaining() < 0 || this.descriptionRemaining() < 0 || this.state.saving}>保存{this.state.saving && "しています..."}</Button>
             </form>
             <h2 className="mt-3 mb-2">プッシュ通知</h2>
             {me.pushbulletEnabled
@@ -113,6 +115,7 @@ export default class PageMySettings extends React.Component<{},State> {
     }
 
     onSubmit(e: any) {
+        this.setState({saving: true})
         const form = new FormData(e.target)
         apiFetch("/api/web/accounts/update", {
             method: "POST",
@@ -120,7 +123,7 @@ export default class PageMySettings extends React.Component<{},State> {
         })
             .then(r => r.json())
             .then(r => {
-                alert(" 更新しました!")
+                alert("更新しました!")
                 location.reload()
             })
     }
