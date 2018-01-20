@@ -18,12 +18,17 @@ export default class PageLogin extends React.Component {
                     </datalist>
                 </FormGroup>
                 <Button type="submit" color="primary">ログイン</Button>
+                <span>&nbsp;もしくは&nbsp;</span>
+                <Button type="button" color="secondary" onClick={this.twitterLogin.bind(this)}>Twitterでログイン</Button>
             </form>
         </div>
     }
 
     send(e: any) {
         const form = new FormData(e.target)
+        this.callApi(form)
+    }
+    callApi(form: FormData) {
         apiFetch("/api/web/oauth/get_url", {
             method: "POST",
             body: form,
@@ -32,5 +37,11 @@ export default class PageLogin extends React.Component {
             .then(r => {
                 location.href = r.url
             })
+    }
+
+    twitterLogin() {
+        var form = new FormData()
+        form.append("instance", "twitter.com")
+        this.callApi(form)
     }
 }
