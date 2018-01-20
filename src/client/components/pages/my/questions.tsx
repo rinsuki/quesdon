@@ -39,6 +39,6 @@ export default class PageMyQuestions extends React.Component<{},State> {
     getShareUrl() {
         const user = (window as any).USER as APIUser
         const text = `私の${user.questionBoxName || "質問箱"}です #quesdon ${location.origin}/@${user.acct}`
-        return `https://${user.hostName}/share?text=${encodeURIComponent(text)}`
+        return `https://${user.hostName}/${user.isTwitter ? "intent/tweet" : "share"}?text=${encodeURIComponent(text)}`
     }
 }
