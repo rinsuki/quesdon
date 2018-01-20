@@ -1,4 +1,6 @@
 const webpack = require("webpack")
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
+const isProduction = process.env.NODE_ENV == "production"
 
 module.exports = {
     entry: "./src/client/index.ts",
@@ -18,20 +20,24 @@ module.exports = {
             riot: "riot",
             "$": "jquery",
             apiFetch: __dirname+"/src/client/api-fetch.ts"
+        }),
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
         })
     ],
     module: {
         loaders: [
             {test: /\.css$/, loader: 'style-loader!css-loader'},
-            {test: /\.tag$/, exclude: /node_modules/, use: [
-                {loader: 'babel-loader'},
-                {loader: 'riot-tag-loader', query: {
-                    type: "none",
-                    template: "pug"
-                }}
-            ]},
             {test: /\.(woff2?|ttf|eot|svg)$/, loader: 'file-loader'},
-            {test: /\.ts$/, loader: 'ts-loader'},
+            {test: /\.tsx?$/, loader: isProduction ? 'babel-loader!ts-loader' : 'ts-loader'},
         ]
+    },
+    resolve: {
+        extensions: [".ts", ".tsx", ".js"]
     }
 }
+
+// if (process.env.NODE_ENV == "production") {
+//     module.exports.plugins.push(new UglifyJsPlugin({
+//     }))
+// }

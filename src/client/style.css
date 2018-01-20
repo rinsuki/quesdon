@@ -6,3 +6,53 @@
     white-space: normal;
     word-break: keep-all;
 }
+
+.progress-anime.progress {
+    height: 0.5em;
+    overflow: hidden;
+}
+.progress-anime .progress-bar {
+    width: 10%;
+    margin-left: calc(-10% + 1em);
+    animation: load2 2.25s infinite ease;
+}
+@keyframes load2 {
+    45% {
+        margin-left: calc(100% - 1em);
+    }
+    50% {
+        margin-left: calc(100% - 1em);
+    }
+    95% {
+        margin-left: calc(-10% + 1em);
+    }
+}
+
+.nsfw-blur {
+    transition: all .1s ease;
+    filter: blur(8px);
+}
+
+.nsfw-guard {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.428);
+    text-align: center;
+    transition: all .1s ease;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.all-container {
+    display:flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1 0 auto;
+}
