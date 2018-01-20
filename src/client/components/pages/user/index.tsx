@@ -37,7 +37,7 @@ export default class PageUserIndex extends React.Component<Props,State> {
         return <div>
             <Title>{user.name} @{user.acct} さんの{user.questionBoxName}</Title>
             <Jumbotron><div style={{textAlign: "center"}}>
-                <img src={user.avatarUrl}/>
+                <img src={user.avatarUrl} style={{maxWidth: "8em", height: "8em"}}/>
                 <h1>{user.name}</h1>
                 <p>
                     さんの{user.questionBoxName || "質問箱"}&nbsp;
