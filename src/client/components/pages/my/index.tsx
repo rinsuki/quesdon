@@ -21,9 +21,12 @@ export default class PageMyIndex extends React.Component {
             </ul>
         </div>
     }
-    async logoutConfirm() {
+    logoutConfirm() {
         if (!confirm("ログアウトしていい?")) return
-        await (await apiFetch("/api/web/logout")).json()
-        location.pathname="/"
+        apiFetch("/api/web/logout")
+            .then(r => r.json())
+            .then(r => {
+                location.pathname="/"
+            })
     }
 }
