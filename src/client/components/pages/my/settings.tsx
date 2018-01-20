@@ -101,7 +101,7 @@ export default class PageMySettings extends React.Component<{},State> {
     allDeleteQuestions() {
         if (!me) return
         const rand = Math.floor(Math.random() * 9) + 1
-        if (prompt(`あなた(@${me.acct})あてに来た質問を「回答済みのものも含めて全て」削除します。
+        if (prompt(`あなた(@${me.acctDisplay})あてに来た質問を「回答済みのものも含めて全て」削除します。
 
 確認のために「${rand}」を下に入力してください(数字だけ入力してください)`, "") != rand.toString()) return
         apiFetch("/api/web/questions/all_delete", {

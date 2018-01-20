@@ -5,7 +5,7 @@ import setTransformer from "../utils/setTransformer"
 var schema = new mongoose.Schema({
     acct: {type: String, required: true},
     acctLower: {type: String, required: true, unique: true},
-    app: {type: mongoose.Schema.Types.ObjectId, required: true, ref: "mastodon_apps"},
+    app: {type: mongoose.Schema.Types.ObjectId, ref: "mastodon_apps"},
     name: {type: String, required: true},
     avatarUrl: {type: String, required: true},
     accessToken: {type: String, required: true},
@@ -14,6 +14,8 @@ var schema = new mongoose.Schema({
     questionBoxName: {type: String, default: "質問箱"},
     pushbulletAccessToken: {type: String},
     allAnon: {type: Boolean, default: false},
+    upstreamId: {type: String},
+    hostName: {type: String},
 }, {
     timestamps: true
 })
@@ -24,7 +26,10 @@ setTransformer(schema, (doc: IUser, ret: any) => {
     delete ret.accessToken
     delete ret.acctLower
     delete ret.pushbulletAccessToken
+    delete ret.upstreamId
+    ret.isTwitter = ret.hostName == "twitter.com"
     ret.pushbulletEnabled = !!doc.pushbulletAccessToken
+    ret.acctDisplay = ret.acct.replace(/:[0-9]+@/, "@")
     return ret
 })
 
@@ -40,6 +45,8 @@ export interface IUser extends mongoose.Document {
     questionBoxName: string
     pushbulletAccessToken: string | null
     allAnon: boolean
+    upstreamId: string | null
+    hostName: string | null
 }
 
 export default mongoose.model("users", schema) as mongoose.Model<IUser>

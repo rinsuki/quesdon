@@ -19,6 +19,7 @@ export interface APIUser {
     createdAt: string
     name: string
     acct: string
+    acctDisplay: string
     avatarUrl: string
     url: string
     allAnon: boolean
@@ -26,4 +27,5 @@ export interface APIUser {
     description: string | undefined
     hostName: string
     pushbulletEnabled: boolean
+    isTwitter: boolean
 }

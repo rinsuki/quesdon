@@ -3,6 +3,9 @@ import * as mongoose from "mongoose"
 import { User, Question, IMastodonApp, QuestionLike, IUser } from "../../db/index";
 import fetch from "node-fetch";
 import { BASE_URL } from "../../config";
+import twitterClient from "../../utils/twitterClient"
+import requestOAuth from "../../utils/requestOAuth";
+import cutText from "../../utils/cutText";
 
 var router = new Router
 
@@ -50,26 +53,45 @@ router.post("/:id/answer", async ctx => {
     ctx.body = {status: "ok"}
     const user = await User.findById(ctx.session!.user)
     if (!~["public","unlisted","private"].indexOf(ctx.request.body.fields.visibility)) return
-    var body = {
-        spoiler_text: "Q. "+question.question + " #quesdon",
-        status: "A. " + (question.answer!.length > 200 ? question.answer!.substring(0,200) + "...(続きはリンク先で)" : question.answer) + "\n#quesdon "+BASE_URL+"/@"+user!.acct+"/questions/"+question.id,
-        visibility: ctx.request.body.fields.visibility
-    }
-    if (question.questionUser) {
-        body.status = "質問者: @"+question.questionUser.acct + "\n" + body.status
-    }
-    if (question.isNSFW) {
-        body.status = "Q. "+question.question + "\n" + body.status
-        body.spoiler_text = "⚠ この質問は回答者がNSFWであると申告しています #quesdon"
-    }
-    fetch("https://"+user!.acct.split("@")[1]+"/api/v1/statuses", {
-        method: "POST",
-        body: JSON.stringify(body),
-        headers: {
-            Authorization: "Bearer "+user!.accessToken,
-            "Content-Type": "application/json"
+    if (!user) return
+    const isTwitter = user.hostName == "twitter.com"
+    const answerCharMax = isTwitter ? (110-question.question.length) : 200
+    const answerUrl = "https://example.com"+"/@"+user!.acct+"/questions/"+question.id
+    if (!isTwitter) { // Mastodon
+        var body = {
+            spoiler_text: "Q. "+question.question + " #quesdon",
+            status: "A. " + (question.answer!.length > 200 ? question.answer!.substring(0,200) + "...(続きはリンク先で)" : question.answer) + "\n#quesdon "+BASE_URL+"/@"+user!.acct+"/questions/"+question.id,
+            visibility: ctx.request.body.fields.visibility
         }
-    })
+        if (question.questionUser) {
+            body.status = "質問者: @"+question.questionUser.acct + "\n" + body.status
+        }
+        if (question.isNSFW) {
+            body.status = "Q. "+question.question + "\n" + body.status
+            body.spoiler_text = "⚠ この質問は回答者がNSFWであると申告しています #quesdon"
+        }
+        fetch("https://"+user!.acct.split("@")[1]+"/api/v1/statuses", {
+            method: "POST",
+            body: JSON.stringify(body),
+            headers: {
+                Authorization: "Bearer "+user!.accessToken,
+                "Content-Type": "application/json"
+            }
+        })
+    } else {
+        const strQ = cutText(question.question, 60)
+        const strA = cutText(question.answer!, 120-strQ.length)
+        const [key, secret] = user.accessToken.split(":")
+        const body = "Q. "+strQ+"\nA. "+strA+"\n#quesdon "+answerUrl
+        console.log(body, body.length)
+        requestOAuth(twitterClient, {
+            url: "https://api.twitter.com/1.1/statuses/update.json",
+            method: "POST",
+            data: {status: body}
+        }, {
+            key, secret
+        })
+    }
 })
 
 router.post("/:id/delete", async ctx => {
