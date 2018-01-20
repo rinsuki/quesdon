@@ -27,3 +27,22 @@
         margin-left: calc(-10% + 1em);
     }
 }
+
+.nsfw-blur {
+    transition: all .1s ease;
+    filter: blur(8px);
+}
+
+.nsfw-guard {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.428);
+    text-align: center;
+    transition: all .1s ease;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}

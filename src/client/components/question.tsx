@@ -10,22 +10,25 @@ import apiFetch from "../api-fetch";
 
 interface Props extends APIQuestion {
     hideAnswerUser?: boolean | undefined
+    noNsfwGuard?: boolean | undefined
 }
 
 interface State {
     isNotEmpty: boolean
+    nsfwGuard: boolean
 }
 
 export default class Question extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props)
         this.state = {
-            isNotEmpty: false
+            isNotEmpty: false,
+            nsfwGuard: this.props.isNSFW && !this.props.noNsfwGuard
         }
     }
     render() {
         return <Card className="mb-3">
-            <CardBody>
+            <CardBody className={this.state.nsfwGuard ? "nsfw-blur" : ""}>
                 <CardTitle tag="h2">{this.props.question}</CardTitle>
                 <CardSubtitle className="mb-2">
                     {this.renderAnswerUser()}
@@ -38,6 +41,13 @@ export default class Question extends React.Component<Props, State> {
                 </CardSubtitle>
                 {this.props.answeredAt ? this.renderAnswer() : this.renderAnswerForm()}
             </CardBody>
+            { this.state.nsfwGuard && <div className="nsfw-guard" onClick={this.nsfwGuardClick.bind(this)}>
+                <div>
+                    <div>閲覧注意</div>
+                    { !this.props.hideAnswerUser && <div>回答者: @{this.props.user.acct}</div>}
+                    <div>クリック/タップで表示</div>
+                </div>
+            </div> }
         </Card>
     }
 
@@ -102,5 +112,9 @@ export default class Question extends React.Component<Props, State> {
             alert("削除しました")
             location.reload()
         })
+    }
+    
+    nsfwGuardClick() {
+        this.setState({nsfwGuard: false})
     }
 }
