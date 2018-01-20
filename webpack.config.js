@@ -1,4 +1,5 @@
 const webpack = require("webpack")
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
 
 module.exports = {
     entry: "./src/client/index.ts",
@@ -40,4 +41,10 @@ module.exports = {
     resolve: {
         extensions: [".ts", ".tsx", ".js"]
     }
+}
+
+if (process.env.NODE_ENV == "production") {
+    module.exports.plugins.push(new UglifyJsPlugin({
+        uglifyOptions: {ecma: 6}
+    }))
 }
