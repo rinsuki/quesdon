@@ -68,7 +68,7 @@ export default class Question extends React.Component<Props, State> {
     }
 
     renderAnswer() {
-        return <CardText>{this.props.answer}</CardText>
+        return <CardText className="question-text">{this.props.answer}</CardText>
     }
 
     renderAnswerForm() {
