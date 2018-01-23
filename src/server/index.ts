@@ -3,7 +3,6 @@ import * as Router from "koa-router"
 import * as Pug from "koa-pug"
 import * as koaBody from "koa-body"
 import * as session from "koa-session"
-import * as koaStatic from "koa-static"
 import * as mount from "koa-mount"
 import rndstr from "rndstr"
 import apiRouter from "./api"
@@ -23,7 +22,7 @@ app.use(koaBody({
 app.use(session({
 }, app))
 
-app.use(mount("/assets", koaStatic(__dirname+"/../client")))
+app.use(mount("/assets", require("koa-static-cache")(__dirname+"/../client")))
 
 const router = new Router
 

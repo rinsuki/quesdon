@@ -60,6 +60,7 @@
     "koa-router": "^7.3.0",
     "koa-session": "^5.5.1",
     "koa-static": "^4.0.2",
+    "koa-static-cache": "^5.1.1",
     "mongoose": "^4.13.6",
     "mongoose-autopopulate": "^0.6.0",
     "node-fetch": "^1.7.3",
