@@ -54,6 +54,9 @@ export default class PageMySettings extends React.Component<{},State> {
                 <FormGroup>
                     <Checkbox name="allAnon" value="1" checked={me.allAnon}>自分宛ての質問では名乗らせない</Checkbox>
                 </FormGroup>
+                <FormGroup>
+                    <Checkbox name="stopNewQuestion" value="1" checked={me.stopNewQuestion}>新たな質問を受け付けない</Checkbox>
+                </FormGroup>
                 <Button type="submit" color="primary"
                     disabled={this.questionBoxNameRemaining() < 0 || this.descriptionRemaining() < 0 || this.state.saving}>保存{this.state.saving && "しています..."}</Button>
             </form>

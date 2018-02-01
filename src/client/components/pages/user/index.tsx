@@ -50,6 +50,7 @@ export default class PageUserIndex extends React.Component<Props,State> {
                     </a>
                 </p>
                 <p>{user.description}</p>
+                { user.stopNewQuestion ? <p>このユーザーは新しい質問を受け付けていません</p> : 
                 <form action="javascript://" onSubmit={this.questionSubmit.bind(this)}>
                     <Input type="textarea" name="question"
                         placeholder="質問する内容を入力"
@@ -72,6 +73,7 @@ export default class PageUserIndex extends React.Component<Props,State> {
                         </div>
                     </div>
                 </form>
+                }
             </div></Jumbotron>
                         <h2>回答&nbsp;{this.state.questions && <Badge pill>{this.state.questions.length}</Badge>}</h2>
             {this.state.questions

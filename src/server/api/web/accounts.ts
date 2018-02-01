@@ -53,6 +53,7 @@ router.post("/update", async ctx => {
     user.description = ctx.request.body.fields.description
     user.questionBoxName = ctx.request.body.fields.questionBoxName
     user.allAnon = !!ctx.request.body.fields.allAnon
+    user.stopNewQuestion = !!ctx.request.body.fields.stopNewQuestion
     await user.save()
     ctx.body = {status: "ok"}
 })
@@ -120,6 +121,7 @@ router.post("/:acct/question", async ctx => {
     if (questionString.length > 200) return ctx.throw("too long", 400)
     const user = await User.findOne({acctLower: ctx.params.acct.toLowerCase()})
     if (!user) return ctx.throw("not found", 404)
+    if (user.stopNewQuestion) return ctx.throw(400, "this user has stopped new question submit")
     var question = new Question
     question.question = questionString
     question.user = user

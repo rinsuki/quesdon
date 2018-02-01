@@ -16,6 +16,7 @@ var schema = new mongoose.Schema({
     allAnon: {type: Boolean, default: false},
     upstreamId: {type: String},
     hostName: {type: String},
+    stopNewQuestion: {type: Boolean},
 }, {
     timestamps: true
 })
@@ -47,6 +48,7 @@ export interface IUser extends mongoose.Document {
     allAnon: boolean
     upstreamId: string | null
     hostName: string | null
+    stopNewQuestion: boolean | null
 }
 
 export default mongoose.model("users", schema) as mongoose.Model<IUser>
