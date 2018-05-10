@@ -29,7 +29,7 @@ export default class Question extends React.Component<Props, State> {
     render() {
         return <Card className="mb-3">
             <CardBody className={this.state.nsfwGuard ? "nsfw-blur" : ""}>
-                <CardTitle tag="h2">{this.props.question}</CardTitle>
+                <CardTitle tag="h4">{this.props.question}</CardTitle>
                 <CardSubtitle className="mb-2">
                     {this.renderAnswerUser()}
                     {this.props.answeredAt && <Link
