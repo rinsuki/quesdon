@@ -2,7 +2,7 @@ import * as OAuth from "oauth-1.0a"
 import fetch, { Response } from "node-fetch"
 import QueryStringUtils from "./queryString";
 
-export default function request(oauth: OAuth, options: OAuth.RequestOptions, token: OAuth.Token | undefined = undefined) {
+export function request(oauth: OAuth, options: OAuth.RequestOptions, token: OAuth.Token | undefined = undefined) {
     var opt = {
         url: options.url,
         method: options.method,

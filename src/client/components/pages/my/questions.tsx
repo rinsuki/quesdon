@@ -1,17 +1,17 @@
 import * as React from "react"
 import { Link } from "react-router-dom";
 import { APIQuestion, APIUser } from "../../../../api-interfaces"
-import Question from "../../question";
-import apiFetch from "../../../api-fetch"
+import { Question } from "../../question";
+import { apiFetch } from "../../../api-fetch"
 import { Button } from "reactstrap";
-import Title from "../../common/title";
-import Loading from "../../loading";
+import { Title } from "../../common/title";
+import { Loading } from "../../loading";
 
 interface State {
     questions: APIQuestion[]
     loading: boolean
 }
-export default class PageMyQuestions extends React.Component<{},State> {
+export class PageMyQuestions extends React.Component<{},State> {
     constructor(props: {}) {
         super(props)
         this.state = {

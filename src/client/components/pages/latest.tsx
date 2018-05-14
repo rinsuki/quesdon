@@ -1,10 +1,10 @@
 import * as React from "react"
-import Question from "../question"
+import { Question } from "../question"
 import { APIQuestion } from "../../../api-interfaces"
-import apiFetch from "../../api-fetch";
-import Title from "../common/title";
+import { apiFetch } from "../../api-fetch";
+import { Title } from "../common/title";
 import { Button } from "reactstrap";
-import Loading from "../loading";
+import { Loading } from "../loading";
 
 interface State {
     questions: APIQuestion[]
@@ -12,7 +12,7 @@ interface State {
     loadTimer?: number
 }
 
-export default class PageLatest extends React.Component<{},State> {
+export class PageLatest extends React.Component<{},State> {
     constructor(props: any) {
         super(props)
         this.state = {

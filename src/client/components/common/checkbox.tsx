@@ -8,7 +8,7 @@ interface Props {
     className?: string| undefined
 }
 
-export default class Checkbox extends React.Component<Props> {
+export class Checkbox extends React.Component<Props> {
     render() {
         return <label className={`custom-control custom-checkbox ${this.props.className}`}>
             <input className="custom-control-input"

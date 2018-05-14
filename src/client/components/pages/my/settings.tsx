@@ -2,9 +2,9 @@ import * as React from "react"
 import { me } from "../../../initial-state"
 import { Link } from "react-router-dom";
 import { FormGroup, Input, FormText, InputGroup, InputGroupAddon, Button } from "reactstrap";
-import Checkbox from "../../common/checkbox";
-import apiFetch from "../../../api-fetch"
-import Title from "../../common/title";
+import { Checkbox } from "../../common/checkbox";
+import { apiFetch } from "../../../api-fetch"
+import { Title } from "../../common/title";
 
 interface State {
     descriptionMax: number
@@ -14,7 +14,7 @@ interface State {
     saving: boolean
 }
 
-export default class PageMySettings extends React.Component<{},State> {
+export class PageMySettings extends React.Component<{},State> {
     constructor(props: any) {
         super(props)
         if (!me) return

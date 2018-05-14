@@ -1,13 +1,13 @@
 import * as React from "react"
 import Badge from "reactstrap/lib/Badge";
-import apiFetch from "../api-fetch";
+import { apiFetch } from "../api-fetch";
 
 interface State {
     count: number
     timer?: number | undefined
 }
 
-export default class QuestionRemaining extends React.Component<{}, State> {
+export class QuestionRemaining extends React.Component<{}, State> {
     constructor(props: any) {
         super(props)
         this.state = {

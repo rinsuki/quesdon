@@ -1,10 +1,10 @@
 import * as React from "react"
 import { Input, Button, FormGroup } from "reactstrap";
 import majorInstances from "../../major-instances"
-import apiFetch from "../../api-fetch"
-import Title from "../common/title";
+import { apiFetch } from "../../api-fetch"
+import { Title } from "../common/title";
 
-export default class PageLogin extends React.Component {
+export class PageLogin extends React.Component {
     render() {
         return <div>
             <Title>ログイン</Title>

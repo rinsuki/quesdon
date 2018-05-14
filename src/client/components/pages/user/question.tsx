@@ -1,9 +1,9 @@
 import * as React from "react"
 import { APIQuestion } from "../../../../api-interfaces";
-import apiFetch from "../../../api-fetch"
-import Question from "../../question"
-import Title from "../../common/title";
-import Loading from "../../loading";
+import { apiFetch } from "../../../api-fetch"
+import { Question } from "../../question"
+import { Title } from "../../common/title";
+import { Loading } from "../../loading";
 
 interface Props {
     match: {
@@ -15,7 +15,7 @@ interface State {
     question: APIQuestion | undefined
 }
 
-export default class PageUserQuestion extends React.Component<Props, State> {
+export class PageUserQuestion extends React.Component<Props, State> {
     constructor(props: any) {
         super(props)
         this.state = {

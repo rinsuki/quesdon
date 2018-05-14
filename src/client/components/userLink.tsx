@@ -5,7 +5,7 @@ import { APIUser } from "../../api-interfaces";
 interface Props extends APIUser {
 }
 
-export default class UserLink extends React.Component<Props> {
+export class UserLink extends React.Component<Props> {
     render() {
         return <Link to={`/@${this.props.acct}`}>
             {this.props.name}

@@ -1,12 +1,12 @@
 import * as React from "react"
 import { Jumbotron, Input, Button, Badge } from "reactstrap";
 import { APIUser, APIQuestion } from "../../../../api-interfaces";
-import Checkbox from "../../common/checkbox"
-import Question from "../../question"
-import apiFetch from "../../../api-fetch";
+import { Checkbox } from "../../common/checkbox"
+import { Question } from "../../question"
+import { apiFetch } from "../../../api-fetch";
 import { me } from "../../../initial-state"
-import Title from "../../common/title";
-import Loading from "../../loading";
+import { Title } from "../../common/title";
+import { Loading } from "../../loading";
 
 interface Props {
     match: {
@@ -22,7 +22,7 @@ interface State {
     questionNow: boolean
 }
 
-export default class PageUserIndex extends React.Component<Props,State> {
+export class PageUserIndex extends React.Component<Props,State> {
     constructor(props: Props) {
         super(props)
         this.state = {
