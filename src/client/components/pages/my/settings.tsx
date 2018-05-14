@@ -44,7 +44,7 @@ export default class PageMySettings extends React.Component<{},State> {
                 <FormGroup>
                     <label>「質問箱」の名称変更</label>
                     <InputGroup>
-                        <InputGroupAddon>◯◯◯さんの</InputGroupAddon>
+                        <InputGroupAddon addonType="prepend">◯◯◯さんの</InputGroupAddon>
                         <Input type="text" name="questionBoxName" placeholder="質問箱"
                             onInput={this.inputQuestionBoxName.bind(this)}
                             defaultValue={me.questionBoxName || "質問箱"}/>
