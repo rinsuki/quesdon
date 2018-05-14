@@ -1,6 +1,7 @@
 import * as React from "react"
 
 interface Props {
+    id?: string
     name: string
     checked?: boolean | undefined
     value: string
@@ -8,18 +9,31 @@ interface Props {
     className?: string| undefined
 }
 
-export class Checkbox extends React.Component<Props> {
+interface State {
+    id: string
+}
+
+export class Checkbox extends React.Component<Props, State> {
+    constructor(props: Props) {
+        super(props)
+
+        this.state = {
+            "id": "checkbox_temp_"+(Math.random().toString().replace("0.", ""))
+        }
+    }
+
     render() {
-        return <label className={`custom-control custom-checkbox ${this.props.className}`}>
+        const domId = this.props.id || this.state.id
+        return <div className={`custom-control custom-checkbox ${this.props.className}`}>
             <input className="custom-control-input"
                 type="checkbox"
                 name={this.props.name}
                 defaultChecked={this.props.checked}
                 value={this.props.value}
                 onChange={this.props.onChange}
+                id={domId}
             />
-            <span className="custom-control-indicator" style={{border: "1px solid rgba(0,0,255,0.2)"}}></span>
-            <span className="custom-control-description">{this.props.children}</span>
-        </label>
+            <label className="custom-control-label" htmlFor={domId}>{this.props.children}</label>
+        </div>
     }
 }
