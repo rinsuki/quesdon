@@ -18,7 +18,7 @@ MONGODB_URL=mongodb://localhost/quesdon BACK_PORT=3000 yarn start
 
 ### 開発環境を立てる
 
-`yarn dev`とするといろいろwatchしながら動くやつが立ち上がるのであとは <http://localhost:8080> を開くだけ
+`cp .env.development .env`したあと`yarn dev`とするといろいろwatchしながら動くやつが立ち上がるのであとは <http://localhost:8080> を開くだけ
 
 ### ファイル構造
 
