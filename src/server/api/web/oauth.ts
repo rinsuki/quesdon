@@ -3,7 +3,7 @@ import { MastodonApp, User } from "../../db/index"
 import fetch from "node-fetch"
 import { BASE_URL } from "../../config";
 import rndstr from "rndstr"
-import requestOAuth from "../../utils/requestOAuth";
+import { requestOAuth } from "../../utils/requestOAuth";
 import QueryStringUtils from "../../utils/queryString"
 import twitterClient from "../../utils/twitterClient"
 

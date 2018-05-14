@@ -4,8 +4,8 @@ import { User, Question, IMastodonApp, QuestionLike, IUser } from "../../db/inde
 import fetch from "node-fetch";
 import { BASE_URL } from "../../config";
 import twitterClient from "../../utils/twitterClient"
-import requestOAuth from "../../utils/requestOAuth";
-import cutText from "../../utils/cutText";
+import { requestOAuth } from "../../utils/requestOAuth";
+import { cutText } from "../../utils/cutText";
 
 var router = new Router
 
