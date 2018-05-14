@@ -98,9 +98,9 @@
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/@types/koa-compose/-/koa-compose-3.2.2.tgz#dc106e000bbf92a3ac900f756df47344887ee847"
 
-"@types/koa-mount@^2.0.19":
-  version "2.0.19"
-  resolved "https://registry.yarnpkg.com/@types/koa-mount/-/koa-mount-2.0.19.tgz#d71e3cf503d0d6acff7abdc9743065ad8d671bf2"
+"@types/koa-mount@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@types/koa-mount/-/koa-mount-3.0.1.tgz#2c068d1696b173c62c316158210c4316c4401f57"
   dependencies:
     "@types/koa" "*"
 
@@ -116,17 +116,24 @@
   dependencies:
     "@types/koa" "*"
 
-"@types/koa-session@^3.0.6":
-  version "3.0.6"
-  resolved "https://registry.yarnpkg.com/@types/koa-session/-/koa-session-3.0.6.tgz#e45ee03a2e8fcaf277a85f7615997f600d782c53"
+"@types/koa-send@*":
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/@types/koa-send/-/koa-send-4.1.1.tgz#88f57cbe0343c8204903f9096d8ff6b98ec3296f"
   dependencies:
     "@types/koa" "*"
 
-"@types/koa-static@^3.0.2":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@types/koa-static/-/koa-static-3.0.2.tgz#ed09d82ccde874a0dc2d525ffaaa7de891574e62"
+"@types/koa-session@^5.7.3":
+  version "5.7.3"
+  resolved "https://registry.yarnpkg.com/@types/koa-session/-/koa-session-5.7.3.tgz#73d63ecde0c5327732a744486acf9a70b2edbd82"
   dependencies:
     "@types/koa" "*"
+
+"@types/koa-static@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@types/koa-static/-/koa-static-4.0.0.tgz#4cddce6adf45221bacfb2842b3621dc92f4d642c"
+  dependencies:
+    "@types/koa" "*"
+    "@types/koa-send" "*"
 
 "@types/koa@*", "@types/koa@^2.0.42":
   version "2.0.45"
@@ -4682,9 +4689,9 @@ mongodb@2.2.34:
     mongodb-core "2.1.18"
     readable-stream "2.2.7"
 
-mongoose-autopopulate@^0.6.0:
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/mongoose-autopopulate/-/mongoose-autopopulate-0.6.1.tgz#988101d683b764764829ce032ad9c739d319d8d0"
+mongoose-autopopulate@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/mongoose-autopopulate/-/mongoose-autopopulate-0.7.0.tgz#35aaf237de6dd9e63727a6641897f7ad3a6522f8"
 
 mongoose@^4.13.6:
   version "4.13.12"
