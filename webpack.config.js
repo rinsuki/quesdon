@@ -19,7 +19,6 @@ module.exports = {
     },
     plugins: [
         new webpack.ProvidePlugin({
-            riot: "riot",
             "$": "jquery",
             apiFetch: __dirname+"/src/client/api-fetch.ts"
         }),
