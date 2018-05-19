@@ -24,7 +24,9 @@ export class Checkbox extends React.Component<Props, State> {
 
     render() {
         const domId = this.props.id || this.state.id
-        return <span className={`custom-control custom-checkbox ${this.props.className}`}>
+        return <span className={`custom-control custom-checkbox ${this.props.className}`} style={{
+            display: "inline"
+        }}>
             <input className="custom-control-input"
                 type="checkbox"
                 name={this.props.name}
