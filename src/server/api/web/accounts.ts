@@ -1,3 +1,4 @@
+import * as Koa from "koa"
 import * as Router from "koa-router"
 import * as mongoose from "mongoose"
 import { User, Question } from "../../db/index";
@@ -150,7 +151,7 @@ router.post("/:acct/question", async ctx => {
     }
 })
 
-const getAnswers = async ctx => {
+const getAnswers = async (ctx: Koa.Context) => {
     const user = await User.findOne({acctLower: ctx.params.acct.toLowerCase()})
     if(!user) return ctx.throw("not found", 404)
     const questions = await Question.find({
