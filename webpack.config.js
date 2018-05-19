@@ -35,6 +35,15 @@ module.exports = {
     },
     resolve: {
         extensions: [".ts", ".tsx", ".js"]
+    },
+    optimization: {
+        minimizer: isProduction ? [
+            new UglifyJsPlugin({
+                uglifyOptions: {
+                    keep_classnames: true
+                }
+            })
+        ]: []
     }
 }
 
