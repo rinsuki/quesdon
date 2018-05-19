@@ -39,7 +39,7 @@ router.get("/followers", async ctx => {
         .map(acct => ~acct.indexOf("@") ? acct : (acct + "@" + user!.acct.split("@")[1]))
         .map(acct => acct.toLowerCase())
     const followersObject = await User.find({acctLower: {$in: followers}})
-    const max_id = ((parseLinkHeader(followersRes.headers.get("Link")) || {} as Links).next || {} as Link).max_id
+    const max_id = ((parseLinkHeader(followersRes.headers.get("Link")!) || {} as Links).next || {} as Link).max_id
     ctx.body = {
         accounts: followersObject,
         max_id

@@ -3,6 +3,8 @@ const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
 const isProduction = process.env.NODE_ENV == "production"
 
 module.exports = {
+    mode: isProduction ? "production": "development",
+
     entry: "./src/client/index.ts",
     output: {
         path: __dirname+"/dist/client",
@@ -17,7 +19,6 @@ module.exports = {
     },
     plugins: [
         new webpack.ProvidePlugin({
-            riot: "riot",
             "$": "jquery",
             apiFetch: __dirname+"/src/client/api-fetch.ts"
         }),
@@ -26,7 +27,7 @@ module.exports = {
         })
     ],
     module: {
-        loaders: [
+        rules: [
             {test: /\.css$/, loader: 'style-loader!css-loader'},
             {test: /\.(woff2?|ttf|eot|svg)$/, loader: 'file-loader'},
             {test: /\.tsx?$/, loader: isProduction ? 'babel-loader!ts-loader' : 'ts-loader'},

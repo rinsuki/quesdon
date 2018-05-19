@@ -1,12 +1,12 @@
 import * as React from "react"
 import * as ReactDOM from "react-dom"
 
-import App from "./components/app"
+import { App } from "./components/app"
 import { APIUser } from "../api-interfaces";
 
 // --- bootstrap init ---
 if (localStorage.getItem("using-dark-theme")) {
-    require("./bootstrap-darkly.min.css")
+    require("bootswatch/dist/darkly/bootstrap.min.css")
 } else {
     require("bootstrap/dist/css/bootstrap.min.css")
 }

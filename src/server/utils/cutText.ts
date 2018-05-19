@@ -1,4 +1,4 @@
-export default function cutText(s: string, l: number) {
+export function cutText(s: string, l: number) {
     if (s.length <= l) {
         return s
     } else {

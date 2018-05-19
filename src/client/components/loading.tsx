@@ -1,6 +1,6 @@
 import * as React from "react"
 
-export default class Loading extends React.Component {
+export class Loading extends React.Component {
     render() {
         return <div className="mt-2 mb-4">
             <h1 style={{textAlign: "center"}}>Loading...</h1>

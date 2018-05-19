@@ -1,9 +1,9 @@
 import * as React from "react"
 import { APIUser } from "../../../../api-interfaces"
-import apiFetch from "../../../api-fetch"
-import UserLink from "../../userLink"
+import { apiFetch } from "../../../api-fetch"
+import { UserLink } from "../../userLink"
 import { Button } from "reactstrap";
-import Title from "../../common/title";
+import { Title } from "../../common/title";
 
 interface State {
     maxId: string | undefined
@@ -11,7 +11,7 @@ interface State {
     loading: boolean
 }
 
-export default class PageMyFollowers extends React.Component<{}, State> {
+export class PageMyFollowers extends React.Component<{}, State> {
     constructor(props: any) {
         super(props)
         this.state = {

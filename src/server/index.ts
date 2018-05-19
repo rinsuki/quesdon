@@ -8,13 +8,14 @@ import rndstr from "rndstr"
 import apiRouter from "./api"
 import { PORT, SECRET_KEY, GIT_COMMIT } from "./config";
 import { User } from "./db/index";
+import * as path from "path"
 
 const app = new Koa
 
 app.keys = [SECRET_KEY]
 
 new Pug({
-    viewPath: __dirname+"/views"
+    viewPath: path.join(__dirname, "../../views")
 }).use(app)
 app.use(koaBody({
     multipart: true

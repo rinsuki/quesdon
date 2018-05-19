@@ -4,9 +4,9 @@ const XDate = require("xdate")
 import { Card, CardBody, CardTitle, CardText, Input, Button, FormGroup, CardSubtitle } from "reactstrap";
 import { APIQuestion } from "../../api-interfaces"
 import { Link } from "react-router-dom";
-import UserLink from "./userLink"
-import Checkbox from "./common/checkbox"
-import apiFetch from "../api-fetch";
+import { UserLink } from "./userLink"
+import { Checkbox } from "./common/checkbox"
+import { apiFetch } from "../api-fetch";
 
 interface Props extends APIQuestion {
     hideAnswerUser?: boolean | undefined
@@ -18,7 +18,7 @@ interface State {
     nsfwGuard: boolean
 }
 
-export default class Question extends React.Component<Props, State> {
+export class Question extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props)
         this.state = {
@@ -29,7 +29,7 @@ export default class Question extends React.Component<Props, State> {
     render() {
         return <Card className="mb-3">
             <CardBody className={this.state.nsfwGuard ? "nsfw-blur" : ""}>
-                <CardTitle tag="h2">{this.props.question}</CardTitle>
+                <CardTitle tag="h4">{this.props.question}</CardTitle>
                 <CardSubtitle className="mb-2">
                     {this.renderAnswerUser()}
                     {this.props.answeredAt && <Link

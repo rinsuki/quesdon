@@ -1,8 +1,8 @@
 import * as React from "react"
 import { Link } from "react-router-dom";
-import Title from "../common/title";
+import { Title } from "../common/title";
 
-export default class PageNotFound extends React.Component {
+export class PageNotFound extends React.Component {
     render() {
         return <div>
             <Title>Not Found</Title>

@@ -1,9 +1,9 @@
 import * as React from "react"
 import { me } from "../../initial-state"
 import { Link } from "react-router-dom";
-import PageLatest from "./latest"
+import { PageLatest } from "./latest"
 
-export default class PageIndex extends React.Component {
+export class PageIndex extends React.Component {
     render() {
         return <div>
             <title>Quesdon</title>

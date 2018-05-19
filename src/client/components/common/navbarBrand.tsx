@@ -5,7 +5,7 @@ interface Props {
     to: string
 }
 
-export default class NavbarBrand extends React.Component<Props>{
+export class NavbarBrand extends React.Component<Props>{
     render() {
         return <Link className="navbar-brand" to={this.props.to}>
             {this.props.children}

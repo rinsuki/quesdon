@@ -2,9 +2,9 @@ import * as React from "react"
 import { me } from "../../../initial-state"
 import { Link } from "react-router-dom";
 import { FormGroup, Input, FormText, InputGroup, InputGroupAddon, Button } from "reactstrap";
-import Checkbox from "../../common/checkbox";
-import apiFetch from "../../../api-fetch"
-import Title from "../../common/title";
+import { Checkbox } from "../../common/checkbox";
+import { apiFetch } from "../../../api-fetch"
+import { Title } from "../../common/title";
 
 interface State {
     descriptionMax: number
@@ -14,7 +14,7 @@ interface State {
     saving: boolean
 }
 
-export default class PageMySettings extends React.Component<{},State> {
+export class PageMySettings extends React.Component<{},State> {
     constructor(props: any) {
         super(props)
         if (!me) return
@@ -44,7 +44,7 @@ export default class PageMySettings extends React.Component<{},State> {
                 <FormGroup>
                     <label>「質問箱」の名称変更</label>
                     <InputGroup>
-                        <InputGroupAddon>◯◯◯さんの</InputGroupAddon>
+                        <InputGroupAddon addonType="prepend">◯◯◯さんの</InputGroupAddon>
                         <Input type="text" name="questionBoxName" placeholder="質問箱"
                             onInput={this.inputQuestionBoxName.bind(this)}
                             defaultValue={me.questionBoxName || "質問箱"}/>

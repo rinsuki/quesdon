@@ -2,7 +2,7 @@ import * as React from "react"
 import { Link } from "react-router-dom";
 import { usingDarkTheme, gitVersion, upstreamUrl } from "../initial-state";
 
-export default class Footer extends React.Component {
+export class Footer extends React.Component {
     render() {
         return <footer className="container">
             <p>Quesdon は AGPL-3.0 で提供されています。<a href={upstreamUrl}>ソースコード</a>&nbsp;

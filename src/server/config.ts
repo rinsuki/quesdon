@@ -1,5 +1,6 @@
 import { execSync } from "child_process";
-
+import dotenv = require("dotenv")
+dotenv.config()
 
 export const PORT = parseInt(process.env.BACK_PORT || "3000")
 

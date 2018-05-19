@@ -4,11 +4,11 @@ ENV BACK_PORT 80
 
 WORKDIR /app
 
-COPY package.json package-lock.json ./
-RUN npm install
+COPY package.json yarn.lock ./
+RUN yarn install
 
 COPY . .
-RUN NODE_ENV=production npm run build
+RUN NODE_ENV=production yarn build
 
 EXPOSE 80
 
