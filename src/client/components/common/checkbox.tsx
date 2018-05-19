@@ -24,7 +24,7 @@ export class Checkbox extends React.Component<Props, State> {
 
     render() {
         const domId = this.props.id || this.state.id
-        return <div className={`custom-control custom-checkbox ${this.props.className}`}>
+        return <span className={`custom-control custom-checkbox ${this.props.className}`}>
             <input className="custom-control-input"
                 type="checkbox"
                 name={this.props.name}
@@ -34,6 +34,6 @@ export class Checkbox extends React.Component<Props, State> {
                 id={domId}
             />
             <label className="custom-control-label" htmlFor={domId}>{this.props.children}</label>
-        </div>
+        </span>
     }
 }
