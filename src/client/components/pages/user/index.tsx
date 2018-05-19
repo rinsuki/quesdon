@@ -89,7 +89,7 @@ export class PageUserIndex extends React.Component<Props,State> {
         apiFetch("/api/web/accounts/"+this.props.match.params.user_id)
             .then(r => r.json())
             .then(user => this.setState({user}))
-        apiFetch("/api/web/accounts/"+this.props.match.params.user_id+"/questions")
+        apiFetch("/api/web/accounts/"+this.props.match.params.user_id+"/answers")
             .then(r => r.json())
             .then(questions => this.setState({questions}))
     }

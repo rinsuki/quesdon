@@ -150,7 +150,7 @@ router.post("/:acct/question", async ctx => {
     }
 })
 
-router.get("/:acct/questions", async ctx => {
+const getAnswers = async ctx => {
     const user = await User.findOne({acctLower: ctx.params.acct.toLowerCase()})
     if(!user) return ctx.throw("not found", 404)
     const questions = await Question.find({
@@ -162,7 +162,10 @@ router.get("/:acct/questions", async ctx => {
         question.user = user
         return question
     })
-})
+}
+
+router.get("/:acct/questions", getAnswers)
+router.get("/:acct/answers", getAnswers)
 
 
 export default router
