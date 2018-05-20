@@ -1,5 +1,13 @@
 {
     "presets": [
-        "es2015"
+        ["env", {
+            "targets": {
+                "browsers": [
+                    "iOS >= 9.3.5",
+                    "Chrome >= 63",
+                    "Firefox >= 57"
+                ]
+            }
+        }]
     ]
 }
