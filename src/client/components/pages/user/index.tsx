@@ -7,6 +7,7 @@ import { apiFetch } from "../../../api-fetch";
 import { me } from "../../../initial-state"
 import { Title } from "../../common/title";
 import { Loading } from "../../loading";
+import { QUESTION_TEXT_MAX_LENGTH } from "../../../../common/const";
 
 interface Props {
     match: {
@@ -18,7 +19,6 @@ interface State {
     user: APIUser | undefined
     questions: APIQuestion[] | undefined
     questionLength: number
-    questionMax: number
     questionNow: boolean
 }
 
@@ -29,7 +29,6 @@ export class PageUserIndex extends React.Component<Props,State> {
             user: undefined,
             questions: undefined,
             questionLength: 0,
-            questionMax: 200,
             questionNow: false,
         }
     }
@@ -62,12 +61,12 @@ export class PageUserIndex extends React.Component<Props,State> {
                         </div>}
                         <div className="ml-auto">
                             <span className={"mr-3 "+
-                                (this.state.questionLength > this.state.questionMax ? "text-danger" : "")
+                                (this.state.questionLength > QUESTION_TEXT_MAX_LENGTH ? "text-danger" : "")
                             }>
-                                {this.state.questionMax - this.state.questionLength}
+                                {QUESTION_TEXT_MAX_LENGTH - this.state.questionLength}
                             </span>
                             <Button color="primary" className="col-xs-2"
-                                disabled={!this.state.questionLength || this.state.questionLength > this.state.questionMax || this.state.questionNow}>
+                                disabled={!this.state.questionLength || this.state.questionLength > QUESTION_TEXT_MAX_LENGTH || this.state.questionNow}>
                                 質問{this.state.questionNow ? "中..." : "する"}
                             </Button>
                         </div>

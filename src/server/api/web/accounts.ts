@@ -6,6 +6,7 @@ import fetch from "node-fetch";
 import * as parseLinkHeader from "parse-link-header"
 import { Links, Link } from "parse-link-header";
 import { PUSHBULLET_CLIENT_ID, BASE_URL, PUSHBULLET_CLIENT_SECRET } from "../../config";
+import { QUESTION_TEXT_MAX_LENGTH } from "../../../common/const";
 
 var router = new Router
 
@@ -119,7 +120,7 @@ router.get("/:acct", async ctx => {
 router.post("/:acct/question", async ctx => {
     const questionString = ctx.request.body.fields.question
     if (questionString.length < 1) return ctx.throw("please input question", 400)
-    if (questionString.length > 200) return ctx.throw("too long", 400)
+    if (questionString.length > QUESTION_TEXT_MAX_LENGTH) return ctx.throw("too long", 400)
     const user = await User.findOne({acctLower: ctx.params.acct.toLowerCase()})
     if (!user) return ctx.throw("not found", 404)
     if (user.stopNewQuestion) return ctx.throw(400, "this user has stopped new question submit")
