@@ -10,6 +10,7 @@ import { Loading } from "../../loading";
 interface State {
     questions: APIQuestion[]
     loading: boolean
+    loadFailed?: number
 }
 export class PageMyQuestions extends React.Component<{},State> {
     constructor(props: {}) {
@@ -20,21 +21,61 @@ export class PageMyQuestions extends React.Component<{},State> {
         }
     }
     render() {
+        const {
+            loading,
+            loadFailed,
+            questions
+        } = this.state
         return <div>
             <Title>質問一覧 - マイページ</Title>
             <h1>質問一覧</h1>
             <Link to="/my">マイページへ</Link>
             <div className="mt-3">
-                {this.state.loading ? <Loading/> : this.state.questions.map(q => <Question {...q} hideAnswerUser key={q._id}/>)}
+                {loading
+                    ? <Loading/> 
+                    : loadFailed
+                        ? <span>読み込みに失敗しました({ loadFailed < 0 ? loadFailed : "HTTP-"+loadFailed })。<a href="javascript://" onClick={this.load.bind(this)}>再度読み込む</a></span>
+                        : questions.map(q => <Question {...q} hideAnswerUser key={q._id}/>)
+                }
             </div>
             <Button href={this.getShareUrl()} color="secondary" target="_blank">自分の質問箱のページを共有<wbr />(新しいページで開きます)</Button>
         </div>
     }
 
     componentDidMount() {
-        apiFetch("/api/web/questions").then(r => r.json()).then(questions => {
-            this.setState({questions, loading: false})
+        this.load()
+    }
+
+    async load() {
+        this.setState({
+            loading: true,
+            loadFailed: undefined,
         })
+        const req = await apiFetch("/api/web/questions").catch(e => {
+            this.setState({
+                loading: false,
+                loadFailed: -1,
+            })
+            return
+        })
+        if (!req) return
+        if (!req.ok) {
+            this.setState({
+                loading: false,
+                loadFailed: req.status,
+            })
+            return
+        }
+
+        const questions = await req.json().catch(e => {
+            this.setState({
+                loading: false,
+                loadFailed: -2
+            })
+            return
+        })
+        if (!questions) return
+        this.setState({questions, loading: false})
     }
     getShareUrl() {
         const user = (window as any).USER as APIUser

@@ -39,16 +39,37 @@ export class PageMyFollowers extends React.Component<{}, State> {
         this.readMore()
     }
 
-    readMore() {
+    async readMore() {
+        function errorMsg(code: number | string) {
+            return "読み込みに失敗しました。再度お試しください ("+code+")"
+        }
         this.setState({loading: true})
-        apiFetch("/api/web/accounts/followers" + (this.state.maxId ? "?max_id="+this.state.maxId : ""))
-            .then(r => r.json())
-            .then(r => {
+        const req = await apiFetch("/api/web/accounts/followers" + (this.state.maxId ? "?max_id="+this.state.maxId : ""))
+            .catch(e => {
+                alert(errorMsg(-1))
                 this.setState({
-                    accounts: this.state.accounts.concat(r.accounts),
-                    maxId: r.max_id,
                     loading: false,
                 })
             })
+        if (!req) return
+        if (!req.ok) {
+            alert(errorMsg("HTTP-"+req.status))
+            this.setState({
+                loading: false,
+            })
+            return
+        }
+        const res = await req.json().catch(e => {
+            alert(errorMsg(-2))
+            this.setState({
+                loading: false,
+            })
+        })
+        if (!res) return
+        this.setState({
+            accounts: this.state.accounts.concat(res.accounts),
+            maxId: res.max_id,
+            loading: false,
+        })
     }
 }

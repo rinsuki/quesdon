@@ -90,45 +90,95 @@ export class PageMySettings extends React.Component<{},State> {
         })
     }
 
-    pushbulletDisconnect() {
-        apiFetch("/api/web/accounts/pushbullet/disconnect", {
+    async pushbulletDisconnect() {
+        function errorMsg(code: number | string) {
+            return "通信に失敗しました。再度お試しください ("+code+")"
+        }
+        const req = await apiFetch("/api/web/accounts/pushbullet/disconnect", {
             method: "POST"
+        }).catch(e => {
+            alert(errorMsg(-1))
         })
-            .then(r => r.json())
-            .then(r => {
-                alert("切断しました。")
-                location.reload()
-            })
+        if (!req) return
+        if (!req.ok) {
+            alert(errorMsg("HTTP-"+req.status))
+            return
+        }
+
+        const res = await req.json().catch(e => {
+            alert(errorMsg(-2))
+        })
+        if (!res) return
+
+        alert("切断しました。")
+        location.reload()
     }
 
-    allDeleteQuestions() {
+    async allDeleteQuestions() {
+        function errorMsg(code: number | string) {
+            return "通信に失敗しました。再度お試しください ("+code+")"
+        }
         if (!me) return
         const rand = Math.floor(Math.random() * 9) + 1
         if (prompt(`あなた(@${me.acctDisplay})あてに来た質問を「回答済みのものも含めて全て」削除します。
 
 確認のために「${rand}」を下に入力してください(数字だけ入力してください)`, "") != rand.toString()) return
-        apiFetch("/api/web/questions/all_delete", {
+        const req = await apiFetch("/api/web/questions/all_delete", {
             method: "POST"
+        }).catch(e => {
+            alert(errorMsg(-1))
         })
-            .then(r => r.json())
-            .then(r => {
-                alert("削除しました。")
-                location.reload()
-            })
+        if (!req) return
+        if (!req.ok) {
+            alert(errorMsg("HTTP-"+req.status))
+            return
+        }
+
+        const res = await req.json().catch(e => {
+            alert(errorMsg(-2))
+            return
+        })
+        if (!res) return
+
+        alert("削除しました。")
+        location.reload()
     }
 
-    onSubmit(e: any) {
+    async onSubmit(e: any) {
+        function errorMsg(code: number | string) {
+            return "通信に失敗しました。再度お試しください ("+code+")"
+        }
         this.setState({saving: true})
+
         const form = new FormData(e.target)
-        apiFetch("/api/web/accounts/update", {
+        const req = await apiFetch("/api/web/accounts/update", {
             method: "POST",
             body: form
-        })
-            .then(r => r.json())
-            .then(r => {
-                alert("更新しました!")
-                location.reload()
+        }).catch(e => {
+            alert(errorMsg(-1))
+            this.setState({
+                saving: false
             })
+        })
+        if (!req) return
+        if (!req.ok) {
+            alert(errorMsg("HTTP-"+req.status))
+            this.setState({
+                saving: false
+            })
+            return
+        }
+
+        const res = req.json().catch(e => {
+            alert(errorMsg(-2))
+            this.setState({
+                saving: false
+            })
+        })
+        if (!res) return
+
+        alert("更新しました!")
+        location.reload()
     }
 
 }

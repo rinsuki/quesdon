@@ -92,6 +92,9 @@ export class PageUserIndex extends React.Component<Props,State> {
             .then(r => r.json())
             .then(questions => this.setState({questions}))
     }
+
+    async fetchUserInfo() {
+    }
     
     questionSubmit(e: any) {
         if (!this.state.user) return
