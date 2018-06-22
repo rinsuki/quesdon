@@ -1,7 +1,7 @@
+import * as moment from "moment"
 import * as React from "react"
 import { Link } from "react-router-dom"
 import { Button, Card, CardBody, CardSubtitle, CardText, CardTitle, FormGroup, Input } from "reactstrap"
-import XDate from "xdate"
 import { APIQuestion } from "../../api-interfaces"
 import { apiFetch } from "../api-fetch"
 import { Checkbox } from "./common/checkbox"
@@ -34,7 +34,7 @@ export class Question extends React.Component<Props, State> {
                     {this.props.answeredAt && <Link
                         to={`/@${this.props.user.acct}/questions/${this.props._id}`}
                         className="text-muted">
-                        {new XDate(this.props.answeredAt).toString("yyyy-MM-dd HH:mm:ss")}
+                        {moment(this.props.answeredAt).format("YYYY-MM-DD HH:mm:ss")}
                     &nbsp;</Link>}
                     {this.renderQuestionUser()}
                 </CardSubtitle>
