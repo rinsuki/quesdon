@@ -1,0 +1,13 @@
+{
+    "extends": [
+        "tslint:recommended"
+    ],
+    "rules": {
+        "semicolon": [true, "never"],
+        "interface-name": false,
+        "member-access": false,
+        "curly": false,
+        "no-console": false,
+        "no-var-keyword": false
+    }
+}
