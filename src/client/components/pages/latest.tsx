@@ -37,7 +37,7 @@ export class PageLatest extends React.Component<{}, State> {
                         読み込みに失敗しました。上の再読み込みボタンを押して再度お試しください。
                         ({loadFailed < 0 ? loadFailed : "HTTP-" + loadFailed})
                     </span>
-                    : questions.map((question) => <Question {...question} />)
+                    : questions.map((question) => <Question {...question} key={question._id}/>)
             }
         </div>
     }
