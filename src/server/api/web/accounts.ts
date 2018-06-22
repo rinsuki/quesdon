@@ -31,8 +31,9 @@ router.get("/followers", async (ctx) => {
             Authorization: "Bearer " + user!.accessToken,
         },
     }).then((r) => r.json())
+    const param = ctx.query.max_id ? "&max_id=" + ctx.query.max_id : ""
     const followersRes = await fetch(
-        `${instanceUrl}/api/v1/accounts/${myInfo.id}/followers?limit=80` + (ctx.query.max_id ? "&max_id=" + ctx.query.max_id : ""),
+        `${instanceUrl}/api/v1/accounts/${myInfo.id}/followers?limit=80${param}`,
         {
             headers: {
                 Authorization: "Bearer " + user!.accessToken,

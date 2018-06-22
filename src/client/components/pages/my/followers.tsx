@@ -44,7 +44,8 @@ export class PageMyFollowers extends React.Component<{}, State> {
             return "読み込みに失敗しました。再度お試しください (" + code + ")"
         }
         this.setState({loading: true})
-        const req = await apiFetch("/api/web/accounts/followers" + (this.state.maxId ? "?max_id=" + this.state.maxId : ""))
+        const param = this.state.maxId ? "?max_id=" + this.state.maxId : ""
+        const req = await apiFetch("/api/web/accounts/followers" + param)
             .catch((e) => {
                 alert(errorMsg(-1))
                 this.setState({
