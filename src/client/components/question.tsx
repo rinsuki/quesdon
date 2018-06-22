@@ -1,12 +1,11 @@
 import * as React from "react"
-import "xdate"
-const XDate = require("xdate")
-import { Card, CardBody, CardTitle, CardText, Input, Button, FormGroup, CardSubtitle } from "reactstrap";
+import { Link } from "react-router-dom"
+import { Button, Card, CardBody, CardSubtitle, CardText, CardTitle, FormGroup, Input } from "reactstrap"
+import XDate from "xdate"
 import { APIQuestion } from "../../api-interfaces"
-import { Link } from "react-router-dom";
-import { UserLink } from "./userLink"
+import { apiFetch } from "../api-fetch"
 import { Checkbox } from "./common/checkbox"
-import { apiFetch } from "../api-fetch";
+import { UserLink } from "./userLink"
 
 interface Props extends APIQuestion {
     hideAnswerUser?: boolean | undefined
@@ -23,7 +22,7 @@ export class Question extends React.Component<Props, State> {
         super(props)
         this.state = {
             isNotEmpty: false,
-            nsfwGuard: this.props.isNSFW && !this.props.noNsfwGuard
+            nsfwGuard: this.props.isNSFW && !this.props.noNsfwGuard,
         }
     }
     render() {
@@ -90,30 +89,30 @@ export class Question extends React.Component<Props, State> {
     }
 
     onInput(e: any) {
-        this.setState({isNotEmpty: e.target.value != ""}) 
+        this.setState({isNotEmpty: e.target.value !== ""})
     }
 
     onSubmit(e: any) {
         const form = new FormData(e.target)
-        apiFetch("/api/web/questions/"+this.props._id+"/answer", {
+        apiFetch("/api/web/questions/" + this.props._id + "/answer", {
             method: "POST",
-            body: form
-        }).then(r => r.json()).then(r => {
+            body: form,
+        }).then((r) => r.json()).then((r) => {
             alert("答えました")
             location.reload()
         })
     }
 
     onDelete(e: any) {
-        if(!confirm("質問を削除します。\n削除した質問は二度と元に戻せません。\n本当に質問を削除しますか?")) return
-        apiFetch("/api/web/questions/"+this.props._id+"/delete", {
-            method: "POST"
-        }).then(r => r.json()).then(r => {
+        if (!confirm("質問を削除します。\n削除した質問は二度と元に戻せません。\n本当に質問を削除しますか?")) return
+        apiFetch("/api/web/questions/" + this.props._id + "/delete", {
+            method: "POST",
+        }).then((r) => r.json()).then((r) => {
             alert("削除しました")
             location.reload()
         })
     }
-    
+
     nsfwGuardClick() {
         this.setState({nsfwGuard: false})
     }

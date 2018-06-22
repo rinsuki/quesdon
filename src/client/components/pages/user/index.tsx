@@ -1,17 +1,17 @@
 import * as React from "react"
-import { Jumbotron, Input, Button, Badge } from "reactstrap";
-import { APIUser, APIQuestion } from "../../../../api-interfaces";
-import { Checkbox } from "../../common/checkbox"
-import { Question } from "../../question"
-import { apiFetch } from "../../../api-fetch";
+import { Badge, Button, Input, Jumbotron } from "reactstrap"
+import { APIQuestion, APIUser } from "../../../../api-interfaces"
+import { QUESTION_TEXT_MAX_LENGTH } from "../../../../common/const"
+import { apiFetch } from "../../../api-fetch"
 import { me } from "../../../initial-state"
-import { Title } from "../../common/title";
-import { Loading } from "../../loading";
-import { QUESTION_TEXT_MAX_LENGTH } from "../../../../common/const";
+import { Checkbox } from "../../common/checkbox"
+import { Title } from "../../common/title"
+import { Loading } from "../../loading"
+import { Question } from "../../question"
 
 interface Props {
     match: {
-        params: {[key: string]: string}
+        params: {[key: string]: string},
     }
 }
 
@@ -22,7 +22,7 @@ interface State {
     questionNow: boolean
 }
 
-export class PageUserIndex extends React.Component<Props,State> {
+export class PageUserIndex extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props)
         this.state = {
@@ -49,7 +49,7 @@ export class PageUserIndex extends React.Component<Props,State> {
                     </a>
                 </p>
                 <p>{user.description}</p>
-                { user.stopNewQuestion ? <p>このユーザーは新しい質問を受け付けていません</p> : 
+                { user.stopNewQuestion ? <p>このユーザーは新しい質問を受け付けていません</p> :
                 <form action="javascript://" onSubmit={this.questionSubmit.bind(this)}>
                     <Input type="textarea" name="question"
                         placeholder="質問する内容を入力"
@@ -60,13 +60,17 @@ export class PageUserIndex extends React.Component<Props,State> {
                             <Checkbox name="noAnon" value="true">名乗る</Checkbox>
                         </div>}
                         <div className="ml-auto">
-                            <span className={"mr-3 "+
+                            <span className={"mr-3 " +
                                 (this.state.questionLength > QUESTION_TEXT_MAX_LENGTH ? "text-danger" : "")
                             }>
                                 {QUESTION_TEXT_MAX_LENGTH - this.state.questionLength}
                             </span>
                             <Button color="primary" className="col-xs-2"
-                                disabled={!this.state.questionLength || this.state.questionLength > QUESTION_TEXT_MAX_LENGTH || this.state.questionNow}>
+                                disabled={
+                                    !this.state.questionLength
+                                    || this.state.questionLength > QUESTION_TEXT_MAX_LENGTH
+                                    || this.state.questionNow
+                                }>
                                 質問{this.state.questionNow ? "中..." : "する"}
                             </Button>
                         </div>
@@ -77,7 +81,9 @@ export class PageUserIndex extends React.Component<Props,State> {
                         <h2>回答&nbsp;{this.state.questions && <Badge pill>{this.state.questions.length}</Badge>}</h2>
             {this.state.questions
             ?   <div>
-                    {this.state.questions.map(question => <Question {...question} hideAnswerUser key={question._id}/>)}
+                    {this.state.questions.map((question) =>
+                        <Question {...question} hideAnswerUser key={question._id}/>,
+                    )}
                 </div>
             :   <Loading />
             }
@@ -85,25 +91,22 @@ export class PageUserIndex extends React.Component<Props,State> {
     }
 
     componentDidMount() {
-        apiFetch("/api/web/accounts/"+this.props.match.params.user_id)
-            .then(r => r.json())
-            .then(user => this.setState({user}))
-        apiFetch("/api/web/accounts/"+this.props.match.params.user_id+"/answers")
-            .then(r => r.json())
-            .then(questions => this.setState({questions}))
+        apiFetch("/api/web/accounts/" + this.props.match.params.user_id)
+            .then((r) => r.json())
+            .then((user) => this.setState({user}))
+        apiFetch("/api/web/accounts/" + this.props.match.params.user_id + "/answers")
+            .then((r) => r.json())
+            .then((questions) => this.setState({questions}))
     }
 
-    async fetchUserInfo() {
-    }
-    
     questionSubmit(e: any) {
         if (!this.state.user) return
         this.setState({questionNow: true})
         const form = new FormData(e.target)
-        apiFetch("/api/web/accounts/"+this.state.user.acct+"/question", {
+        apiFetch("/api/web/accounts/" + this.state.user.acct + "/question", {
             method: "POST",
-            body: form
-        }).then(r => r.json()).then(r => {
+            body: form,
+        }).then((r) => r.json()).then((r) => {
             this.setState({questionNow: false})
             alert("質問しました!")
             location.reload()
@@ -113,7 +116,7 @@ export class PageUserIndex extends React.Component<Props,State> {
     questionInput(e: any) {
         const count = e.target.value.length
         this.setState({
-            questionLength: count
+            questionLength: count,
         })
     }
 }

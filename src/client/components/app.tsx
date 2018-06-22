@@ -1,19 +1,19 @@
 import * as React from "react"
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-import { APIUser } from "../../api-interfaces";
-import { Header } from "./header";
-import { PageIndex } from "./pages/index";
-import { PageLogin } from "./pages/login";
-import { PageMyIndex } from "./pages/my/index";
-import { PageMyQuestions } from "./pages/my/questions";
-import { PageUserIndex } from "./pages/user/index"
-import { PageUserQuestion } from "./pages/user/question";
-import { PageLatest } from "./pages/latest";
-import { me }  from "../initial-state"
-import { PageMyFollowers } from "./pages/my/followers";
-import { PageNotFound } from "./pages/notfound"
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom"
+import { APIUser } from "../../api-interfaces"
+import { me } from "../initial-state"
+import { Footer } from "./footer"
+import { Header } from "./header"
+import { PageIndex } from "./pages/index"
+import { PageLatest } from "./pages/latest"
+import { PageLogin } from "./pages/login"
+import { PageMyFollowers } from "./pages/my/followers"
+import { PageMyIndex } from "./pages/my/index"
+import { PageMyQuestions } from "./pages/my/questions"
 import { PageMySettings } from "./pages/my/settings"
-import { Footer } from "./footer";
+import { PageNotFound } from "./pages/notfound"
+import { PageUserIndex } from "./pages/user/index"
+import { PageUserQuestion } from "./pages/user/question"
 
 export class App extends React.Component {
     render() {

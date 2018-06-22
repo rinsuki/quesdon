@@ -1,6 +1,6 @@
-import { APIUser } from "../api-interfaces";
+import { APIUser } from "../api-interfaces"
 
-const w = <any>window
+const w = window as any
 
 export const me: APIUser | undefined = w.USER
 export const csrfToken: string = w.CSRF_TOKEN

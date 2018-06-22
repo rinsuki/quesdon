@@ -222,9 +222,9 @@
     "@types/express-serve-static-core" "*"
     "@types/mime" "*"
 
-"@types/xdate@^0.8.28":
-  version "0.8.28"
-  resolved "https://registry.yarnpkg.com/@types/xdate/-/xdate-0.8.28.tgz#5026908bfd861acf599f240427f49b111412649d"
+"@types/xdate@^0.8.29":
+  version "0.8.29"
+  resolved "https://registry.yarnpkg.com/@types/xdate/-/xdate-0.8.29.tgz#0aeacee64c7f54792dc1e3e93af320839a0367dc"
 
 "@webassemblyjs/ast@1.4.3":
   version "1.4.3"

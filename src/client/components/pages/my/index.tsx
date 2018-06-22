@@ -1,10 +1,10 @@
 import * as React from "react"
-import { Link } from "react-router-dom";
-import { apiFetch } from "../../../api-fetch"
+import { Link } from "react-router-dom"
 import { APIUser } from "../../../../api-interfaces"
+import { apiFetch } from "../../../api-fetch"
 import { me } from "../../../initial-state"
-import { Title } from "../../common/title";
-import { QuestionRemaining } from "../../question-remaining";
+import { Title } from "../../common/title"
+import { QuestionRemaining } from "../../question-remaining"
 
 export class PageMyIndex extends React.Component {
     render() {
@@ -25,9 +25,9 @@ export class PageMyIndex extends React.Component {
     logoutConfirm() {
         if (!confirm("ログアウトしていい?")) return
         apiFetch("/api/web/logout")
-            .then(r => r.json())
-            .then(r => {
-                location.pathname="/"
+            .then((r) => r.json())
+            .then((r) => {
+                location.pathname = "/"
             })
     }
 }

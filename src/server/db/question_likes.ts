@@ -1,11 +1,11 @@
 import * as mongoose from "mongoose"
-import { IUser, IQuestion } from "./index";
+import { IQuestion, IUser } from "./index"
 
-var schema = new mongoose.Schema({
+const schema = new mongoose.Schema({
     user: {type: mongoose.Schema.Types.ObjectId, required: true, ref: "users"},
     question: {type: mongoose.Schema.Types.ObjectId, required: true, ref: "questions"},
 }, {
-    timestamps: true
+    timestamps: true,
 })
 
 export interface IQuestionLike extends mongoose.Document {

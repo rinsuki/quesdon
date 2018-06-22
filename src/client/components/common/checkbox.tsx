@@ -18,14 +18,14 @@ export class Checkbox extends React.Component<Props, State> {
         super(props)
 
         this.state = {
-            "id": "checkbox_temp_"+(Math.random().toString().replace("0.", ""))
+            id: "checkbox_temp_" + (Math.random().toString().replace("0.", "")),
         }
     }
 
     render() {
         const domId = this.props.id || this.state.id
         return <span className={`custom-control custom-checkbox ${this.props.className}`} style={{
-            display: "inline"
+            display: "inline",
         }}>
             <input className="custom-control-input"
                 type="checkbox"

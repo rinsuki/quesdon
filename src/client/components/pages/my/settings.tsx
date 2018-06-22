@@ -1,20 +1,20 @@
 import * as React from "react"
-import { me } from "../../../initial-state"
-import { Link } from "react-router-dom";
-import { FormGroup, Input, FormText, InputGroup, InputGroupAddon, Button } from "reactstrap";
-import { Checkbox } from "../../common/checkbox";
+import { Link } from "react-router-dom"
+import { Button, FormGroup, FormText, Input, InputGroup, InputGroupAddon } from "reactstrap"
 import { apiFetch } from "../../../api-fetch"
-import { Title } from "../../common/title";
+import { me } from "../../../initial-state"
+import { Checkbox } from "../../common/checkbox"
+import { Title } from "../../common/title"
 
 interface State {
     descriptionMax: number
-    questionBoxNameMax: number    
+    questionBoxNameMax: number
     descriptionCount: number
     questionBoxNameCount: number
     saving: boolean
 }
 
-export class PageMySettings extends React.Component<{},State> {
+export class PageMySettings extends React.Component<{}, State> {
     constructor(props: any) {
         super(props)
         if (!me) return
@@ -23,7 +23,7 @@ export class PageMySettings extends React.Component<{},State> {
             questionBoxNameMax: 10,
             descriptionCount: (me.description || "").length,
             questionBoxNameCount: (me.questionBoxName || "質問箱").length,
-            saving: false
+            saving: false,
         }
     }
     render() {
@@ -57,17 +57,24 @@ export class PageMySettings extends React.Component<{},State> {
                 <FormGroup>
                     <Checkbox name="stopNewQuestion" value="1" checked={me.stopNewQuestion}>新たな質問を受け付けない</Checkbox>
                 </FormGroup>
-                <Button type="submit" color="primary"
-                    disabled={this.questionBoxNameRemaining() < 0 || this.descriptionRemaining() < 0 || this.state.saving}>保存{this.state.saving && "しています..."}</Button>
+                <Button type="submit" color="primary" disabled={this.sendableForm()}>
+                    保存{this.state.saving && "しています..."}
+                </Button>
             </form>
             <h2 className="mt-3 mb-2">プッシュ通知</h2>
             {me.pushbulletEnabled
             ?   <Button color="warning" onClick={this.pushbulletDisconnect.bind(this)}>Pushbulletとの接続を解除する</Button>
-            :   <Button href="/api/web/accounts/pushbullet/redirect" color="success">Pushbulletと接続して新しい質問が来た際に通知を受け取る</Button>
+            :   <Button href="/api/web/accounts/pushbullet/redirect" color="success">
+                    Pushbulletと接続して新しい質問が来た際に通知を受け取る
+                </Button>
             }
             <h2 className="mt-3 mb-2">やばいゾーン</h2>
             <Button color="danger" onClick={this.allDeleteQuestions.bind(this)}>自分宛ての質問を(回答済みのものも含めて)すべて削除</Button>
         </div>
+    }
+
+    sendableForm() {
+        return this.questionBoxNameRemaining() < 0 || this.descriptionRemaining() < 0 || this.state.saving
     }
 
     descriptionRemaining() {
@@ -80,32 +87,32 @@ export class PageMySettings extends React.Component<{},State> {
 
     inputDescription(e: any) {
         this.setState({
-            descriptionCount: e.target.value.length
+            descriptionCount: e.target.value.length,
         })
     }
 
     inputQuestionBoxName(e: any) {
         this.setState({
-            questionBoxNameCount: e.target.value.length
+            questionBoxNameCount: e.target.value.length,
         })
     }
 
     async pushbulletDisconnect() {
         function errorMsg(code: number | string) {
-            return "通信に失敗しました。再度お試しください ("+code+")"
+            return "通信に失敗しました。再度お試しください (" + code + ")"
         }
         const req = await apiFetch("/api/web/accounts/pushbullet/disconnect", {
-            method: "POST"
-        }).catch(e => {
+            method: "POST",
+        }).catch((e) => {
             alert(errorMsg(-1))
         })
         if (!req) return
         if (!req.ok) {
-            alert(errorMsg("HTTP-"+req.status))
+            alert(errorMsg("HTTP-" + req.status))
             return
         }
 
-        const res = await req.json().catch(e => {
+        const res = await req.json().catch((e) => {
             alert(errorMsg(-2))
         })
         if (!res) return
@@ -116,25 +123,25 @@ export class PageMySettings extends React.Component<{},State> {
 
     async allDeleteQuestions() {
         function errorMsg(code: number | string) {
-            return "通信に失敗しました。再度お試しください ("+code+")"
+            return "通信に失敗しました。再度お試しください (" + code + ")"
         }
         if (!me) return
         const rand = Math.floor(Math.random() * 9) + 1
         if (prompt(`あなた(@${me.acctDisplay})あてに来た質問を「回答済みのものも含めて全て」削除します。
 
-確認のために「${rand}」を下に入力してください(数字だけ入力してください)`, "") != rand.toString()) return
+確認のために「${rand}」を下に入力してください(数字だけ入力してください)`, "") !== rand.toString()) return
         const req = await apiFetch("/api/web/questions/all_delete", {
-            method: "POST"
-        }).catch(e => {
+            method: "POST",
+        }).catch((e) => {
             alert(errorMsg(-1))
         })
         if (!req) return
         if (!req.ok) {
-            alert(errorMsg("HTTP-"+req.status))
+            alert(errorMsg("HTTP-" + req.status))
             return
         }
 
-        const res = await req.json().catch(e => {
+        const res = await req.json().catch((e) => {
             alert(errorMsg(-2))
             return
         })
@@ -146,33 +153,33 @@ export class PageMySettings extends React.Component<{},State> {
 
     async onSubmit(e: any) {
         function errorMsg(code: number | string) {
-            return "通信に失敗しました。再度お試しください ("+code+")"
+            return "通信に失敗しました。再度お試しください (" + code + ")"
         }
         this.setState({saving: true})
 
         const form = new FormData(e.target)
         const req = await apiFetch("/api/web/accounts/update", {
             method: "POST",
-            body: form
-        }).catch(e => {
+            body: form,
+        }).catch(() => {
             alert(errorMsg(-1))
             this.setState({
-                saving: false
+                saving: false,
             })
         })
         if (!req) return
         if (!req.ok) {
-            alert(errorMsg("HTTP-"+req.status))
+            alert(errorMsg("HTTP-" + req.status))
             this.setState({
-                saving: false
+                saving: false,
             })
             return
         }
 
-        const res = req.json().catch(e => {
+        const res = req.json().catch(() => {
             alert(errorMsg(-2))
             this.setState({
-                saving: false
+                saving: false,
             })
         })
         if (!res) return

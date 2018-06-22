@@ -1,5 +1,5 @@
-import * as OAuth from "oauth-1.0a"
 import * as crypto from "crypto"
+import * as OAuth from "oauth-1.0a"
 
 const twitterClient = new OAuth({
     consumer: {
@@ -7,10 +7,10 @@ const twitterClient = new OAuth({
         secret: process.env.TWITTER_CONSUMER_SECRET!,
     },
     signature_method: "HMAC-SHA1",
-    hash_function(base_string, key) {
-        return crypto.createHmac("sha1", key).update(base_string).digest("base64")
+    hash_function(baseString, key) {
+        return crypto.createHmac("sha1", key).update(baseString).digest("base64")
     },
-    realm: ""
+    realm: "",
 })
 
 export default twitterClient

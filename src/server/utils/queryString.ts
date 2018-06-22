@@ -1,9 +1,9 @@
 import * as OAuth from "oauth-1.0a"
 
-export default new class QueryStringUtils{
+export default new class QueryStringUtils {
     decode(query: string) {
-        var res: {[key: string]: string} = {}
-        query.split("&").map(q => {
+        const res: {[key: string]: string} = {}
+        query.split("&").map((q) => {
             const splitedQuery = q.split("=")
             if (splitedQuery.length < 2) {
                 return
@@ -16,7 +16,7 @@ export default new class QueryStringUtils{
     }
 
     encode(params: {[key: string]: any}) {
-        return Object.keys(params).map(key => {
+        return Object.keys(params).map((key) => {
             return encodeURIComponent(key) + "=" + OAuth.prototype.percentEncode(params[key])
         }).join("&")
     }

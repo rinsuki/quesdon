@@ -5,5 +5,5 @@ export default [
     "pawoo.net",
     "music.pawoo.net",
     "imastodon.net",
-    "mstdn.maud.io"
+    "mstdn.maud.io",
 ]
