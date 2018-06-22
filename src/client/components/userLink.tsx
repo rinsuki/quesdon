@@ -1,7 +1,8 @@
 import * as React from "react"
-import { Link } from "react-router-dom";
-import { APIUser } from "../../api-interfaces";
+import { Link } from "react-router-dom"
+import { APIUser } from "../../api-interfaces"
 
+// tslint:disable-next-line:no-empty-interface
 interface Props extends APIUser {
 }
 

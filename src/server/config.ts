@@ -1,10 +1,10 @@
-import { execSync } from "child_process";
+import { execSync } from "child_process"
 import dotenv = require("dotenv")
 dotenv.config()
 
-export const PORT = parseInt(process.env.BACK_PORT || "3000")
+export const PORT = parseInt(process.env.BACK_PORT || "3000", 10)
 
-export const HOST = process.env.VIRTUAL_HOST || "localhost:"+PORT
+export const HOST = process.env.VIRTUAL_HOST || "localhost:" + PORT
 export const HTTPS_ENABLED = !!process.env.HTTPS_ENABLED
 export const BASE_URL = (HTTPS_ENABLED ? "https" : "http") + "://" + HOST
 

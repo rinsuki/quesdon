@@ -1,9 +1,9 @@
 import * as React from "react"
+import { Button } from "reactstrap"
 import { APIUser } from "../../../../api-interfaces"
 import { apiFetch } from "../../../api-fetch"
+import { Title } from "../../common/title"
 import { UserLink } from "../../userLink"
-import { Button } from "reactstrap";
-import { Title } from "../../common/title";
 
 interface State {
     maxId: string | undefined
@@ -26,7 +26,7 @@ export class PageMyFollowers extends React.Component<{}, State> {
             <Title>Quesdonを利用しているフォロワー一覧 - マイページ</Title>
             <h1>Quesdonを利用しているフォロワー一覧</h1>
             <ul>
-                {this.state.accounts.map(user => <li><UserLink {...user} /></li>)}
+                {this.state.accounts.map((user) => <li><UserLink {...user} /></li>)}
             </ul>
             <Button disabled={this.state.loading || !this.state.maxId}
                 onClick={this.readMore.bind(this)}>
@@ -41,11 +41,12 @@ export class PageMyFollowers extends React.Component<{}, State> {
 
     async readMore() {
         function errorMsg(code: number | string) {
-            return "読み込みに失敗しました。再度お試しください ("+code+")"
+            return "読み込みに失敗しました。再度お試しください (" + code + ")"
         }
         this.setState({loading: true})
-        const req = await apiFetch("/api/web/accounts/followers" + (this.state.maxId ? "?max_id="+this.state.maxId : ""))
-            .catch(e => {
+        const param = this.state.maxId ? "?max_id=" + this.state.maxId : ""
+        const req = await apiFetch("/api/web/accounts/followers" + param)
+            .catch((e) => {
                 alert(errorMsg(-1))
                 this.setState({
                     loading: false,
@@ -53,13 +54,13 @@ export class PageMyFollowers extends React.Component<{}, State> {
             })
         if (!req) return
         if (!req.ok) {
-            alert(errorMsg("HTTP-"+req.status))
+            alert(errorMsg("HTTP-" + req.status))
             this.setState({
                 loading: false,
             })
             return
         }
-        const res = await req.json().catch(e => {
+        const res = await req.json().catch((e) => {
             alert(errorMsg(-2))
             this.setState({
                 loading: false,

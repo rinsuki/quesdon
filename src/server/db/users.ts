@@ -1,8 +1,8 @@
 import * as mongoose from "mongoose"
-import { IMastodonApp } from "./";
 import setTransformer from "../utils/setTransformer"
+import { IMastodonApp } from "./"
 
-var schema = new mongoose.Schema({
+const schema = new mongoose.Schema({
     acct: {type: String, required: true},
     acctLower: {type: String, required: true, unique: true},
     app: {type: mongoose.Schema.Types.ObjectId, ref: "mastodon_apps"},
@@ -18,7 +18,7 @@ var schema = new mongoose.Schema({
     hostName: {type: String},
     stopNewQuestion: {type: Boolean},
 }, {
-    timestamps: true
+    timestamps: true,
 })
 
 setTransformer(schema, (doc: IUser, ret: any) => {
@@ -28,7 +28,7 @@ setTransformer(schema, (doc: IUser, ret: any) => {
     delete ret.acctLower
     delete ret.pushbulletAccessToken
     delete ret.upstreamId
-    ret.isTwitter = ret.hostName == "twitter.com"
+    ret.isTwitter = ret.hostName === "twitter.com"
     ret.pushbulletEnabled = !!doc.pushbulletAccessToken
     ret.acctDisplay = ret.acct.replace(/:[0-9]+@/, "@")
     return ret

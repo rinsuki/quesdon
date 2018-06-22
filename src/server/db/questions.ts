@@ -1,8 +1,9 @@
 import * as mongoose from "mongoose"
-import { IUser } from "./index";
+import { IUser } from "./index"
+// tslint:disable-next-line:no-var-requires
 const autopopulate = require("mongoose-autopopulate") // @types/がないのでしかたない
 
-var schema = new mongoose.Schema({
+const schema = new mongoose.Schema({
     user: {type: mongoose.Schema.Types.ObjectId, required: true, ref: "users", autopopulate: true},
     question: {type: String, required: true},
     answer: String,
@@ -12,7 +13,7 @@ var schema = new mongoose.Schema({
     isNSFW: {type: Boolean, default: false},
     questionUser: {type: mongoose.Schema.Types.ObjectId, ref: "users", autopopulate: true},
 }, {
-    timestamps: true
+    timestamps: true,
 })
 schema.plugin(autopopulate)
 
@@ -21,9 +22,9 @@ export interface IQuestion extends mongoose.Document {
     question: string
     answer: string | null
     answeredAt: Date | null
-    isDeleted: Boolean
-    likesCount: Number
-    isNSFW: Boolean
+    isDeleted: boolean
+    likesCount: number
+    isNSFW: boolean
     questionUser: IUser
 }
 

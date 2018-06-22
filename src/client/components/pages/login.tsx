@@ -1,8 +1,8 @@
 import * as React from "react"
-import { Input, Button, FormGroup } from "reactstrap";
-import majorInstances from "../../major-instances"
+import { Button, FormGroup, Input } from "reactstrap"
 import { apiFetch } from "../../api-fetch"
-import { Title } from "../common/title";
+import majorInstances from "../../major-instances"
+import { Title } from "../common/title"
 
 interface State {
     loading: boolean
@@ -26,7 +26,7 @@ export class PageLogin extends React.Component<{}, State> {
                 <FormGroup>
                     <Input name="instance" placeholder="mastodon.social" list="major-instances"/>
                     <datalist id="major-instances">
-                        {majorInstances.map(instance => <option value={instance} />)}
+                        {majorInstances.map((instance) => <option value={instance} />)}
                     </datalist>
                 </FormGroup>
                 <Button type="submit" color="primary" disabled={loading}>{ loading ? "読み込み中" : "ログイン" }</Button>
@@ -44,32 +44,32 @@ export class PageLogin extends React.Component<{}, State> {
     }
     async callApi(form: FormData) {
         this.setState({
-            loading: true
+            loading: true,
         })
         function errorMsg(code: number | string) {
-            return "ログインに失敗しました。入力内容をご確認の上、再度お試しください ("+code+")"
+            return "ログインに失敗しました。入力内容をご確認の上、再度お試しください (" + code + ")"
         }
         const req = await apiFetch("/api/web/oauth/get_url", {
             method: "POST",
             body: form,
-        }).catch(e => {
+        }).catch((e) => {
             alert(errorMsg(-1))
             this.setState({
-                loading: false
+                loading: false,
             })
         })
         if (!req) return
         if (!req.ok) {
-            alert(errorMsg("HTTP-"+req.status))
+            alert(errorMsg("HTTP-" + req.status))
             this.setState({
-                loading: false
+                loading: false,
             })
             return
         }
-        const urlRes = await req.json().catch(e => {
+        const urlRes = await req.json().catch((e) => {
             alert(errorMsg(-2))
             this.setState({
-                loading: false
+                loading: false,
             })
         })
         if (!urlRes) return
@@ -77,7 +77,7 @@ export class PageLogin extends React.Component<{}, State> {
     }
 
     twitterLogin() {
-        var form = new FormData()
+        const form = new FormData()
         form.append("instance", "twitter.com")
         this.callApi(form)
     }

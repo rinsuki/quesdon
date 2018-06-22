@@ -1,6 +1,6 @@
 import * as React from "react"
-import Badge from "reactstrap/lib/Badge";
-import { apiFetch } from "../api-fetch";
+import Badge from "reactstrap/lib/Badge"
+import { apiFetch } from "../api-fetch"
 
 interface State {
     count: number
@@ -11,7 +11,7 @@ export class QuestionRemaining extends React.Component<{}, State> {
     constructor(props: any) {
         super(props)
         this.state = {
-            count: 0
+            count: 0,
         }
     }
 
@@ -22,8 +22,8 @@ export class QuestionRemaining extends React.Component<{}, State> {
 
     updateCount() {
         apiFetch("/api/web/questions/count")
-            .then(r => r.json())
-            .then(r => this.setState({count: r.count}))
+            .then((r) => r.json())
+            .then((r) => this.setState({count: r.count}))
     }
 
     componentDidMount() {
@@ -31,7 +31,7 @@ export class QuestionRemaining extends React.Component<{}, State> {
         this.setState({
             timer: window.setInterval(() => {
                 this.updateCount()
-            }, 1 * 60 * 1000)
+            }, 1 * 60 * 1000),
         })
     }
 
