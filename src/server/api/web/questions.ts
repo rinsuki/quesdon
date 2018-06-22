@@ -43,7 +43,8 @@ router.post("/:id/answer", async (ctx) => {
     const question = await Question.findById(ctx.params.id)
     if (!question) return ctx.throw("not found", 404)
     if (question.isDeleted) return ctx.throw("not found", 404)
-    if (question.user._id !== ctx.session!.user) return ctx.throw("not found", 404)
+    // tslint:disable-next-line:triple-equals
+    if (question.user._id != ctx.session!.user) return ctx.throw("not found", 404)
     if (question.answeredAt) return ctx.throw("alread answered", 400)
     question.answer = ctx.request.body.fields.answer
     if (question.answer!.length < 1) return ctx.throw("please input answer", 400)
@@ -109,7 +110,8 @@ router.post("/:id/delete", async (ctx) => {
     if (!ctx.session!.user) return ctx.throw("please login", 403)
     const question = await Question.findById(ctx.params.id)
     if (!question) return ctx.throw("not found", 404)
-    if (question.user._id !== ctx.session!.user) return ctx.throw("not found", 404)
+    // tslint:disable-next-line:triple-equals
+    if (question.user._id != ctx.session!.user) return ctx.throw("not found", 404)
     question.isDeleted = true
     await question.save()
     ctx.body = {status: "ok"}
