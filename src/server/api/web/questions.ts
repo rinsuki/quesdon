@@ -16,7 +16,6 @@ router.get("/", async (ctx) => {
         answeredAt: null,
         isDeleted: {$ne: true},
     })
-    console.log(questions)
     ctx.body = JSON.stringify(questions)
 })
 
@@ -95,7 +94,6 @@ router.post("/:id/answer", async (ctx) => {
         const strA = cutText(question.answer!, 120 - strQ.length)
         const [key, secret] = user.accessToken.split(":")
         const body = "Q. " + strQ + "\nA. " + strA + "\n#quesdon " + answerUrl
-        console.log(body, body.length)
         requestOAuth(twitterClient, {
             url: "https://api.twitter.com/1.1/statuses/update.json",
             method: "POST",

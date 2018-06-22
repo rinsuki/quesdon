@@ -57,7 +57,6 @@ router.post("/get_url", async (ctx) => {
             method: "POST",
             data: {},
         }).then((r) => r.text()).then((r) => QueryStringUtils.decode(r))
-        console.log(requestTokenRes)
         const requestToken = {
             token: requestTokenRes.oauth_token,
             secret: requestTokenRes.oauth_token_secret,
@@ -71,7 +70,6 @@ router.post("/get_url", async (ctx) => {
 })
 
 router.get("/redirect", async (ctx) => {
-    console.log(ctx.session)
     var profile: {
         id: string
         name: string
@@ -104,11 +102,9 @@ router.get("/redirect", async (ctx) => {
             }),
             headers: {"Content-Type": "application/json"},
         }).then((r) => r.json())
-        console.log(res)
         const myProfile = await fetch("https://" + app.hostName + "/api/v1/accounts/verify_credentials",  {
             headers: {Authorization: "Bearer " + res.access_token},
         }).then((r) => r.json())
-        console.log(myProfile)
         profile = {
             id: myProfile.id,
             name: myProfile.display_name || myProfile.username,
