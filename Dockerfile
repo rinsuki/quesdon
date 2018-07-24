@@ -1,4 +1,4 @@
-FROM node
+FROM node:10
 
 ENV BACK_PORT 80
 
