@@ -31,6 +31,7 @@ export class PageLogin extends React.Component<{}, State> {
                     までダイレクトメッセージでお問い合わせください。
                 </p>
                 <p>ご利用ありがとうございました。</p>
+                <strong>なお、Mastodonアカウントでログインされているユーザーの皆様には影響はありません。</strong>これまで通りサービスをご利用いただけます。
             </Alert>
             <form action="javascript://" onSubmit={this.send.bind(this)}>
                 <FormGroup>
