@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Button, FormGroup, Input } from "reactstrap"
+import { Alert, Button, FormGroup, Input } from "reactstrap"
 import { apiFetch } from "../../api-fetch"
 import majorInstances from "../../major-instances"
 import { Title } from "../common/title"
@@ -22,6 +22,16 @@ export class PageLogin extends React.Component<{}, State> {
             <Title>ログイン</Title>
             <h1>ログイン</h1>
             <p>あなたのMastodonアカウントがあるインスタンスを入力してください。</p>
+            <Alert color="danger">
+                <h5>Twitterアカウントでのサービス提供終了について</h5>
+                <p>Twitterの開発者向けポリシー改定の影響で、QuesdonでのTwitterアカウントを利用したサービス提供を<strong>2018年9月30日</strong>に停止します。</p>
+                <p>これ以降は、Twitterアカウントでログインできなくなり、またTwitterアカウントで回答した質問等も閲覧できなくなります。</p>
+                <p>Mastodonアカウントへの質問データの移行は、該当するTwitterアカウントからTwitter
+                    <a href="https://twitter.com/quesdon">@quesdon</a>
+                    までダイレクトメッセージでお問い合わせください。
+                </p>
+                <p>ご利用ありがとうございました。</p>
+            </Alert>
             <form action="javascript://" onSubmit={this.send.bind(this)}>
                 <FormGroup>
                     <Input name="instance" placeholder="mastodon.social" list="major-instances"/>
