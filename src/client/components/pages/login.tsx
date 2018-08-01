@@ -35,7 +35,7 @@ export class PageLogin extends React.Component<{}, State> {
                     { loading ? "読み込み中" : "Twitterでログイン" }
                 </Button>
             </form>
-            <Alert color="danger">
+            <Alert color="danger" className="mt-3">
                 <h5>Twitterアカウントでのサービス提供終了について</h5>
                 <p>Twitterの開発者向けポリシー改定の影響で、QuesdonでのTwitterアカウントを利用したサービス提供を<strong>2018年9月30日</strong>に停止します。</p>
                 <p>これ以降は、TwitterアカウントでQuesdonにログインできなくなり、またTwitterアカウントで開設した質問箱で回答した質問等も閲覧できなくなります。</p>
