@@ -10,9 +10,7 @@ import { Loading } from "../../loading"
 import { Question } from "../../question"
 
 interface Props {
-    match: {
-        params: {[key: string]: string},
-    }
+    userId: string
 }
 
 interface State {
@@ -91,10 +89,10 @@ export class PageUserIndex extends React.Component<Props, State> {
     }
 
     componentDidMount() {
-        apiFetch("/api/web/accounts/" + this.props.match.params.user_id)
+        apiFetch("/api/web/accounts/" + this.props.userId)
             .then((r) => r.json())
             .then((user) => this.setState({user}))
-        apiFetch("/api/web/accounts/" + this.props.match.params.user_id + "/answers")
+        apiFetch("/api/web/accounts/" + this.props.userId + "/answers")
             .then((r) => r.json())
             .then((questions) => this.setState({questions}))
     }

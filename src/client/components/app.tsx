@@ -1,5 +1,5 @@
 import * as React from "react"
-import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom"
+import { BrowserRouter, Redirect, Route, RouteComponentProps, Switch } from "react-router-dom"
 import { APIUser } from "../../api-interfaces"
 import { me } from "../initial-state"
 import { Footer } from "./footer"
@@ -31,7 +31,10 @@ export class App extends React.Component {
                     <Route exact path="/my/questions" component={PageMyQuestions}/>
                     <Route exact path="/my/followers" component={PageMyFollowers}/>
                     <Route exact path="/my/settings" component={PageMySettings}/>
-                    <Route exact path="/@:user_id" component={PageUserIndex}/>
+                    <Route exact path="/@:user_id" render={(props: RouteComponentProps<{user_id: string}>) => {
+                        const userId = props.match.params.user_id
+                        return <PageUserIndex key={userId} userId={userId}/>
+                    }}/>
                     <Route exact path="/@:user_id/questions/:question_id" component={PageUserQuestion}/>
                     <Route component={PageNotFound}/>
                 </Switch>
