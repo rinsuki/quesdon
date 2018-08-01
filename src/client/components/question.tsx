@@ -33,9 +33,9 @@ export class Question extends React.Component<Props, State> {
                     {this.renderAnswerUser()}
                     {this.props.answeredAt && <Link
                         to={`/@${this.props.user.acct}/questions/${this.props._id}`}
-                        className="text-muted">
+                        className="text-muted mr-2">
                         {moment(this.props.answeredAt).format("YYYY-MM-DD HH:mm:ss")}
-                    &nbsp;</Link>}
+                    </Link>}
                     {this.renderQuestionUser()}
                 </CardSubtitle>
                 {this.props.answeredAt ? this.renderAnswer() : this.renderAnswerForm()}
