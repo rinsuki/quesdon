@@ -15,6 +15,9 @@ const schema = new mongoose.Schema({
 }, {
     timestamps: true,
 })
+schema.index({
+    answeredAt: -1,
+})
 schema.plugin(autopopulate)
 
 export interface IQuestion extends mongoose.Document {
