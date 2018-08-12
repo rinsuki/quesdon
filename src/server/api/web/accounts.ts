@@ -7,6 +7,7 @@ import { Link, Links } from "parse-link-header"
 import { QUESTION_TEXT_MAX_LENGTH } from "../../../common/const"
 import { BASE_URL, PUSHBULLET_CLIENT_ID, PUSHBULLET_CLIENT_SECRET } from "../../config"
 import { Question, User } from "../../db/index"
+import { questionLogger } from "../../utils/questionLog"
 
 const router = new Router()
 
@@ -140,6 +141,8 @@ router.post("/:acct/question", async (ctx) => {
         question.questionUser = questionUser
     }
     await question.save()
+    // logging
+    await questionLogger(ctx, question, "create")
     ctx.body = {status: "ok"}
     if (user.pushbulletAccessToken) {
         fetch("https://api.pushbullet.com/v2/pushes", {

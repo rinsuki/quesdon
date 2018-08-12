@@ -8,6 +8,7 @@ mongoose.connect(MONGODB_URL).catch((e) => {
 
 import MastodonApp, {IMastodonApp} from "./apps"
 import QuestionLike, {IQuestionLike} from "./question_likes"
+import QuestionLog, { IQuestionLog } from "./question_logs"
 import Question, {IQuestion} from "./questions"
 import User, {IUser} from "./users"
 
@@ -16,4 +17,5 @@ export {
     User, IUser,
     Question, IQuestion,
     QuestionLike, IQuestionLike,
+    QuestionLog, IQuestionLog,
 }

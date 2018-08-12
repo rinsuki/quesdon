@@ -4,6 +4,7 @@ import fetch from "node-fetch"
 import { BASE_URL } from "../../config"
 import { IMastodonApp, IUser, Question, QuestionLike, User } from "../../db/index"
 import { cutText } from "../../utils/cutText"
+import { questionLogger } from "../../utils/questionLog"
 import { requestOAuth } from "../../utils/requestOAuth"
 import twitterClient from "../../utils/twitterClient"
 
@@ -102,6 +103,8 @@ router.post("/:id/answer", async (ctx) => {
             key, secret,
         })
     }
+    // logging
+    await questionLogger(ctx, question, "answer")
 })
 
 router.post("/:id/delete", async (ctx) => {
