@@ -9,9 +9,14 @@ export class PageIndex extends React.Component {
             <title>Quesdon</title>
             <h1>Quesdon</h1>
             <p>ザ・インタビューズとかaskfmとかそんなかんじのやつのMastodonアカウントで使えるやつです</p>
-            <p><strong>
-                2018年1月21日よりTwitterアカウントでも使えるようになりました。ログイン画面で「Twitterでログイン」をクリックするとTwitterアカウントで利用できます。
-            </strong></p>
+            <p>
+                <h5>Twitterアカウントでのログインについて</h5>
+                <strong>
+                    Twitterアカウントでのログインを2018年9月30日で廃止します。
+                    廃止後は、これまでTwitterアカウントで答えた回答などが見れなくなります。
+                    Mastodonアカウントに質問を移行したい方は管理者までお問い合わせください。
+                </strong>
+            </p>
             <p>{me ? <Link to="/my">マイページ</Link> : <Link to="/login">ログイン</Link>}</p>
             <PageLatest />
         </div>
