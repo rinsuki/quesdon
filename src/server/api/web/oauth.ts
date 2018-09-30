@@ -48,22 +48,6 @@ router.post("/get_url", async (ctx) => {
         url = `https://${app.hostName}/oauth/authorize?${Object.entries(params).map((v) => v.join("=")).join("&")}`
     } else { // Twitter
         return ctx.throw("twitter service is finished.", 404)
-        ctx.session!.loginState = "twitter"
-        const { TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET } = process.env
-        if (TWITTER_CONSUMER_KEY == null || TWITTER_CONSUMER_SECRET == null) {
-            ctx.throw(500, "twitter not supported in this server.")
-        }
-        const requestTokenRes = await requestOAuth(twitterClient, {
-            url: "https://api.twitter.com/oauth/request_token",
-            method: "POST",
-            data: {},
-        }).then((r) => r.text()).then((r) => QueryStringUtils.decode(r))
-        const requestToken = {
-            token: requestTokenRes.oauth_token,
-            secret: requestTokenRes.oauth_token_secret,
-        }
-        ctx.session!.twitterOAuth = requestToken
-        url = `https://twitter.com/oauth/authenticate?oauth_token=${requestToken.token}`
     }
     ctx.body = {
         url,
@@ -118,49 +102,6 @@ router.get("/redirect", async (ctx) => {
         }
     } else { // twitter
         return ctx.throw("twitter service is finished", 404)
-        const requestToken: {
-            token: string
-            secret: string,
-        } | undefined = ctx.session!.twitterOAuth
-        if (!requestToken) return ctx.redirect("/login?error=no_request_token")
-        if (requestToken.token !== ctx.query.oauth_token) return ctx.redirect("/login?error=invalid_request_token")
-        var accessToken
-        try {
-            const accessTokenRes = await requestOAuth(twitterClient, {
-                url: "https://api.twitter.com/oauth/access_token",
-                method: "POST",
-                data: {oauth_verifier: ctx.query.oauth_verifier},
-            }, {
-                key: requestToken.token,
-                secret: requestToken.secret,
-            }).then((r) => r.text()).then((r) => QueryStringUtils.decode(r))
-            accessToken = {
-                key: accessTokenRes.oauth_token,
-                secret: accessTokenRes.oauth_token_secret,
-            }
-        } catch (e) {
-            return ctx.redirect("/login?error=failed_access_token_fetch")
-        }
-        var a
-        try {
-            a = await requestOAuth(twitterClient, {
-                url: "https://api.twitter.com/1.1/account/verify_credentials.json",
-                method: "GET",
-                data: {},
-            }, accessToken).then((r) => r.json())
-        } catch (e) {
-            return ctx.redirect("/login?error=failed_user_profile_fetch")
-        }
-        profile = {
-            id: a.id_str,
-            name: a.name,
-            screenName: a.screen_name,
-            hostName: "twitter.com",
-            avatarUrl: a.profile_image_url_https.replace("_normal.", "_400x400."),
-            accessToken: accessToken.key + ":" + accessToken.secret,
-            url: "https://twitter.com/" + a.screen_name,
-            acct: a.screen_name + ":" + a.id_str + "@twitter.com",
-        }
     }
     if (!profile) return
     const acct = profile.acct
