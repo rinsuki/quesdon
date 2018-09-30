@@ -12,7 +12,7 @@ export class PageIndex extends React.Component {
             <p>
                 <h5>Twitterアカウントでのログインについて</h5>
                 <strong>
-                    Twitterアカウントでのログインを2018年9月30日で廃止します。
+                    Twitterアカウントでのログインを2018年9月30日で廃止しま<del>す</del>した。
                     廃止後は、これまでTwitterアカウントで答えた回答などが見れなくなります。
                     Mastodonアカウントに質問を移行したい方は管理者までお問い合わせください。
                 </strong>

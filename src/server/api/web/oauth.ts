@@ -47,6 +47,7 @@ router.post("/get_url", async (ctx) => {
         }
         url = `https://${app.hostName}/oauth/authorize?${Object.entries(params).map((v) => v.join("=")).join("&")}`
     } else { // Twitter
+        return ctx.throw("twitter service is finished.", 404)
         ctx.session!.loginState = "twitter"
         const { TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET } = process.env
         if (TWITTER_CONSUMER_KEY == null || TWITTER_CONSUMER_SECRET == null) {
@@ -116,6 +117,7 @@ router.get("/redirect", async (ctx) => {
             acct: myProfile.username + "@" + app.hostName,
         }
     } else { // twitter
+        return ctx.throw("twitter service is finished", 404)
         const requestToken: {
             token: string
             secret: string,

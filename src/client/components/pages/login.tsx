@@ -30,14 +30,20 @@ export class PageLogin extends React.Component<{}, State> {
                     </datalist>
                 </FormGroup>
                 <Button type="submit" color="primary" disabled={loading}>{ loading ? "読み込み中" : "ログイン" }</Button>
-                <span>&nbsp;もしくは&nbsp;</span>
+                {/* <span>&nbsp;もしくは&nbsp;</span>
                 <Button type="button" color="secondary" disabled={loading} onClick={this.twitterLogin.bind(this)}>
                     { loading ? "読み込み中" : "Twitterでログイン" }
-                </Button>
+                </Button> */}
             </form>
             <Alert color="danger" className="mt-3">
                 <h5>Twitterアカウントでのサービス提供終了について</h5>
-                <p>Twitterの開発者向けポリシー改定の影響で、QuesdonでのTwitterアカウントを利用したサービス提供を<strong>2018年9月30日</strong>に停止します。</p>
+                <p>
+                    Twitterの開発者向けポリシー改定の影響で、QuesdonでのTwitterアカウントを利用したサービス提供を
+                    <strong>2018年9月30日</strong>
+                    に停止しま
+                    <del>す</del>
+                    した。
+                </p>
                 <p>これ以降は、TwitterアカウントでQuesdonにログインできなくなり、またTwitterアカウントで開設した質問箱で回答した質問等も閲覧できなくなります。</p>
                 <p>Mastodonアカウントへの質問データの移行は、該当するTwitterアカウントからTwitter
                     <a href="https://twitter.com/quesdon">@quesdon</a>

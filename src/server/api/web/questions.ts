@@ -56,6 +56,7 @@ router.post("/:id/answer", async (ctx) => {
     if (!["public", "unlisted", "private"].includes(ctx.request.body.fields.visibility)) return
     if (!user) return
     const isTwitter = user.hostName === "twitter.com"
+    if (isTwitter) return ctx.throw("twitter service is finished", 404)
     const answerCharMax = isTwitter ? (110 - question.question.length) : 200
     const answerUrl = BASE_URL + "/@" + user!.acct + "/questions/" + question.id
     if (!isTwitter) { // Mastodon

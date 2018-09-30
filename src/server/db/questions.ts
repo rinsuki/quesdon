@@ -1,4 +1,5 @@
 import * as mongoose from "mongoose"
+import setTransformer from "../utils/setTransformer"
 import { IUser } from "./index"
 // tslint:disable-next-line:no-var-requires
 const autopopulate = require("mongoose-autopopulate") // @types/がないのでしかたない
@@ -19,6 +20,13 @@ schema.index({
     answeredAt: -1,
 })
 schema.plugin(autopopulate)
+
+setTransformer(schema, (doc: IQuestion, ret: any) => {
+    if (ret.questionUser && ret.questionUser.hostName === "twitter.com") {
+        delete ret.questionUser
+    }
+    return ret
+})
 
 export interface IQuestion extends mongoose.Document {
     user: IUser
