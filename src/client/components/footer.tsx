@@ -8,13 +8,11 @@ export class Footer extends React.Component {
             <p>Quesdon は AGPL-3.0 で提供されています。<a href={upstreamUrl}>ソースコード</a>&nbsp;
             (<a href={`${upstreamUrl}/commits/${gitVersion}`}>{gitVersion.slice(0, 7)}</a>)</p>
             <p>
-                公式アカウント: <a href="https://mstdn.jp/@quesdon">@quesdon@mstdn.jp</a>
+                公式アカウント: <a href="https://mstdn.rinsuki.net/@quesdon">@quesdon@mstdn.rinsuki.net</a>
                 &nbsp;
-                <a href="https://twitter.com/quesdon">@Quesdon on Twitter</a>
-                &nbsp;
-                <Link to="/@quesdon@mstdn.jp">公式Quesdon (要望や不具合報告もこちらへどうぞ)</Link>
+                <Link to="/@quesdon@mstdn.rinsuki.net">公式Quesdon (要望や不具合報告もこちらへどうぞ)</Link>
             </p>
-            <p>開発者: <a href="https://mstdn.maud.io/@rinsuki">@rinsuki@mstdn.maud.io</a></p>
+            <p>開発者: <a href="https://mstdn.rinsuki.net/@rinsuki">@rinsuki@mstdn.rinsuki.net</a></p>
             <p>
                 {usingDarkTheme
                 ?   <a href="#" onClick={this.leaveDarkTheme.bind(this)}>ダークテーマから戻す</a>
