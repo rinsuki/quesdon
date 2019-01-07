@@ -2,11 +2,8 @@ import * as Router from "koa-router"
 import * as mongoose from "mongoose"
 import fetch from "node-fetch"
 import { BASE_URL } from "../../config"
-import { IMastodonApp, IUser, Question, QuestionLike, User } from "../../db/index"
-import { cutText } from "../../utils/cutText"
+import { Question, QuestionLike, User } from "../../db/index"
 import { questionLogger } from "../../utils/questionLog"
-import { requestOAuth } from "../../utils/requestOAuth"
-import twitterClient from "../../utils/twitterClient"
 
 const router = new Router()
 
@@ -55,55 +52,40 @@ router.post("/:id/answer", async (ctx) => {
     const user = await User.findById(ctx.session!.user)
     if (!["public", "unlisted", "private"].includes(ctx.request.body.fields.visibility)) return
     if (!user) return
-    const isTwitter = user.hostName === "twitter.com"
-    if (isTwitter) return ctx.throw("twitter service is finished", 404)
-    const answerCharMax = isTwitter ? (110 - question.question.length) : 200
+    if (user.hostName === "twitter.com") return ctx.throw("twitter service is finished", 404)
+    const answerCharMax = 200
     const answerUrl = BASE_URL + "/@" + user!.acct + "/questions/" + question.id
-    if (!isTwitter) { // Mastodon
-        const body = {
-            spoiler_text: "Q. " + question.question + " #quesdon",
-            status: [
-                "A. ",
-                (question.answer!.length > 200
-                    ? question.answer!.substring(0, 200) + "...(続きはリンク先で)"
-                    : question.answer),
-                "\n#quesdon ",
-                answerUrl,
-            ].join(""),
-            visibility: ctx.request.body.fields.visibility,
-        }
-        if (question.questionUser) {
-            var questionUserAcct = "@" + question.questionUser.acct
-            if (question.questionUser.hostName === "twitter.com") {
-                questionUserAcct = "https://twitter.com/" + question.questionUser.acct.replace(/:.+/, "")
-            }
-            body.status = "質問者: " + questionUserAcct + "\n" + body.status
-        }
-        if (question.isNSFW) {
-            body.status = "Q. " + question.question + "\n" + body.status
-            body.spoiler_text = "⚠ この質問は回答者がNSFWであると申告しています #quesdon"
-        }
-        fetch("https://" + user!.acct.split("@")[1] + "/api/v1/statuses", {
-            method: "POST",
-            body: JSON.stringify(body),
-            headers: {
-                "Authorization": "Bearer " + user!.accessToken,
-                "Content-Type": "application/json",
-            },
-        })
-    } else {
-        const strQ = cutText(question.question, 60)
-        const strA = cutText(question.answer!, 120 - strQ.length)
-        const [key, secret] = user.accessToken.split(":")
-        const body = "Q. " + strQ + "\nA. " + strA + "\n#quesdon " + answerUrl
-        requestOAuth(twitterClient, {
-            url: "https://api.twitter.com/1.1/statuses/update.json",
-            method: "POST",
-            data: {status: body},
-        }, {
-            key, secret,
-        })
+    const body = {
+        spoiler_text: "Q. " + question.question + " #quesdon",
+        status: [
+            "A. ",
+            (question.answer!.length > 200
+                ? question.answer!.substring(0, 200) + "...(続きはリンク先で)"
+                : question.answer),
+            "\n#quesdon ",
+            answerUrl,
+        ].join(""),
+        visibility: ctx.request.body.fields.visibility,
     }
+    if (question.questionUser) {
+        var questionUserAcct = "@" + question.questionUser.acct
+        if (question.questionUser.hostName === "twitter.com") {
+            questionUserAcct = "https://twitter.com/" + question.questionUser.acct.replace(/:.+/, "")
+        }
+        body.status = "質問者: " + questionUserAcct + "\n" + body.status
+    }
+    if (question.isNSFW) {
+        body.status = "Q. " + question.question + "\n" + body.status
+        body.spoiler_text = "⚠ この質問は回答者がNSFWであると申告しています #quesdon"
+    }
+    fetch("https://" + user!.acct.split("@")[1] + "/api/v1/statuses", {
+        method: "POST",
+        body: JSON.stringify(body),
+        headers: {
+            "Authorization": "Bearer " + user!.accessToken,
+            "Content-Type": "application/json",
+        },
+    })
     // logging
     await questionLogger(ctx, question, "answer")
 })
