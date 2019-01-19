@@ -11,6 +11,15 @@ module.exports = {
         filename: "bundle.js",
         publicPath: "/assets/",
     },
+    externals: {
+        react: "React",
+        "react-dom": "ReactDOM",
+        "react-router-dom": "ReactRouterDOM",
+        "reactstrap": "Reactstrap",
+        jquery: "jQuery",
+        moment: "moment",
+        "popper.js": "Popper",
+    },
     devServer: {
         contentBase: "dist/client",
         proxy: {
@@ -19,7 +28,6 @@ module.exports = {
     },
     plugins: [
         new webpack.ProvidePlugin({
-            "$": "jquery",
             apiFetch: __dirname+"/src/client/api-fetch.ts"
         }),
         new webpack.DefinePlugin({

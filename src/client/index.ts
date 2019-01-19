@@ -12,11 +12,8 @@ if (localStorage.getItem("using-dark-theme")) {
     // tslint:disable-next-line:no-var-requires
     require("bootstrap/dist/css/bootstrap.min.css")
 }
-import "jquery"
-import "./style.css"
-// tslint:disable-next-line:no-var-requires
-(window as any).Popper = require("popper.js")
 import "bootstrap/dist/js/bootstrap.min.js"
+import "./style.css"
 // ---
 
 import "./ctrl-enter"

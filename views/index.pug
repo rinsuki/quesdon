@@ -9,6 +9,22 @@ html
         script window.CSRF_TOKEN="#{csrfToken}"
         script window.GIT_VERSION="#{GIT_COMMIT}"
         script(src="https://cdn.polyfill.io/v2/polyfill.js?features=fetch")
+        if isProduction === true
+            script(src="https://cdnjs.cloudflare.com/ajax/libs/react/16.7.0/umd/react.production.min.js")
+            script(src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.7.0/umd/react-dom.production.min.js")
+            script(src="https://cdnjs.cloudflare.com/ajax/libs/react-router-dom/4.3.1/react-router-dom.min.js")
+            script(src="https://cdnjs.cloudflare.com/ajax/libs/reactstrap/5.0.0-beta.3/reactstrap.full.min.js")
+            script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js")
+            script(src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js")
+            script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js")
+        else
+            script(src="https://cdnjs.cloudflare.com/ajax/libs/react/16.7.0/umd/react.development.js")
+            script(src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.7.0/umd/react-dom.development.js")
+            script(src="https://cdnjs.cloudflare.com/ajax/libs/react-router-dom/4.3.1/react-router-dom.js")
+            script(src="https://cdnjs.cloudflare.com/ajax/libs/reactstrap/5.0.0-beta.3/reactstrap.full.js")
+            script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js")
+            script(src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.js")
+            script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.js")
         script(src="/assets/bundle.js?version="+GIT_COMMIT)
     body
         #root
