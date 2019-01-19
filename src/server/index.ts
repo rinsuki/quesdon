@@ -46,6 +46,7 @@ router.get("/*", async (ctx) => {
         GIT_COMMIT,
         user,
         csrfToken: ctx.session!.csrfToken,
+        isProduction: app.env === "production",
     })
 })
 

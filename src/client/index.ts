@@ -19,6 +19,11 @@ import "./style.css"
 import "./ctrl-enter"
 
 addEventListener("DOMContentLoaded", () => {
+    const devBuildMessage = document.getElementById("webpackDevBuildMessage")
+    if (process.env.NODE_ENV !== "production" && devBuildMessage) {
+        devBuildMessage.style.display = "block"
+    }
+
     const root = document.getElementById("root")
     ReactDOM.render(React.createElement(App), root)
 })

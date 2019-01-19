@@ -9,7 +9,7 @@ html
         script window.CSRF_TOKEN="#{csrfToken}"
         script window.GIT_VERSION="#{GIT_COMMIT}"
         script(src="https://cdn.polyfill.io/v2/polyfill.js?features=fetch")
-        if isProduction === true
+        if isProduction
             script(src="https://cdnjs.cloudflare.com/ajax/libs/react/16.7.0/umd/react.production.min.js")
             script(src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.7.0/umd/react-dom.production.min.js")
             script(src="https://cdnjs.cloudflare.com/ajax/libs/react-router-dom/4.3.1/react-router-dom.min.js")
@@ -27,6 +27,15 @@ html
             script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.js")
         script(src="/assets/bundle.js?version="+GIT_COMMIT)
     body
+        if !isProduction
+            #devEnvMessage(style="background: red; color: white; padding: 10px;text-align: center;")
+                | サーバーが開発環境として起動されています。
+                | もしこれが開発環境でない場合は、NODE_ENV=productionを指定して再起動してください。
+        else
+            #webpackDevBuildMessage(style="display: none;background: yellow;padding: 10px;text-align: center;")
+                | 管理者向け: サーバーは本番環境として実行されていますが、クライアントリソースが開発環境用にビルドされています。
+                | 開発環境用のビルドを本番環境で利用すると、予期せぬ問題が発生する可能性があります。
+                | ビルド時に環境変数 <code>NODE_ENV=production</code>を指定すると、このメッセージは出なくなります。
         #root
             p ...あれ、もしかしてページが表示されてませんか?
             p ご迷惑をおかけしています。何回かリロードしていただいた後、それでもこの画面が表示されるようでしたら、以下の動作環境を満たしていることを確認した後、Mastodon @quesdon@mstdn.rinsuki.net もしくは Twitter @quesdon までお問い合わせください。
