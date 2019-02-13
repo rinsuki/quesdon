@@ -17,6 +17,9 @@
   },
   "author": "rinsuki",
   "license": "AGPL-3.0+",
+  "resolutions": {
+    "@types/react": "^16.8.2"
+  },
   "devDependencies": {
     "@types/dotenv": "^4.0.3",
     "@types/koa": "^2.0.42",
@@ -47,7 +50,7 @@
     "style-loader": "^0.21.0",
     "ts-loader": "^4.3.0",
     "tslint": "^5.10.0",
-    "typescript": "^2.6.2",
+    "typescript": "^3.3.3",
     "uglifyjs-webpack-plugin": "^1.2.5",
     "webpack": "^4.8.3",
     "webpack-cli": "^2.1.3",
