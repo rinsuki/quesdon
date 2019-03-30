@@ -10,6 +10,13 @@ export class PageIndex extends React.Component {
             <h1>Quesdon</h1>
             <p>ザ・インタビューズとかaskfmとかそんなかんじのやつのMastodonアカウントで使えるやつです</p>
             <details open>
+                <summary>2019/03/31追加: quesdon.rinsuki.net は 2019年4月30日 までに段階的にサービスを終了します</summary>
+                詳しくはこちらをご覧ください。
+                <a href="https://mstdn.rinsuki.net/@quesdon/101840155554009697">
+                    https://mstdn.rinsuki.net/@quesdon/101840155554009697
+                </a>
+            </details>
+            <details open>
                 <summary>
                     2018/10/01追加: 公式アカウントを
                     <a href="https://mstdn.rinsuki.net/@quesdon">@quesdon@mstdn.rinsuki.net</a>
