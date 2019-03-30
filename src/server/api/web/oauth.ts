@@ -99,9 +99,12 @@ router.get("/redirect", async (ctx) => {
     }
     if (!profile) return
     const acct = profile.acct
-    var user = await User.findOne({acctLower: acct.toLowerCase()})
+    const user = await User.findOne({acctLower: acct.toLowerCase()})
     if (user == null) {
-        user = new User()
+        ctx.status = 400
+        ctx.type = "html"
+        ctx.body = `新規登録は終了しました。<a href="/">トップに戻る</a>`
+        return
     }
     user.acct = acct
     user.acctLower = acct.toLowerCase()
