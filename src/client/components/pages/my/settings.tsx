@@ -70,6 +70,7 @@ export class PageMySettings extends React.Component<{}, State> {
             }
             <h2 className="mt-3 mb-2">やばいゾーン</h2>
             <Button color="danger" onClick={this.allDeleteQuestions.bind(this)}>自分宛ての質問を(回答済みのものも含めて)すべて削除</Button>
+            <Button color="success" onClick={this.exportAnswers.bind(this)}>回答済みの質問を一括エクスポート</Button>
         </div>
     }
 
@@ -149,6 +150,18 @@ export class PageMySettings extends React.Component<{}, State> {
 
         alert("削除しました。")
         location.reload()
+    }
+
+    async exportAnswers() {
+        const req = await apiFetch("/api/web/questions/export", {
+            method: "POST",
+        })
+        const b = await req.blob()
+        const anchor = document.createElement("a")
+        anchor.href = window.URL.createObjectURL(b)
+        anchor.target = "_blank"
+        anchor.download = req.headers.get("X-File-Name") + ".zip"
+        anchor.click()
     }
 
     async onSubmit(e: any) {

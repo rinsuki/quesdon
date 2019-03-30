@@ -1,3 +1,5 @@
+import archiver = require("archiver")
+import * as fs from "fs"
 import * as Router from "koa-router"
 import * as mongoose from "mongoose"
 import fetch from "node-fetch"
@@ -150,6 +152,67 @@ router.post("/all_delete", async (ctx) => {
         multi: true,
     })
     ctx.body = {status: "ok"}
+})
+
+router.post("/export", async (ctx) => {
+    const user = await User.findById(ctx.session!.user)
+    if (user == null) return ctx.throw("please login", 403)
+    const base = user.acct.replace(/[^0-9a-zA-Z_]/g, "-")
+    const dir = `quesdon-archive-${base}-${Math.floor(new Date().getTime() / 1000)}`
+    console.log(base)
+    const q = await Question.find({
+        user: mongoose.Types.ObjectId(ctx.session!.user),
+        answeredAt: {$ne: null},
+        isDeleted: {$ne: true},
+    })
+    const answersJs = `// Tips: 最初の二行を削るとJSONになるぞ!ならなかったらゴメン
+var answers =
+${JSON.stringify(q, null, 4)}
+`
+    const userJs = `// Tips: 最初の二行を削るとJSONになるぞ!ならなかったらゴメン
+var user =
+${JSON.stringify(user, null, 4)}
+`
+    const archive = archiver("zip", {
+        zlib: { level: 9 },
+    })
+    const p = new Promise((res) => archive.on("close", res))
+    ctx.status = 200
+    ctx.type = "zip"
+    ctx.set("X-File-Name", dir)
+    archive.pipe(ctx.res)
+    archive.append(`<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="answers.js"></script>
+<script src="userInfo.js"></script>
+<link rel="stylesheet" href="./static/bootstrap.min.css">
+<script src="./static/moment.min.js"></script>
+<script src="./static/main.js"></script>
+<!-- Thanks for using Quesdon -->
+</head>
+<body>
+<div id="app">Loading...</div>
+</body>
+</html>
+`, { name: `${dir}/index.html` })
+    archive.append(answersJs, { name: `${dir}/answers.js` })
+    archive.append(userJs, { name: `${dir}/userInfo.js` })
+    archive.append(
+        fs.createReadStream(__dirname + "/../../../../static/bootstrap.min.css"),
+        { name: `${dir}/static/bootstrap.min.css` },
+    )
+    archive.append(
+        fs.createReadStream(__dirname + "/../../../../static/moment.min.js"),
+        { name: `${dir}/static/moment.min.js` },
+    )
+    archive.append(
+        fs.createReadStream(__dirname + "/../../../../static/main.js"),
+        { name: `${dir}/static/main.js` },
+    )
+    archive.finalize()
+    await p
 })
 
 export default router
