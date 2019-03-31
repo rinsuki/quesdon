@@ -22,6 +22,10 @@ export class App extends React.Component {
             <div className="all-container">
                 <Header/>
                 <main className="container mt-2">
+                <p>
+                    quesdon.rinsuki.netは2019年4月30日までに段階的にサービスを終了します。
+                    <a href="https://mstdn.rinsuki.net/@quesdon/101840155554009697">詳しくはこちら。</a>
+                </p>
                 <Switch>
                     <Route exact path="/" component={PageIndex}/>
                     <Route exact path="/latest" component={PageLatest}/>
