@@ -16,7 +16,7 @@ router.get("/", async (ctx) => {
         answeredAt: null,
         isDeleted: {$ne: true},
     })
-    ctx.body = JSON.stringify(questions)
+    ctx.body = JSON.stringify([questions])
 })
 
 router.get("/count", async (ctx) => {
@@ -30,11 +30,7 @@ router.get("/count", async (ctx) => {
 })
 
 router.get("/latest", async (ctx) => {
-    const questions = await Question.find({
-        answeredAt: {$ne: null},
-        isDeleted: {$ne: true},
-    }).limit(20).sort("-answeredAt")
-    ctx.body = questions
+    ctx.body = []
 })
 
 router.post("/:id/answer", async (ctx) => {
@@ -99,35 +95,6 @@ router.post("/:id/delete", async (ctx) => {
     // tslint:disable-next-line:triple-equals
     if (question.user._id != ctx.session!.user) return ctx.throw("not found", 404)
     question.isDeleted = true
-    await question.save()
-    ctx.body = {status: "ok"}
-})
-
-router.post("/:id/like", async (ctx) => {
-    if (!ctx.session!.user) return ctx.throw("please login", 403)
-    const question = await Question.findById(ctx.params.id)
-    if (!question) return ctx.throw("not found", 404)
-    if (!question.answeredAt) return ctx.throw("not found", 404)
-    if (await QuestionLike.findOne({question})) return ctx.throw("already liked", 400)
-    const like = new QuestionLike()
-    like.question = question
-    like.user = mongoose.Types.ObjectId(ctx.session!.user)
-    await like.save()
-    question.likesCount = await QuestionLike.find({question}).count()
-    await question.save()
-    ctx.body = {status: "ok"}
-})
-
-router.post("/:id/unlike", async (ctx) => {
-    if (!ctx.session!.user) return ctx.throw("please login", 403)
-    const question = await Question.findById(ctx.params.id)
-    const user = mongoose.Types.ObjectId(ctx.session!.user)
-    if (!question) return ctx.throw("not found", 404)
-    if (!question.answeredAt) return ctx.throw("not found", 404)
-    const like = await QuestionLike.findOne({question, user})
-    if (!like) return ctx.throw("not liked", 400)
-    await like.remove()
-    question.likesCount = await QuestionLike.find({question}).count()
     await question.save()
     ctx.body = {status: "ok"}
 })

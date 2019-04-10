@@ -47,34 +47,6 @@ export class PageUserIndex extends React.Component<Props, State> {
                     </a>
                 </p>
                 <p>{user.description}</p>
-                { user.stopNewQuestion ? <p>このユーザーは新しい質問を受け付けていません</p> :
-                <form action="javascript://" onSubmit={this.questionSubmit.bind(this)}>
-                    <Input type="textarea" name="question"
-                        placeholder="質問する内容を入力"
-                        onInput={this.questionInput.bind(this)}
-                    />
-                    <div className="d-flex mt-1">
-                        {me && !user.allAnon && <div className="p-1">
-                            <Checkbox name="noAnon" value="true">名乗る</Checkbox>
-                        </div>}
-                        <div className="ml-auto">
-                            <span className={"mr-3 " +
-                                (this.state.questionLength > QUESTION_TEXT_MAX_LENGTH ? "text-danger" : "")
-                            }>
-                                {QUESTION_TEXT_MAX_LENGTH - this.state.questionLength}
-                            </span>
-                            <Button color="primary" className="col-xs-2"
-                                disabled={
-                                    !this.state.questionLength
-                                    || this.state.questionLength > QUESTION_TEXT_MAX_LENGTH
-                                    || this.state.questionNow
-                                }>
-                                質問{this.state.questionNow ? "中..." : "する"}
-                            </Button>
-                        </div>
-                    </div>
-                </form>
-                }
             </div></Jumbotron>
                         <h2>回答&nbsp;{this.state.questions && <Badge pill>{this.state.questions.length}</Badge>}</h2>
             {this.state.questions
