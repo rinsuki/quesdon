@@ -16,7 +16,7 @@ router.get("/", async (ctx) => {
         answeredAt: null,
         isDeleted: {$ne: true},
     })
-    ctx.body = JSON.stringify([questions])
+    ctx.body = JSON.stringify(questions)
 })
 
 router.get("/count", async (ctx) => {
