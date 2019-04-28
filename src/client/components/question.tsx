@@ -71,6 +71,7 @@ export class Question extends React.Component<Props, State> {
     }
 
     renderAnswerForm() {
+        return "回答できる期間は終了しました。"
         return <form action="javascript://" onSubmit={this.onSubmit.bind(this)}>
             <FormGroup>
                 <Input type="textarea" name="answer" placeholder="回答内容を入力" onInput={this.onInput.bind(this)}/>

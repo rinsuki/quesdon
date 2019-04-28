@@ -34,58 +34,7 @@ router.get("/latest", async (ctx) => {
 })
 
 router.post("/:id/answer", async (ctx) => {
-    if (!ctx.session!.user) return ctx.throw("please login", 403)
-    const question = await Question.findById(ctx.params.id)
-    if (!question) return ctx.throw("not found", 404)
-    if (question.isDeleted) return ctx.throw("not found", 404)
-    // tslint:disable-next-line:triple-equals
-    if (question.user._id != ctx.session!.user) return ctx.throw("not found", 404)
-    if (question.answeredAt) return ctx.throw("alread answered", 400)
-    question.answer = ctx.request.body.fields.answer
-    if (question.answer!.length < 1) return ctx.throw("please input answer", 400)
-    question.answeredAt = new Date()
-    if (ctx.request.body.fields.isNSFW) question.isNSFW = true
-    await question.save()
-    ctx.body = {status: "ok"}
-    const user = await User.findById(ctx.session!.user)
-    if (!["public", "unlisted", "private"].includes(ctx.request.body.fields.visibility)) return
-    if (!user) return
-    if (user.hostName === "twitter.com") return ctx.throw("twitter service is finished", 404)
-    const answerCharMax = 200
-    const answerUrl = BASE_URL + "/@" + user!.acct + "/questions/" + question.id
-    const body = {
-        spoiler_text: "Q. " + question.question + " #quesdon",
-        status: [
-            "A. ",
-            (question.answer!.length > 200
-                ? question.answer!.substring(0, 200) + "...(続きはリンク先で)"
-                : question.answer),
-            "\n#quesdon ",
-            answerUrl,
-        ].join(""),
-        visibility: ctx.request.body.fields.visibility,
-    }
-    if (question.questionUser) {
-        var questionUserAcct = "@" + question.questionUser.acct
-        if (question.questionUser.hostName === "twitter.com") {
-            questionUserAcct = "https://twitter.com/" + question.questionUser.acct.replace(/:.+/, "")
-        }
-        body.status = "質問者: " + questionUserAcct + "\n" + body.status
-    }
-    if (question.isNSFW) {
-        body.status = "Q. " + question.question + "\n" + body.status
-        body.spoiler_text = "⚠ この質問は回答者がNSFWであると申告しています #quesdon"
-    }
-    fetch("https://" + user!.acct.split("@")[1] + "/api/v1/statuses", {
-        method: "POST",
-        body: JSON.stringify(body),
-        headers: {
-            "Authorization": "Bearer " + user!.accessToken,
-            "Content-Type": "application/json",
-        },
-    })
-    // logging
-    await questionLogger(ctx, question, "answer")
+    return ctx.throw("answer service is finished.", 410)
 })
 
 router.post("/:id/delete", async (ctx) => {
