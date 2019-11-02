@@ -69,7 +69,7 @@
     "koa-static": "^4.0.2",
     "koa-static-cache": "^5.1.1",
     "moment": "^2.23.0",
-    "mongoose": "^4.13.6",
+    "mongoose": "^5.7.5",
     "mongoose-autopopulate": "^0.7.0",
     "node-fetch": "^1.7.3",
     "oauth-1.0a": "github:rinsuki/oauth-1.0a",
